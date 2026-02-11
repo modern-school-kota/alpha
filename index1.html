@@ -1,0 +1,2796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern School | Leadership & Excellence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,500;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* ===== INTRO ANIMATION STYLES ===== */
+        :root {
+            --royal-gold: #D4AF37;
+            --maroon-regal: #800000;
+            --cream-silk: #f2ede4;
+            --bg-cream: #f2ede4; 
+            --ivory-glass: rgba(255, 255, 248, 0.7);
+            --active-maroon: #A63232; 
+            --active-blue:  #A63232;
+            --gold: #f1c40f;
+            --card-radius: 0px 70px 0px 70px;
+            --nav-locked-height: 60px;
+            --card-shadow: rgba(50, 40, 20, 0.12);
+            --maroon: #A63232;
+            --cream: #f4f4f4;
+            --gold-glow: rgba(255, 204, 0, 0.3);
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --light-cream: #FFFBF5;
+            --deep-cream: #F2E8DA;
+            --text-main: #333333;
+            --footer-bg: #A63232;
+            --bottom-bar-bg: #A63232;
+            --cream-header: #f5f5dc; 
+            --dark-cream-hover: #d1c7a7; 
+            --field-bg: #f9f9f9;
+            --blue-active: #007bff;
+        }
+
+        /* Intro specific styles */
+        #intro-overlay, #final-logo-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease;
+            z-index: 9999;
+            background: radial-gradient(circle, #f2ede4 0%, #fcf9f0 100%);
+            font-family: 'Cinzel', serif;
+        }
+
+        .intro-main-wrapper {
+            text-align: center;
+            width: 95%;
+            max-width: 1100px;
+            margin-top: 50px; 
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 35px;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--maroon-regal);
+            border-radius: 50%;
+        }
+
+        .line-container {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            margin-bottom: 60px;
+        }
+
+        .single-unit {
+            position: absolute;
+            left: -350px; 
+            display: flex;
+            align-items: center;
+            width: 300px; 
+            opacity: 0;
+            animation: moveUnit 3.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s 1 forwards;
+        }
+
+        .gold-line {
+            height: 2px;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0), rgba(212, 175, 55, 0.7));
+            width: 100%; 
+        }
+
+        .maroon-ball {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle at 30% 30%, #a52a2a, var(--maroon-regal));
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(128, 0, 0, 0.4);
+        }
+
+        @keyframes moveUnit {
+            0% { left: -30%; opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { left: 110%; opacity: 0; }
+        }
+
+        .image-container {
+            position: relative;
+            height: 220px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-img {
+            position: absolute;
+            width: 150px; 
+            bottom: -100px;
+            opacity: 0;
+        }
+
+        .img-01 { z-index: 5; animation: clearRiseStay 1.2s ease-out forwards 0.8s; }
+        .img-02 { z-index: 3; animation: softRiseLeft 1.5s ease-out forwards 1s; }
+        .img-03 { z-index: 4; animation: softRiseRight 1.5s ease-out forwards 1s; }
+
+        @keyframes clearRiseStay { 0% { bottom: -100px; opacity: 0; } 100% { bottom: 0; opacity: 1; } }
+        @keyframes softRiseLeft { 0% { bottom: -100px; opacity: 0; transform: translateX(0); } 40% { bottom: 0; opacity: 0; transform: translateX(0); } 100% { bottom: 0; opacity: 1; transform: translateX(-170px); } }
+        @keyframes softRiseRight { 0% { bottom: -100px; opacity: 0; transform: translateX(0); } 40% { bottom: 0; opacity: 0; transform: translateX(0); } 100% { bottom: 0; opacity: 1; transform: translateX(170px); } }
+
+        .asterisk {
+            position: absolute;
+            color: var(--royal-gold);
+            font-size: 6rem;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
+
+        #final-logo-container {
+            opacity: 0;
+            visibility: hidden;
+            z-index: 10000;
+        }
+
+        .ms-logo { max-width: 60%; max-height: 60%; object-fit: contain; }
+
+        #skipBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: transparent;
+            color: var(--maroon-regal);
+            border: 2px solid var(--maroon-regal);
+            padding: 12px 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            z-index: 10001;
+        }
+
+        #skipBtn:active, #skipBtn.scrolled {
+            background: var(--maroon-regal) !important;
+            color: white !important;
+        }
+
+        /* Hide main website content during intro */
+        body.intro-active #main-website {
+            display: none;
+        }
+
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        /* ===== MAIN WEBSITE STYLES ===== */
+        body { 
+            margin: 0; 
+            background-color: var(--bg-cream); 
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; 
+        }
+
+        /* --- NAVIGATION & NAVBAR --- */
+        header {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: var(--nav-locked-height);
+            background: #ffffff; 
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            z-index: 3000;
+            transition: all 0.4s ease;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e5dfd3; 
+        }
+
+        /* Rule: Hide navbar when menu is open OR when modal is open */
+        header.hide-nav {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none;
+        }
+
+        .nav-center-text {
+            font-weight: 750;
+            letter-spacing: 0px;
+            font-size: 1.5rem;
+            color: var(--active-maroon);
+            text-transform: uppercase;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 4000;
+            padding: 10px;
+            position: fixed; 
+            top: 10px; 
+            left: 8px;
+            transition: 0.3s ease;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: var(--active-maroon);
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* --- MENU OVERLAY --- */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 2500;
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .menu-overlay.open { opacity: 1; visibility: visible; }
+        
+        /* Rule: Active navigation element in blue */
+        .main-nav-item.active { color: var(--active-blue) !important; }
+        .main-nav-item { 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
+            font-weight: 800; 
+            color: #e0d9cc; 
+            margin: 10px 0; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            text-transform: uppercase; 
+        }
+@media (max-width: 480px) {
+     .nav-center-text {
+            font-weight: 750;
+            margin-left:20px;
+            letter-spacing: 0px;
+            font-size: 1.3rem;
+            color: var(--active-maroon);
+            text-transform: uppercase;
+        }
+    .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 2500;
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .menu-overlay.open { opacity: 1; visibility: visible; }
+        
+        /* Rule: Active navigation element in blue */
+        .main-nav-item.active { color: var(--active-blue) !important; }
+        .main-nav-item { 
+            font-size: clamp(1.5rem); 
+            font-weight: 600; 
+            color: #e0d9cc; 
+            margin: 10px 0; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            text-transform: uppercase; 
+        }
+    .logo-row {
+        flex-direction: column;
+        gap: 15px;
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+    }
+    .intro-img {
+        width: 120px;
+    }
+    .img-02 { transform: translateX(-120px) !important; }
+    .img-03 { transform: translateX(120px) !important; }
+    .asterisk {
+        font-size: 4rem;
+    }
+}
+        /* --- CONTENT SECTIONS --- */
+        .scroll-section { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            background: var(--bg-cream); 
+            position: relative;
+        }
+        
+        .text-content { 
+            text-align: center; 
+            padding: 15px 30px;
+            background: var(--ivory-glass);
+            border-radius: 0px 70px 0px 70px;
+            z-index: 20; 
+            margin-top:70px;
+            margin-bottom: -40px; 
+            height:220px !important;
+            width:350px;
+            border: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .text-content h2 { font-size: 1.0rem; color: var(--active-maroon); text-transform: uppercase; margin-bottom: 5px; }
+        .text-content p { color: #6b5e4c; font-weight: 400; }
+
+        .carousel-stage { position: relative; width: 100%; max-width: 1000px; height: 400px; display: flex; justify-content: center; align-items: center; }
+        .img-box { position: absolute; background-size: cover; background-position: center; border-radius: var(--card-radius); box-shadow: 0 15px 35px rgba(107, 94, 76, 0.2); }
+        
+        /* ROYAL BANNER with original Times New Roman font */
+        .royal-banner { 
+            width: 100%; 
+            height: 160px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: radial-gradient(circle, #800000 0%, #A63232 100%); 
+            border-top: 4px solid #d4af37; 
+            border-bottom: 4px solid #d4af37; 
+            position: relative; 
+            z-index: 10; 
+        }
+        
+        .royal-banner h1 { 
+            font-family: 'Times New Roman', Times, serif !important; /* Original font */
+            font-size: 3.5rem; 
+            color: #fff9c4; /* Cream color */
+            margin: 0; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+            font-weight: normal;
+            text-align: center;
+        }
+        
+        .royal-banner h1 .bold-num {
+            font-weight: bold;
+            color: #d4af37; /* Gold color for the number */
+            font-size: 4rem;
+        }
+
+        /* --- HALL OF FAME STYLES --- */
+        .pin-container {
+            height: 100vh;
+            background: var(--bg-cream);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .header-title {
+            color: #A63232;
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 5vh;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        .cards-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 94%;
+            max-width: 1500px;
+        }
+
+        .hall-card {
+            position: relative;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px var(--card-shadow);
+            aspect-ratio: 3 / 2; 
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .hall-card:hover .card-img { transform: scale(1.08); }
+
+        .winner-tag {
+            position: absolute;
+            top: 4px; right: 0;
+            background: #c6cf3f;
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 10;
+            letter-spacing: 1px;
+        }
+
+        .ribbon {
+            position: absolute;
+            top: 62%; width: 115%; left: -7.5%;
+            background: linear-gradient(90deg, #d4af37, var(--gold), #d4af37);
+            color: #1a1a1a;
+            padding: 10px 0;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            transform: rotate(-3deg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            z-index: 5;
+            font-size: 0.85rem;
+        }
+
+        .info-overlay {
+            position: absolute;
+            bottom: 0; width: 100%;
+            padding: 25px 20px 15px;
+            background: linear-gradient(transparent 10%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0.95));
+            box-sizing: border-box;
+            color: white;
+            z-index: 4;
+        }
+
+        .info-overlay h3 { margin: 0; font-size: 1.4rem; }
+        .location { font-size: 0.7rem; border-top: 1px solid rgba(255,255,255,0.25); padding-top: 10px; margin-top: 5px; text-transform: uppercase; opacity: 0.8; }
+
+        .spacer { height: 100vh; background-color: var(--bg-cream); }
+        
+        /* Menu internal styling */
+        .menu-wrapper { display: flex; width: 100%; height: 100%; padding: 100px 8%; box-sizing: border-box; }
+        .menu-left { flex: 1.2; display: flex; flex-direction: column; justify-content: center; }
+        .menu-left.side { transform: translateX(-40px); transition: 0.5s;}
+        .menu-right { flex: 0.8; display: flex; flex-direction: column; justify-content: center; padding-left: 5%; border-left: 1px solid #eee; opacity: 0; transform: translateX(40px); transition: 0.5s; }
+        .menu-right.show { opacity: 1; transform: translateX(0); }
+        .sub-menu-list { display: none; list-style: none; padding: 0; }
+        .sub-menu-list.active { display: block; }
+        .sub-menu-list a { font-size: 2.5rem; text-decoration: none; color: #444; line-height: 70px;}
+        .sub-menu-list a:hover { color: var(--active-blue); }
+
+        /* --- ORIGINAL SCROLL SECTION --- */
+        .original-scroll-section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-container { margin-bottom: 30px; text-align: center; }
+        h1 { font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px; color:#A63232 ;font-weight:900;}
+
+        .cards-container {
+            display: flex;
+            gap: 10px;
+            width: 97%;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card {
+            flex: 1;
+            aspect-ratio: 3 / 3;
+            border-radius: 2px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card:nth-child(1) { z-index: 5; }
+        .card:nth-child(2) { z-index: 4; }
+        .card:nth-child(3) { z-index: 3; }
+        .card:nth-child(4) { z-index: 2; }
+        .card:nth-child(5) { z-index: 10; }
+
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+
+        .final-text-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            opacity: 0;
+            z-index: 20;
+        }
+
+        .top-line { font-size: 1.2rem; letter-spacing: 4px; margin-bottom: 20px; }
+
+        .middle-row {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            font-size: 4.5rem;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--maroon);
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            z-index: 50; 
+        }
+
+        .bottom-line { font-size: 1.4rem; font-style: italic; margin-top: 20px; }
+
+        .decoration-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--maroon), transparent);
+            margin-top: 30px;
+        }
+
+        /* --- SERIALISM SECTION --- */
+        .serialism-section {
+            height: 100vh;
+            background-color: var(--maroon);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .serialism-title {
+            font-style: italic;
+            font-size: 1.8rem;
+            margin-bottom: 80px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .values-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
+        }
+
+        .progress-line-bg {
+            position: absolute;
+            bottom: 22px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .progress-line-active {
+            position: absolute;
+            bottom: 22px;
+            left: 10%;
+            width: 0%;
+            height: 3px;
+            background-color: var(--gold);
+            box-shadow: 0 0 15px var(--gold-glow);
+            z-index: 2;
+        }
+
+        .value-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+            z-index: 5;
+        }
+
+        .value-label {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+        }
+
+        .icon-box {
+            width: 125px;
+            height: 125px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            opacity: 0.2;
+            transform: translateY(10px);
+        }
+
+        .icon-box img { width: 100px; height: auto; }
+
+        .checkmark-circle {
+            width: 44px;
+            height: 44px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid var(--maroon);
+            color: var(--maroon);
+            font-weight: 900;
+            transform: scale(0);
+            z-index: 10;
+        }
+
+        /* --- BLOG SECTION --- */
+        .blog-section {
+            min-height: 100vh;
+            background-color: var(--cream);
+            padding: 100px 2%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            font-family: var(--font-main);
+        }
+
+        .blog-header { text-align: center; margin-bottom: 50px; }
+        .blog-header h2 { font-size: 3.5rem; font-weight: 800; margin: 0; color: var(--maroon); }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover { transform: translateY(-8px); }
+
+        .plus-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background: var(--maroon);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 0;
+            padding-bottom: 0px;
+            z-index: 10;
+        }
+
+        .blog-card img { width: 100%; height: 180px; object-fit: cover; }
+        .blog-content { padding: 20px; }
+        .blog-meta { font-size: 0.75rem; font-weight: 700; color: #aaa; text-transform: uppercase; }
+        .blog-card h3 { margin: 10px 0; font-size: 1.3rem; font-weight: 700; color: var(--maroon); }
+        .blog-card p { font-size: 0.9rem; line-height: 1.5; color: #666; }
+
+        /* --- ADMISSION MARQUEE BANNER --- */
+        .admission-marquee {
+            width: 100%;
+            background-color: var(--maroon);
+            padding: 20px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(255, 204, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 204, 0, 0.3);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            margin: 0;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            align-items: center;
+            animation: scroll-left 30s linear infinite;
+        }
+
+        .admission-text {
+            font-family: var(--font-main);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--cream);
+            letter-spacing: 2px;
+            padding: 0 30px;
+            text-transform: uppercase;
+        }
+
+        .enquire-btn {
+            background: transparent;
+            padding: 12px 30px;
+            font-family: var(--font-main);
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--gold);
+            cursor: pointer;
+            margin-right: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s all ease;
+            
+            /* Golden Gradient Outline */
+            border: 2px solid;
+            border-image-source: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            border-image-slice: 1;
+        }
+
+        .enquire-btn:hover {
+            background: var(--gold);
+            color: var(--maroon);
+            border-image-source: none;
+            border-color: var(--gold);
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- MODAL --- */
+        .blog-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            font-family: var(--font-main);
+        }
+
+        /* Hide navbar when modal is open */
+        body.modal-open header,
+        body.enquiry-modal-open header {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none;
+        }
+        
+        body.modal-open .hamburger,
+        body.enquiry-modal-open .hamburger {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none;
+        }
+
+        .modal-container { display: flex; height: 100%; width: 100%; }
+        .modal-left { flex: 1.2; }
+        .modal-left img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-right { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: var(--maroon);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            line-height: 0;
+            padding-bottom: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .close-modal:hover { background: #3d1c1a; transform: scale(1.05); }
+        .modal-body { font-size: 1.15rem; line-height: 1.7; color: #444; margin-top: 30px; }
+
+        /* Custom Active Class (Personalized) */
+        .active-nav { color: var(--active-blue) !important; }
+
+        /* --- TESTIMONIAL SECTION --- */
+        .testimonial-outer {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+            background-color: var(--light-cream);
+        }
+
+        .header-maroon {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 40px;
+        }
+
+        .header-maroon h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--maroon);
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .header-maroon p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .testimonial-flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .testimonial-card {
+            display: none;
+            background: transparent;
+            padding: 50px;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 900px;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .testimonial-card.active {
+            display: flex;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .parent-sq-img {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 20px;
+            flex: 0 0 280px;
+            margin-right: 50px;
+        }
+
+        .quote-content blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            line-height: 1.7;
+            margin: 0;
+            color: #444;
+        }
+
+        .parent-name {
+            font-family: 'Cinzel', serif;
+            color: var(--maroon);
+            font-size: 1.3rem;
+            margin: 25px 0 5px;
+        }
+
+        .nav-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 1.5px solid var(--maroon);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--maroon);
+            transition: 0.3s;
+        }
+
+        /* Active Blue Personalization for Navigation Buttons */
+        .nav-btn.active-blue {
+            background: var(--active-blue);
+            color: white;
+            border-color: var(--active-blue);
+            transform: scale(1.1);
+        }
+
+        /* --- LEADERSHIP PIN SECTION --- */
+        .leadership-pin-wrapper {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--light-cream);
+        }
+
+        .leader-panel {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10%;
+            box-sizing: border-box;
+            background-color: var(--light-cream);
+        }
+
+        .leader-container {
+            display: flex;
+            max-width: 1300px;
+            align-items: center;
+            gap: 70px;
+            padding: 60px 0;
+            border-top: 1px solid var(--maroon);
+            border-bottom: 1px solid var(--maroon);
+        }
+
+        .leader-img {
+            width: 380px;
+            height: 520px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 20px 20px 0px var(--deep-cream);
+        }
+
+        .leader-text {
+            flex: 1;
+        }
+
+        .leader-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--maroon);
+            font-style: italic;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .leader-message {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .leader-name {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--maroon);
+            margin: 0;
+        }
+
+        .leader-role {
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .city-footer {
+            margin-top: 25px;
+            display: flex;
+            gap: 20px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: var(--maroon);
+            border-top: 1px solid var(--deep-cream);
+            padding-top: 15px;
+        }
+
+        .city-footer span { position: relative; }
+        .city-footer span:not(:last-child):after {
+            content: "•";
+            position: absolute;
+            right: -12px;
+            opacity: 0.5;
+        }
+
+        /* --- ENQUIRY FORM MODAL STYLES --- */
+        .enquiry-modal-overlay {
+            display: none; 
+            position: fixed; 
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(5px);
+            justify-content: center; 
+            align-items: center; 
+            z-index: 5000;
+        }
+
+        .enquiry-modal-content {
+            background: white; 
+            width: 95%; 
+            max-width: 420px;
+            padding: 30px; 
+            border-radius: 8px; 
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        .close-x {
+            position: absolute; 
+            top: 15px; 
+            right: 20px;
+            font-size: 24px; 
+            cursor: pointer; 
+            color: #999;
+        }
+
+        .form-grid { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+        }
+        .form-row { 
+            display: flex; 
+            gap: 12px; 
+        }
+        .form-field { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .form-label { 
+            font-size: 11px; 
+            font-weight: 700; 
+            color: #555; 
+            margin-bottom: 4px; 
+            text-transform: uppercase; 
+        }
+
+        .form-input, .form-select, .form-textarea {
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+            font-size: 14px; 
+            background: var(--field-bg); 
+            outline: none;
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        /* Blue Active State for Inputs */
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--blue-active) !important;
+            background: #fff;
+        }
+
+        .form-textarea { 
+            resize: none; 
+            height: 70px; 
+        }
+
+        /* SINGLE SNAKE BUTTON LOGIC */
+        .submit-container {
+            position: relative; 
+            height: 50px; 
+            margin-top: 15px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+
+        .snake-svg {
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%; 
+            pointer-events: none;
+            display: none; /* Only show during animation */
+        }
+
+        .snake-rect {
+            fill: none; 
+            stroke: var(--maroon); 
+            stroke-width: 5;
+            width: 100%; 
+            height: 100%;
+            stroke-dasharray: 120 1000; /* Single snake segment */
+            stroke-dashoffset: 0;
+        }
+
+        /* Static Outline (Visible by default) */
+        .static-outline {
+            position: absolute; 
+            inset: 0;
+            border: 2px solid var(--maroon);
+            pointer-events: none;
+            border-radius: 4px;
+        }
+
+        .animating .snake-svg { display: block; }
+        .animating .snake-rect { animation: singleSnake 1.2s linear infinite; }
+        .animating .static-outline { display: none; }
+
+        @keyframes singleSnake {
+            from { stroke-dashoffset: 1100; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .form-submit-btn {
+            width: 100%; 
+            height: 100%; 
+            background: transparent;
+            border: none; 
+            color: var(--maroon);
+            font-weight: 800; 
+            cursor: pointer; 
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .success-msg {
+            display: none; 
+            color: #1e7e34; 
+            font-weight: 800;
+            text-align: center; 
+            font-size: 15px;
+        }
+
+        /* --- FOOTER CSS --- */
+        .main-footer {
+            background-color: var(--footer-bg);
+            color: #ffffff;
+            padding: 60px 8% 40px 8%;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .footer-col { flex: 1; min-width: 280px; padding: 10px; }
+        .brand-col { text-align: center; }
+        .brand-col img { width: 280px; margin-bottom: 0px; }
+        .brand-col .tagline { font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.3); display: inline-block; padding-top: 10px; margin-top: 10px; }
+
+        .col-title {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: var(--cream-header);
+        }
+
+        .info-content { text-align: center; font-size: 0.95rem; line-height: 1.8; }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+
+        .social-row { display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px; }
+        .social-row a { color: white; font-size: 1.2rem; text-decoration: none; transition: color 0.3s; }
+        .social-row a:hover { color: var(--dark-cream-hover); }
+
+        .footer-hr { border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin-bottom: 40px; }
+
+        .footer-links-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+        }
+
+        .link-group h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            display: inline-block;
+            color: var(--cream-header);
+        }
+
+        .link-group ul { list-style: none; }
+        .link-group li { margin-bottom: 10px; margin-left:-40px;}
+        .link-group a { color: #ffffff; text-decoration: none; font-size: 0.9rem; transition: all 0.3s ease; }
+        .link-group a:hover { color: var(--dark-cream-hover); }
+
+        /* Blue highlight for active/clicked links */
+        .link-group a.active, .link-group a:active {
+            color: var(--active-blue) !important;
+            font-weight: 600;
+        }
+
+        .copyright-bar {
+            width: 100%;
+            background-color: var(--bottom-bar-bg);
+            padding: 20px 0;
+        }
+
+        .copyright-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 8%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #ffffff;
+        }
+
+        .copyright-text { text-align: left; }
+        .legal-links { display: flex; gap: 30px; justify-content: center; }
+        .legal-links a { color: #ffffff; text-decoration: none; transition: color 0.3s; }
+        .legal-links a:hover { color: var(--dark-cream-hover); }
+        .future-content-slot { text-align: right; }
+
+        /* --- BACK TO TOP BUTTON --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--maroon);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(166, 50, 50, 0.3);
+            border: 2px solid var(--gold);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--active-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(166, 50, 50, 0.4);
+        }
+
+        .back-to-top i {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-to-top:hover i {
+            transform: scale(1.2);
+        }
+
+        /* GSAP Prep */
+        #panel-2 { transform: translateX(100%); z-index: 2; border-left: 1px solid var(--deep-cream); }
+        #panel-1 { z-index: 1; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1024px) {
+            .testimonial-card.active, .leader-container { flex-direction: column; text-align: center; }
+            .parent-sq-img, .leader-img { margin-right: 0; margin-bottom: 30px; width: 250px; height: 250px; }
+            .nav-controls { flex-direction: row; justify-content: center; }
+            .city-footer { justify-content: center; }
+            .footer-links-grid { grid-template-columns: repeat(3, 1fr); }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .cards-wrapper { grid-template-columns: repeat(2, 1fr); }
+            .royal-banner h1 { font-size: 2.8rem; }
+            .royal-banner h1 .bold-num { font-size: 3.2rem; }
+            .back-to-top {
+                bottom: 20px;
+                left: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        @media (max-width: 850px) {
+            .copyright-content { grid-template-columns: 1fr; gap: 15px; text-align: center; }
+            .copyright-text, .future-content-slot { text-align: center; }
+            .footer-top { flex-direction: column; align-items: center; }
+            .contact-item, .social-row { justify-content: center; }
+            .footer-links-grid { grid-template-columns: repeat(2, 1fr); }
+            .blog-grid { grid-template-columns: 1fr; }
+            .cards-wrapper { grid-template-columns: 1fr; max-width: 400px; }
+            .royal-banner h1 { font-size: 2.2rem; }
+            .royal-banner h1 .bold-num { font-size: 2.6rem; }
+        }
+        @media (max-width: 768px) {
+            .cards-container { flex-direction: column; height: 70vh; width: 90%; }
+            .card { width: 100%; max-width: 300px; }
+            .middle-row { font-size: 2.5rem; gap: 15px; flex-direction: column; }
+            .leader-img { width: 280px; height: 380px; }
+            .leader-container { gap: 40px; padding: 40px 0; }
+            .admission-text { font-size: 1.2rem; }
+            .enquire-btn { padding: 8px 20px; font-size: 0.8rem; margin-right: 20px; }
+            .royal-banner h1 { font-size: 1.8rem; }
+            .royal-banner h1 .bold-num { font-size: 2.2rem; }
+            .form-row { flex-direction: column; }
+            .back-to-top {
+                bottom: 15px;
+                left: 15px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+        /* ===== CHAT ASSISTANT STYLES ===== */
+#launcher {
+    position: fixed;
+    right: 20px;
+    bottom: 0;
+    background: var(--maroon);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-bottom: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+}
+
+#launcher i { 
+    font-size: 12px; 
+    animation: icon-shake 4s ease-in-out infinite;
+}
+
+@keyframes icon-shake {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(-15deg); }
+    20% { transform: rotate(15deg); }
+    30% { transform: rotate(-15deg); }
+    40% { transform: rotate(15deg); }
+    50% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+}
+
+#launcher:hover { 
+    background: var(--active-maroon); 
+    padding-bottom: 15px; 
+}
+
+#launcher:hover i {
+    animation: none;
+}
+
+#chat-card {
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px;
+    width: 330px; 
+    height: 420px;
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    display: none; 
+    flex-direction: column; 
+    z-index: 3001; 
+    overflow: hidden;
+    border: 1px solid #eee;
+    font-family: 'Inter', sans-serif;
+}
+
+.chat-header {
+    background: var(--maroon); 
+    color: white; 
+    padding: 7px 18px;
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+}
+
+.chat-min-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.7;
+}
+.chat-min-btn:hover { opacity: 1; }
+
+#exec-img-container { 
+    width: 35px; 
+    height: 35px; 
+    background: white; 
+    border-radius: 50%; 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden;
+}
+
+.chat-header-info h3 { 
+    margin: 0; 
+    font-size: 14px; 
+    font-weight: 600; 
+}
+.chat-header-info span { 
+    font-size: 11px; 
+    opacity: 0.8; 
+}
+
+#feature-bar {
+    display: none; 
+    background: var(--cream-silk); 
+    padding: 8px;
+    border-bottom: 1px solid #eee; 
+    justify-content: space-around;
+}
+.bar-link { 
+    font-size: 11px; 
+    font-weight: 600; 
+    color: var(--maroon); 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    gap: 4px; 
+}
+
+.chat-body { 
+    height: 340px; 
+    overflow-y: auto; 
+    padding: 15px; 
+    background: #fdfdfd; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+.chat-msg { 
+    padding: 10px 14px; 
+    font-size: 13px; 
+    line-height: 1.4; 
+    max-width: 85%; 
+    border-radius: 10px; 
+}
+.chat-bot { 
+    background: white; 
+    border: 1px solid #eee; 
+    align-self: flex-start; 
+    color: #333; 
+}
+.chat-user { 
+    background: var(--maroon); 
+    color: white; 
+    align-self: flex-end; 
+}
+
+.chip-box { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 6px; 
+}
+.chip {
+    background: white; 
+    border: 1px solid var(--maroon); 
+    color: var(--maroon);
+    padding: 5px 12px; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    font-size: 11px; 
+    font-weight: 500;
+}
+.chip:hover { 
+    background: var(--maroon); 
+    color: white; 
+}
+
+.rating-box { 
+    text-align: center; 
+    padding: 20px; 
+}
+.chat-stars { 
+    font-size: 24px; 
+    color: #ddd; 
+    cursor: pointer; 
+    margin: 0 4px; 
+}
+.chat-stars.active { 
+    color: var(--gold); 
+}
+
+.chat-footer { 
+    padding: 10px; 
+    border-top: 1px solid #eee; 
+    display: flex; 
+    gap: 8px; 
+    align-items: center; 
+}
+.chat-footer input { 
+    flex: 1; 
+    border: none; 
+    outline: none; 
+    font-size: 13px; 
+    padding: 5px; 
+    background: transparent;
+}
+
+.blink-dot {
+    height: 8px;
+    width: 8px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
+    box-shadow: 0 0 0 rgba(46, 204, 113, 0.4);
+    animation: pulse 1.5s infinite;
+    vertical-align: middle;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+
+/* Mobile responsive styles for chat */
+@media (max-width: 768px) {
+    #chat-card {
+        width: 90% !important;
+        height: 70vh !important;
+        bottom: 10px !important;
+        right: 5% !important;
+        left: 5% !important;
+    }
+    
+    #launcher {
+        right: 15px !important;
+        bottom: 0px !important;
+        padding: 5px 10px !important;
+        font-size: 0.8rem !important;
+    }
+}
+    </style>
+</head>
+<body class="intro-active">
+
+<!-- ===== INTRO ANIMATION ===== -->
+<div id="intro-overlay">
+    <div class="intro-main-wrapper">
+        <span class="asterisk" style="left: -120px; top: -100px;">✱</span>
+        <span class="asterisk" style="right: -120px; top: -60px; animation-delay: 1s;">✱</span>
+
+        <div class="logo-row">
+            <span>TRUTH</span><div class="dot"></div>
+            <span>DEVOTE</span><div class="dot"></div>
+            <span>DEDICATE</span>
+        </div>
+
+        <div class="line-container">
+            <div class="single-unit"><div class="gold-line"></div><div class="maroon-ball"></div></div>
+        </div>
+
+        <div class="image-container">
+            <img src="1.png" alt="1" class="intro-img img-01">
+            <img src="2.png" alt="2" class="intro-img img-02">
+            <img src="3.png" alt="3" class="intro-img img-03">
+        </div>
+    </div>
+</div>
+
+<div id="final-logo-container">
+    <img src="ms_logo.png" alt="MS Logo" class="ms-logo">
+</div>
+
+<button id="skipBtn" onclick="skipIntro()">Skip Intro</button>
+
+<!-- ===== MAIN WEBSITE CONTENT ===== -->
+<div id="main-website">
+<!-- Navigation from the new code -->
+<header id="main-nav">
+    <div class="nav-center-text">MODERN SCHOOL</div>
+</header>
+
+<div class="hamburger" id="menu-toggle">
+    <span></span><span></span><span></span>
+</div>
+
+<div class="menu-overlay" id="menu-overlay">
+    <div class="menu-wrapper">
+        <div class="menu-left" id="menu-left">
+           <div class="main-nav-item" data-target="">Home</div>
+           <div class="main-nav-item" data-target="m-about">About Us</div>
+            <div class="main-nav-item" data-target="m-academics">Academics</div>
+            <div class="main-nav-item" data-target="m-campus">Campus Life</div>
+             <div class="main-nav-item" data-target="m-info">Contact Us</div>
+            
+        </div>
+        <div class="menu-right" id="menu-right">
+            <ul class="sub-menu-list" id="m-academics">
+                <li><a href="curriculum.html">Curriculum</a></li>
+                <li><a href="exam.html">Exam & Result</a></li>
+                 <li><a href="calendar.html">Calendar</a></li>
+            </ul>
+            <ul class="sub-menu-list" id="m-info">
+                <li><a href="campus_location.html">Campus Location</a></li>
+                <li><a href="career.html">Career</a></li>
+                 <li><a href="enquiry.html">Enquiry</a></li>
+                  <li><a href="tc_verification.html">TC Verification</a></li>
+                   <li><a href="branches.html">Other Branches</a></li>
+            </ul>
+            <ul class="sub-menu-list" id="m-campus">
+                <li><a href="student_council.html">Student Council</a></li>
+                  <li><a href="event.html">Events</a></li>
+                    <li><a href="sport.html">Athletics</a></li>
+                <li><a href="campus_facilities.html">Campus Facilities</a></li>
+            </ul>
+            <ul class="sub-menu-list" id="m-about">
+                <li><a href="history.html">Our History</a></li>
+                <li><a href="vision.html">Vision & Direction</a></li>
+                <li><a href="leadership.html">Leadership</a></li>
+                <li><a href="admin.html">Admin Team</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- First scroll section from the new code -->
+<section class="scroll-section">
+    <div class="text-content" id="text-wrapper">
+        <h2 id="title">Active Learning</h2>
+        <p id="desc">Focusing on student growth and creativity.</p>
+    </div>
+    <div class="carousel-stage">
+        <div class="img-box item" id="img1" data-title="MODFEST- Annual Dance Festival" data-desc="A vibrant annual techno-cultural extravaganza that showcases the diverse talents of students through high-energy performances and creative competitions." style="background-image: url('intro1a.jpg')"></div>
+        <div class="img-box item" id="img2" data-title="Indoor Basketball Court" data-desc="A state-of-the-art indoor basketball court featuring premium synthetic flooring and a fully air-cooled environment for year-round play." style="background-image: url('intro1b.jpg')"></div>
+        <div class="img-box item" id="img3" data-title="MUN @ Modern" data-desc="Modern School's MUN program transforms students into global diplomats, mastering international negotiation and complex geopolitical debate. This platform empowers Modernites to sharpen their leadership and public speaking skills through professional committee simulations." style="background-image: url('intro1c.jpg')"></div>
+    </div>
+</section>
+
+<!-- Royal Banner -->
+<div class="royal-banner">
+    <div class="royal-content">
+        <h1>Celebrating <span class="bold-num">53</span> Years of Legacy</h1>
+    </div>
+</div>
+
+<!-- Hall of Fame Section -->
+<div class="pin-container">
+    <h1 class="header-title">Hall of Fame</h1>
+    <div class="cards-wrapper">
+        <div class="hall-card">
+            <div class="winner-tag">WINNER</div>
+            <div class="ribbon">MUN-25 @ Modern-Jaipur</div>
+            <img src="01_hof.png" class="card-img" alt="Student 1">
+            <div class="info-overlay">
+                <div class="location">Venue • Jaipur</div>
+            </div>
+        </div>
+        <div class="hall-card">
+            <div class="winner-tag">WINNER</div>
+            <div class="ribbon">Inter-School Swimming</div>
+            <img src="02_hof.png" class="card-img" alt="Student 2">
+            <div class="info-overlay">
+                <div class="location">Venue • Kota</div>
+            </div>
+        </div>
+        <div class="hall-card">
+            <div class="winner-tag">WINNER</div>
+            <div class="ribbon">Inter-School Kabbadi</div>
+            <img src="03_hof.png" class="card-img" alt="Student 3">
+            <div class="info-overlay">
+                 <div class="location">Venue • Kota</div>
+            </div>
+        </div>
+        <div class="hall-card">
+            <div class="winner-tag">WINNER</div>
+            <div class="ribbon">MUN-25 @ St. Pauls</div>
+            <img src="05_hof.png" class="card-img" alt="Student 4">
+            <div class="info-overlay">
+                <div class="location">Venue • Kota</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Original content starts here -->
+<section class="original-scroll-section">
+    <div class="header-container" id="initial-header">
+        <h1>Forging a highly significant impact</h1>
+    </div>
+
+    <div class="cards-container" id="all-cards">
+        <div class="card"><img src="intro2a.jpg" alt="1"></div>
+        <div class="card"><img src="intro2b.jpg" alt="2"></div>
+        <div class="card"><img src="intro2c.jpg" alt="3"></div>
+        <div class="card"><img src="intro2d.jpg" alt="4"></div>
+        <div class="card"><img src="intro2e.jpg" alt="5"></div>
+    </div>
+
+    <div class="final-text-wrapper" id="final-msg">
+        <div class="top-line">a little steps</div>
+        <div class="middle-row">
+            <span class="text-part">setting</span>
+            <span class="dot" id="expanding-dot"></span>
+            <span class="text-part">milestones</span>
+        </div>
+        <div class="bottom-line">in education standards</div>
+        <div class="decoration-line"></div>
+    </div>
+</section>
+
+<section class="serialism-section">
+    <h2 class="serialism-title">The operating values that drive us are serialism:</h2>
+    
+    <div class="values-container">
+        <div class="progress-line-bg"></div>
+        <div class="progress-line-active" id="active-line"></div>
+
+        <div class="value-item" id="step-1">
+            <span class="value-label">DISCIPLINE</span>
+            <div class="icon-box"><img src="discipline.png" alt="Discipline"></div>
+            <div class="checkmark-circle">✓</div>
+        </div>
+
+        <div class="value-item" id="step-2">
+            <span class="value-label">COURTESY</span>
+            <div class="icon-box"><img src="courtesy.png" alt="Courtesy"></div>
+            <div class="checkmark-circle">✓</div>
+        </div>
+
+        <div class="value-item" id="step-3">
+            <span class="value-label">EFFICIENCY</span>
+            <div class="icon-box"><img src="efficiency.png" alt="Efficiency"></div>
+            <div class="checkmark-circle">✓</div>
+        </div>
+
+        <div class="value-item" id="step-4">
+            <span class="value-label">CARE</span>
+            <div class="icon-box"><img src="care.png" alt="Care"></div>
+            <div class="checkmark-circle">✓</div>
+        </div>
+    </div>
+</section>
+
+<section class="blog-section">
+    <div class="blog-header">
+        <h2>School Blog</h2>
+        <p>Discover the latest news, events, and insights from our school community</p>
+    </div>
+
+    <div class="blog-grid">
+        <div class="blog-card" onclick="openBlog(0)">
+            <div class="plus-btn">+</div>
+            <img src="blog1.png" alt="Blog 1">
+            <div class="blog-content">
+                <span class="blog-meta">Oct 24, 2025 • 4 min read</span>
+                <h3>MUN-25 | @Modern School Jaipur | Highlights</h3>
+                <p>Transforms students into global diplomats.</p>
+            </div>
+        </div>
+        <div class="blog-card" onclick="openBlog(1)">
+            <div class="plus-btn">+</div>
+            <img src="blog2.png" alt="Blog 2">
+            <div class="blog-content">
+                <span class="blog-meta">Oct 20, 2025 • 6 min read</span>
+                <h3>Social Science Exhibition 2025 | Day-1 | Highlights</h3>
+                <p>Our latest blog discusses the new curriculum focus on robotics and coding for classes 7-9. We are integrating advanced labs and project-based learning to prepare students for the demands of a technology-driven world</p>
+            </div>
+        </div>
+        <div class="blog-card" onclick="openBlog(2)">
+            <div class="plus-btn">+</div>
+            <img src="blog3.png" alt="Blog 3">
+            <div class="blog-content">
+                <span class="blog-meta">Oct 15, 2025 • 5 min read</span>
+                <h3>MODFEST-25 | Annual Dance Festival | Day-1</h3>
+                <p>Simple ways to encourage a lifelong love for reading in primary school children at home. Suggestions include setting aside dedicated reading time, creating a cozy reading nook, and leading by example.</p>
+            </div>
+        </div>
+        <div class="blog-card" onclick="openBlog(3)">
+            <div class="plus-btn">+</div>
+            <img src="blog4.png" alt="Blog 4">
+            <div class="blog-content">
+                <span class="blog-meta">Oct 10, 2025 • 3 min read</span>
+                <h3>Inter-School Sports Day</h3>
+                <p>Highlights from this year's highly competitive Inter-School Meet.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Admission Banner placed above Testimonial Section -->
+<div class="admission-marquee">
+    <div class="marquee-content">
+        <span class="admission-text">Admission Open Session 2026-2027 • </span>
+        <button class="enquire-btn" onclick="openEnquiryForm()">Enquire Now</button>
+        <span class="admission-text">Admission Open Session 2026-2027 • </span>
+        <button class="enquire-btn" onclick="openEnquiryForm()">Enquire Now</button>
+        <span class="admission-text">Admission Open Session 2026-2027 • </span>
+        <button class="enquire-btn" onclick="openEnquiryForm()">Enquire Now</button>
+        <span class="admission-text">Admission Open Session 2026-2027 • </span>
+        <button class="enquire-btn" onclick="openEnquiryForm()">Enquire Now</button>
+    </div>
+</div>
+
+<!-- Added Testimonial Section -->
+<div class="testimonial-outer">
+    <div class="header-maroon">
+        <h2>The proof is the progress</h2>
+        <p>Guiding our institution with Vision and Direction</p>
+    </div>
+
+    <div class="testimonial-flex">
+        <div class="testimonial-card active">
+            <img src="dummy.png" class="parent-sq-img" alt="Parent">
+            <div class="quote-content">
+                <blockquote>"The school has truly transformed my child's learning experience. The teachers are caring and the environment is very encouraging. My son has developed not just academically but also socially. The holistic approach to education here is remarkable."</blockquote>
+                <h4 class="parent-name">Mrs. Priya Verma</h4>
+                <span style="color: #999; font-weight: 500;">Parent of Rhea Verma, Class 2</span>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <img src="dummy.png" class="parent-sq-img" alt="Parent">
+            <div class="quote-content">
+                <blockquote>"   The school has truly transformed my child's learning experience. The teachers are caring and the environment is very encouraging. My son has developed not just academically but also socially. The holistic approach to education here is remarkable.
+                                  "</blockquote>
+                <h4 class="parent-name">Mr. Amit Gupta</h4>
+                <span style="color: #999; font-weight: 500;">Parent of Kabir Gupta, Class 6-A</span>
+            </div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="changeTestimonial(-1, this)">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="nav-btn" onclick="changeTestimonial(1, this)">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Added Leadership Section -->
+<div class="header-maroon">
+    <h2>Our Leadership</h2>
+</div>
+
+<div class="leadership-pin-wrapper" id="leadershipPin">
+    <div class="leader-panel" id="panel-1">
+        <div class="leader-container">
+            <img src="chairman.jpg" class="leader-img" alt="Dr. Deepak Singh">
+            <div class="leader-text">
+                <span class="leader-quote">"Innovation is the bridge between aspiration and achievement."</span>
+                <p class="leader-message">
+                    Goal setting is not a mind game. It is a process of developing the internal willpower to accomplish what you have set out to do. I wish that all the Modernites look beyond the internal barriers and push through on the road to success. Face the challenges with courage, as challenges are goals pursued with conviction. So, propel yourself forward with a vision. Be strong and steady and develop yourselves with the human values inculcated for making a difference in this world. I wish all Modernites become strong pillars of humanity and spread positivity wherever they go. Your words have incredible power. They reinforce your beliefs, and your beliefs create your reality.
+                </p>
+                <h3 class="leader-name">Dr. Deepak Singh</h3>
+                <p class="leader-role">Chairman, Modern School</p>
+                <div class="city-footer">
+                    <span>Baran</span><span>Bharatpur</span><span>Kota</span><span>Jaipur</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="leader-panel" id="panel-2">
+        <div class="leader-container">
+            <img src="director.jpg" class="leader-img" alt="Mr. Vaibhav Singh">
+            <div class="leader-text">
+                <span class="leader-quote">"If you are trying to find out what you want to do with your life, look for sparks. There is no passion to be found playing small in settling for a life that is less than the one you are capable of living." - Nelson Mandela</span>
+                <p class="leader-message">
+                 When you set sail in search of your life's work, you must seek passion, not fame or rewards or riches, but a willingness to quietly do your work, trusting life's sowing and reaping nature. Strive to do your work with gratitude and conviction. Make a difference in your own way, as nobody else has what you have, your voice, your mind, and your vision. Just don't give up on your dreams. I wish all the Modernites a bright present and an inspiring future.
+                </p>
+                <h3 class="leader-name">Mr. Vaibhav Singh</h3>
+                <p class="leader-role">Director, Modern School</p>
+                <div class="city-footer">
+                    <span>Baran</span><span>Bharatpur</span><span>Kota</span><span>Jaipur</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-top">
+        <div class="footer-col brand-col">
+            <img src="logo.png" alt="Logo">
+            <p class="tagline">Excellence in Education Since 1973</p>
+        </div>
+
+        <div class="footer-col">
+            <h3 class="col-title">Our Address</h3>
+            <div class="info-content">
+                <p>Modern School</p>
+                <p>Sector - A Talwandi,</p>
+                <p>Kota, Rajasthan 324005</p>
+                <p>India</p>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h3 class="col-title">Contact Information</h3>
+            <div class="info-content">
+                <div class="contact-item">+91-744-24211167 <i class="fas fa-phone-alt"></i></div>
+                <div class="contact-item">+91-744-2411116 <i class="fas fa-mobile-alt"></i></div>
+                <div class="contact-item">info@modernschool.ac.in <i class="far fa-envelope"></i></div>
+                <div class="contact-item">www.modernschool.ac.in <i class="fas fa-globe"></i></div>
+                <div class="social-row">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="footer-hr">
+
+    <div class="footer-links-grid">
+        <div class="link-group">
+            <h4>Academics</h4>
+            <ul>
+                <li><a href="curriculum.html">Curriculum</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="exam.html">Time Table</a></li>
+            </ul>
+        </div>
+        <div class="link-group">
+            <h4>Informations</h4>
+            <ul>
+                <li><a href="fees.html">Tuition Fees</a></li>
+            <li><a href="cbse.html">CBSE Corner</a></li>
+            <li><a href="mandatory_disc.html">Mandatory Disclosures</a></li>
+            <li><a href="alumni.html">Alumni Network</a></li>
+            </ul>
+        </div>
+        <div class="link-group">
+            <h4>Campus Life</h4>
+            <ul>
+             <li><a href="student_council.html">Student Counsel</a></li>
+            <li><a href="event.html">Events</a></li>
+            <li><a href="sport.html">Athletics</a></li>
+            <li><a href="campus_facilities.html">Campus Facilities</a></li>
+            </ul>
+        </div>
+        <div class="link-group">
+            <h4>About Us</h4>
+            <ul>
+              <li><a href="history.html">Our History</a></li>
+            <li><a href="vision.html">Vision & Direction</a></li>
+            <li><a href="leadership.html">Leadership</a></li>
+            <li><a href="admin.html">Admin Team</a></li>
+            </ul>
+        </div>
+        <div class="link-group">
+            <h4>Connect</h4>
+            <ul >
+               <li><a href="campus_location.html">Campus Location</a></li>
+            <li><a href="career.html">Career</a></li>
+            <li><a href="tc_verification.html">TC Verification</a></li>
+            <li><a href="branches.html">Other Branches</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<div class="copyright-bar">
+    <div class="copyright-content">
+        <div class="copyright-text">
+            <p>&copy; 2026 Modern School, Kota. All Rights Reserved.</p>
+        </div>
+        
+        <div class="legal-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+
+        <div class="future-content-slot"></div>
+    </div>
+</div>
+
+<!-- Back to Top Button -->
+<div class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+</div>
+
+<!-- Blog Modal -->
+<div class="blog-modal" id="blogModal">
+    <div class="modal-container">
+        <div class="modal-left">
+            <img id="modalImg" src="" alt="Full View">
+        </div>
+        <div class="modal-right">
+            <div class="close-modal" onclick="closeBlog()">&times;</div>
+            <span id="modalMeta" class="blog-meta"></span>
+            <h2 id="modalTitle" style="font-size: 3.5rem; font-weight: 800; margin: 20px 0; color: var(--maroon); line-height: 1;"></h2>
+            <div class="modal-body">
+                <p>Detailed insights about our school's recent activities and pedagogical breakthroughs will be detailed here, providing a window into our student's journey toward excellence.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enquiry Form Modal -->
+<div class="enquiry-modal-overlay" id="enquiryModal">
+    <div class="enquiry-modal-content">
+        <span class="close-x" onclick="closeEnquiryForm()">&times;</span>
+        
+        <div id="formContainer">
+            <h2>Admission Enquiry</h2>
+            <form id="enquiryForm" class="form-grid">
+                <div class="form-field">
+                    <label class="form-label">Student Name</label>
+                    <input type="text" class="form-input" required>
+                </div>
+
+                <div class="form-field">
+                    <label class="form-label">Parent Name</label>
+                    <input type="text" class="form-input" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" class="form-input" required>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="text" class="form-input" id="mobile" maxlength="10" placeholder="10 Digits Only" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="form-label">Current Class</label>
+                        <select id="curClass" class="form-select" required></select>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Class Opted For</label>
+                        <select id="optClass" class="form-select" required></select>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label class="form-label">Note</label>
+                    <textarea class="form-textarea" placeholder="How can we help you?"></textarea>
+                </div>
+
+                <div class="submit-container" id="subCont">
+                    <div class="static-outline"></div>
+                    <svg class="snake-svg"><rect class="snake-rect" x="0" y="0"></rect></svg>
+                    <button type="submit" class="form-submit-btn" id="subBtn">Submit Enquiry</button>
+                    <div id="successMsg" class="success-msg">✔ ENQUIRY SENT SUCCESSFULLY!</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div> <!-- End of main-website -->
+<!-- ===== CHAT ASSISTANT ===== -->
+<div id="launcher" onclick="openChat()">
+    <i class="fas fa-headset"></i>
+    <span>Assist</span>
+</div>
+
+<div id="chat-card">
+    <div class="chat-header">
+        <div id="exec-img-container">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="#A63232" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+        </div>
+        <div class="chat-header-info">
+            <h3 id="h-title">Modern School</h3>
+            <span id="h-status">Modern Assist is Live <span class="blink-dot"></span></span>
+        </div>
+        <i class="fas fa-minus chat-min-btn" onclick="closeChat()"></i>
+    </div>
+
+    <div id="feature-bar">
+        <span class="bar-link" onclick="handleCallbackRequest()"><i class="fas fa-phone-alt"></i> Call-Back</span>
+        <span class="bar-link" onclick="triggerRating()"><i class="fas fa-times-circle"></i> End Chat</span>
+    </div>
+    
+    <div class="chat-body" id="flow"></div>
+
+    <div class="chat-footer" id="chat-footer">
+        <input type="text" id="user-in" placeholder="Ask a question..." onkeypress="checkKey(event)">
+        <i class="fas fa-paper-plane" style="color:#A63232; cursor:pointer;" onclick="sendInput()"></i>
+    </div>
+</div>
+<script>
+  // ===== INTRO ANIMATION LOGIC =====
+let autoSequence;
+
+function skipIntro() {
+    clearTimeout(autoSequence);
+    document.getElementById('intro-overlay').style.display = 'none';
+    document.getElementById('final-logo-container').style.display = 'none';
+    document.getElementById('skipBtn').style.display = 'none';
+
+    // Show main website
+    document.body.classList.remove('intro-active');
+    document.getElementById('main-website').style.display = 'block';
+    setTimeout(() => { document.getElementById('main-website').style.opacity = '1'; }, 50);
+    
+    // Initialize GSAP animations after main content is visible
+    setTimeout(() => {
+        initWebsiteAnimations();
+    }, 100);
+}
+
+// Auto sequence: Wait for images to finish moving (~2.5s) + 2 seconds hold = ~4.5 seconds total
+autoSequence = setTimeout(() => {
+    const intro = document.getElementById('intro-overlay');
+    const final = document.getElementById('final-logo-container');
+    
+    intro.style.opacity = '0';
+    
+    setTimeout(() => {
+        intro.style.display = 'none';
+        final.style.visibility = 'visible';
+        final.style.opacity = '1';
+        
+        // Show MS Logo for 3 seconds then go to main
+        setTimeout(skipIntro, 3000);
+    }, 800); 
+}, 4500);
+
+// Add scroll/touch listeners for skip button styling
+window.addEventListener('wheel', () => document.getElementById('skipBtn').classList.add('scrolled'));
+window.addEventListener('touchmove', () => document.getElementById('skipBtn').classList.add('scrolled'));
+
+// ===== CHAT ASSISTANT LOGIC =====
+const flow = document.getElementById('flow');
+const chatCard = document.getElementById('chat-card');
+const launcher = document.getElementById('launcher');
+const userIn = document.getElementById('user-in');
+const featureBar = document.getElementById('feature-bar');
+const execImgContainer = document.getElementById('exec-img-container');
+
+let userData = { name: "", mobile: "" };
+let captureStep = 0; 
+let isConnectedToExec = false;
+
+const subTopics = {
+    "Admissions": ["Fee Structure", "Admission Process", "Visit Campus"],
+    "Academics": ["Curriculum", "Faculty", "Board Results"],
+    "Facilities": ["Library & Labs", "Smart Classes", "Cafeteria"],
+    "Sports": ["Coaching", "Infrastructure"],
+    "Transport": ["Routes", "Safety"]
+};
+
+function openChat() {
+    chatCard.style.display = 'flex';
+    launcher.style.display = 'none';
+    if(flow && flow.children.length === 0) showMainBot();
+}
+
+function closeChat() {
+    chatCard.style.display = 'none';
+    launcher.style.display = 'flex';
+}
+
+function showMainBot() {
+    if (!flow) return;
+    
+    flow.innerHTML = "";
+    userData = { name: "", mobile: "" };
+    captureStep = 0;
+    isConnectedToExec = false;
+    document.getElementById('chat-footer').style.display = "flex";
+    featureBar.style.display = "none";
+    execImgContainer.style.display = "none";
+    document.getElementById('h-title').innerText = "Modern School";
+    document.getElementById('h-status').innerHTML = "Modern Assist is Live <span class='blink-dot'></span>";
+
+    addMsg("Namaste! Welcome to <b>Modern School</b>. How can I assist you today?", "bot");
+    addChips(["Admissions", "Academics", "Facilities", "Sports", "Transport", "Speak to Executive"]);
+}
+
+function handleLogic(choice) {
+    if (captureStep > 0) return;
+    addMsg(choice, "user");
+
+    if(choice === "Speak to Executive") {
+        captureStep = 1;
+        addMsg("To connect you with <b>Ms. Ankita </b>, please provide your <b>Full Name</b>.", "bot");
+        return;
+    }
+
+    if(subTopics[choice]) {
+        setTimeout(() => {
+            addMsg(`What would you like to know about <b>${choice}</b>?`, "bot");
+            addChips([...subTopics[choice], "Main Menu"]);
+        }, 500);
+    } else {
+        setTimeout(() => {
+            addMsg(`I've shared the info for <b>${choice}</b>.`, "bot");
+            askHelpful();
+        }, 500);
+    }
+}
+
+function askHelpful() {
+    setTimeout(() => {
+        addMsg("<b>Was this helpful?</b>", "bot");
+        addChips(["Yes, thanks!", "No, Speak to Executive", "Main Menu"]);
+    }, 800);
+}
+
+function handleCapture(val) {
+    if(captureStep === 1) {
+        userData.name = val;
+        addMsg(val, "user");
+        setTimeout(() => { addMsg(`Thanks ${val}. Enter your <b>Mobile Number</b>.`, "bot"); captureStep = 2; }, 600);
+    } else if(captureStep === 2) {
+        if(!/^\d{10}$/.test(val)) { addMsg("Enter a valid 10-digit number.", "bot"); return; }
+        userData.mobile = val;
+        addMsg(val, "user");
+        captureStep = 0;
+        startLiveTimer();
+    }
+}
+
+function startLiveTimer() {
+    addMsg("Connecting to counselor...", "bot");
+    const div = document.createElement('div');
+    div.className = "chat-msg chat-bot";
+    div.style.background = "#fff9e6";
+    div.innerHTML = `<i class="fas fa-headset"></i> Connecting to <b>Ms. Ankita </b> in <b id='tm'>10</b>s`;
+    flow.appendChild(div);
+    
+    let time = 10;
+    const timer = setInterval(() => {
+        time--;
+        if(document.getElementById('tm')) document.getElementById('tm').innerText = time;
+        if(time <= 0) {
+            clearInterval(timer);
+            div.remove();
+            connectExecutive();
+        }
+    }, 1000);
+}
+
+function connectExecutive() {
+    isConnectedToExec = true;
+    execImgContainer.style.display = "flex";
+    document.getElementById('h-title').innerText = "Ms. Ankita ";
+    document.getElementById('h-status').innerHTML = "🟢 Active | Counselor";
+    featureBar.style.display = "flex";
+    addMsg(`Hello ${userData.name}! I am <b>Ankita </b>. How can I help you today?`, "bot");
+}
+
+function handleCallbackRequest() {
+    addMsg("Request Callback", "user");
+    setTimeout(() => {
+        addMsg(`Callback confirmed for <b>+91 ${userData.mobile}</b>.`, "bot");
+        addMsg("🕒 You will receive a call within <b>24 working hours</b>.", "bot");
+        addMsg("You can continue chatting or end the session.", "bot");
+        addChips(["End Chat", "Main Menu"]);
+    }, 800);
+}
+
+function triggerRating() {
+    featureBar.style.display = "none";
+    document.getElementById('chat-footer').style.display = "none";
+    flow.innerHTML = `
+        <div class="rating-box">
+            <p style="font-weight:600; color:var(--maroon);">Rate your experience</p>
+            <div style="margin:15px 0;">
+                <i class="fas fa-star chat-stars" onclick="rate(1)"></i>
+                <i class="fas fa-star chat-stars" onclick="rate(2)"></i>
+                <i class="fas fa-star chat-stars" onclick="rate(3)"></i>
+                <i class="fas fa-star chat-stars" onclick="rate(4)"></i>
+                <i class="fas fa-star chat-stars" onclick="rate(5)"></i>
+            </div>
+            <p id="thx" style="display:none; color:green; font-size:12px;">Feedback submitted!</p>
+            <button style="margin-top:15px; padding:8px 20px; background:var(--maroon); color:white; border:none; border-radius:5px; cursor:pointer;" onclick="showMainBot()">New Chat</button>
+        </div>`;
+}
+
+function rate(n) {
+    document.querySelectorAll('.chat-stars').forEach((s, i) => s.classList.toggle('active', i < n));
+    document.getElementById('thx').style.display = "block";
+}
+
+function addMsg(t, s) {
+    if (!flow) return;
+    
+    const d = document.createElement('div'); 
+    d.className = `chat-msg ${s === "user" ? "chat-user" : "chat-bot"}`; 
+    d.innerHTML = t;
+    flow.appendChild(d); 
+    flow.scrollTop = flow.scrollHeight;
+}
+
+function addChips(opts) {
+    if (!flow) return;
+    
+    const cb = document.createElement('div'); 
+    cb.className = "chip-box";
+    opts.forEach(o => {
+        const c = document.createElement('div'); 
+        c.className = "chip"; 
+        c.innerText = o;
+        c.onclick = () => {
+            if(o === "Main Menu") showMainBot();
+            else if(o === "End Chat") triggerRating();
+            else if(o === "Yes, thanks!") { 
+                addMsg(o, "user"); 
+                setTimeout(() => { 
+                    addMsg("Great! Anything else?", "bot"); 
+                    addChips(["Main Menu"]); 
+                }, 400); 
+            }
+            else if(o === "No, Speak to Executive") handleLogic("Speak to Executive");
+            else handleLogic(o);
+        };
+        cb.appendChild(c);
+    });
+    flow.appendChild(cb); 
+    flow.scrollTop = flow.scrollHeight;
+}
+
+function sendInput() {
+    if (!userIn) return;
+    
+    const v = userIn.value.trim(); 
+    if(!v) return;
+    if(captureStep > 0) handleCapture(v); 
+    else if(isConnectedToExec) {
+        addMsg(v, "user");
+        setTimeout(() => addMsg("Checking that for you. Please wait...", "bot"), 1000);
+    }
+    else handleLogic(v);
+    userIn.value = "";
+}
+
+function checkKey(e) { 
+    if(e.key === 'Enter') sendInput(); 
+}
+
+// ===== MAIN WEBSITE ANIMATIONS =====
+function initWebsiteAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Navigation Logic
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const mainNav = document.getElementById('main-nav');
+    const mainItems = document.querySelectorAll('.main-nav-item');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('open');
+            if(menuOverlay.classList.contains('open')) {
+                mainNav.classList.add('hide-nav'); // Hide navbar when menu open
+                document.body.style.overflow = 'hidden';
+            } else {
+                mainNav.classList.remove('hide-nav');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    if (mainItems) {
+        mainItems.forEach(item => {
+            item.addEventListener('click', () => {
+                mainItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active'); // Set blue active color
+                document.getElementById('menu-left').classList.add('side');
+                document.getElementById('menu-right').classList.add('show');
+                const target = item.getAttribute('data-target');
+                document.querySelectorAll('.sub-menu-list').forEach(list => {
+                    list.classList.toggle('active', list.id === target);
+                });
+            });
+        });
+    }
+
+    // First Carousel Logic
+    const items = gsap.utils.toArray(".item");
+    const titleEl = document.getElementById('title');
+    const descEl = document.getElementById('desc');
+    const slots = [
+        { x: "-35vw", y: -180, width: 280, height: 150, opacity: 0.8, zIndex: 1 },  
+        { x: 0,       y: 15,    width: 550, height: 280, opacity: 1, zIndex: 10 }, 
+        { x: "35vw",  y: -150, width: 350, height: 220, opacity: 0.8, zIndex: 5 }   
+    ];
+
+    items.forEach((item, i) => gsap.set(item, slots[i]));
+
+    function updateTextContent(index) {
+        const activeItem = items[index];
+        gsap.to([titleEl, descEl], {
+            opacity: 0, duration: 0.3, 
+            onComplete: () => {
+                titleEl.innerText = activeItem.getAttribute('data-title');
+                descEl.innerText = activeItem.getAttribute('data-desc');
+                gsap.to([titleEl, descEl], { opacity: 1, duration: 0.3 });
+            }
+        });
+    }
+
+    let currentVisibleIndex = 1; 
+    const firstCarouselTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".scroll-section",
+            start: "top top",
+            end: "+=2000",
+            pin: true,
+            scrub: 1.2,
+            onUpdate: (self) => {
+                let p = self.progress;
+                let activeIndex = p < 0.33 ? 1 : (p < 0.66 ? 2 : 0);
+                if (activeIndex !== currentVisibleIndex) {
+                    currentVisibleIndex = activeIndex;
+                    updateTextContent(activeIndex);
+                }
+            }
+        }
+    });
+
+    firstCarouselTl.to(items[2], { ...slots[1], duration: 1 }, 0)
+      .to(items[1], { ...slots[0], duration: 1 }, 0)
+      .to(items[0], { ...slots[2], duration: 1 }, 0)
+      .to(items[0], { ...slots[1], duration: 1 }, 1)
+      .to(items[2], { ...slots[0], duration: 1 }, 1)
+      .to(items[1], { ...slots[2], duration: 1 }, 1);
+
+    // Hall of Fame Animation Logic
+    const hallCards = gsap.utils.toArray(".hall-card");
+    const hallOfFameTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".pin-container",
+            start: "top top",
+            end: "+=2000",
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1
+        }
+    });
+    hallOfFameTl.to(hallCards, {
+        x: -2000,
+        opacity: 0,
+        stagger: 0.6,
+        duration: 2,
+        ease: "power3.inOut"
+    });
+
+    // Original Cards Animation
+    const cards = gsap.utils.toArray(".card");
+    const lastCard = cards[4];
+    const movingCards = cards.slice(0, 4);
+
+    const originalTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".original-scroll-section",
+            start: "top top",
+            end: "+=4000", 
+            scrub: 1,
+            pin: true,
+        }
+    });
+
+    originalTl.to(movingCards, {
+        x: (i, target) => {
+            const targetRect = target.getBoundingClientRect();
+            const lastRect = lastCard.getBoundingClientRect();
+            return lastRect.left - targetRect.left;
+        },
+        scale: 0.9, opacity: 0.2, stagger: 0.4
+    })
+    .to(["#initial-header", "#all-cards"], { x: -1500, opacity: 0, duration: 1.5 })
+    .fromTo("#final-msg", { x: "100vw", opacity: 0 }, { x: "0vw", opacity: 1, duration: 1.5 })
+    .to([".text-part", ".top-line", ".bottom-line", ".decoration-line"], { opacity: 0, duration: 0.8, stagger: 0.1 })
+    .to("#expanding-dot", { scale: 450, duration: 2.5, ease: "expo.in" });
+
+    // Serialism Animation
+    const progressTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".serialism-section",
+            start: "top top",
+            end: "+=3000", 
+            scrub: 1,
+            pin: true,
+        }
+    });
+
+    progressTl.to("#step-1 .icon-box, #step-1 .value-label", { opacity: 1, y: 0, duration: 0.5 })
+              .to("#step-1 .checkmark-circle", { scale: 1, duration: 0.5 }, "-=0.2");
+
+    progressTl.to("#active-line", { width: "26%", duration: 1 })
+              .to("#step-2 .icon-box, #step-2 .value-label", { opacity: 1, y: 0, duration: 0.5 })
+              .to("#step-2 .checkmark-circle", { scale: 1, duration: 0.5 }, "-=0.2");
+
+    progressTl.to("#active-line", { width: "53%", duration: 1 })
+              .to("#step-3 .icon-box, #step-3 .value-label", { opacity: 1, y: 0, duration: 0.5 })
+              .to("#step-3 .checkmark-circle", { scale: 1, duration: 0.5 }, "-=0.2");
+
+    progressTl.to("#active-line", { width: "80%", duration: 1 })
+              .to("#step-4 .icon-box, #step-4 .value-label", { opacity: 1, y: 0, duration: 0.5 })
+              .to("#step-4 .checkmark-circle", { scale: 1, duration: 0.5 }, "-=0.2");
+
+    // GSAP LEADERSHIP LOGIC
+    const leadershipTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#leadershipPin",
+            start: "top top",
+            end: "+=150%",
+            pin: true,
+            scrub: 1
+        }
+    });
+    leadershipTl.to("#panel-2", {
+        x: "0%",
+        ease: "power2.inOut"
+    });
+
+    // Blog Data & Modal with navbar hide functionality
+    const blogData = [
+        { title: "MUN-25 | @Modern School Jaipur", meta: "Oct 24, 2025 • 4 min read", img: "blog1.png" },
+        { title: "Social Science Exhibition 2025", meta: "Oct 20, 2025 • 6 min read", img: "blog2.png" },
+        { title: "MODFEST-25 | Annual Dance Festival", meta: "Oct 15, 2025 • 5 min read", img: "blog3.png" },
+        { title: "Inter-School Sports Day", meta: "Oct 10, 2025 • 3 min read", img: "blog4.png" }
+    ];
+
+    window.openBlog = function(index) {
+        const data = blogData[index];
+        document.getElementById('modalTitle').innerText = data.title;
+        document.getElementById('modalMeta').innerText = data.meta;
+        document.getElementById('modalImg').src = data.img;
+        gsap.set("#blogModal", { display: "block" });
+        gsap.to("#blogModal", { opacity: 1, duration: 0.4 });
+        
+        // Hide navbar when modal opens
+        document.body.classList.add('modal-open');
+    }
+
+    window.closeBlog = function() {
+        gsap.to("#blogModal", { 
+            opacity: 0, 
+            duration: 0.3, 
+            onComplete: () => {
+                gsap.set("#blogModal", { display: "none" });
+                // Show navbar again when modal closes
+                document.body.classList.remove('modal-open');
+            }
+        });
+    }
+
+    // TESTIMONIAL LOGIC
+    let currentIdx = 0;
+    const slides = document.querySelectorAll('.testimonial-card');
+    const btns = document.querySelectorAll('.nav-btn');
+
+    window.changeTestimonial = function(step, btnElement) {
+        slides[currentIdx].classList.remove('active');
+        btns.forEach(b => b.classList.remove('active-blue'));
+        btnElement.classList.add('active-blue');
+        currentIdx = (currentIdx + step + slides.length) % slides.length;
+        slides[currentIdx].classList.add('active');
+    }
+
+    // ENQUIRY FORM LOGIC
+    window.openEnquiryForm = function() {
+        document.getElementById('enquiryModal').style.display = 'flex';
+        document.body.classList.add('enquiry-modal-open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.closeEnquiryForm = function() {
+        document.getElementById('enquiryModal').style.display = 'none';
+        document.body.classList.remove('enquiry-modal-open');
+        document.body.style.overflow = 'auto';
+        // Reset form state
+        const container = document.getElementById('subCont');
+        const subBtn = document.getElementById('subBtn');
+        const successMsg = document.getElementById('successMsg');
+        
+        container.classList.remove('animating');
+        subBtn.style.display = 'block';
+        subBtn.innerText = "Submit Enquiry";
+        successMsg.style.display = 'none';
+        document.getElementById('enquiryForm').reset();
+    }
+
+    // Initialize form dropdowns
+    const classes = ["LKG", "HKG", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+    const curClass = document.getElementById('curClass');
+    const optClass = document.getElementById('optClass');
+    
+    const options = `<option value="">Select</option>` + classes.map(c => `<option value="${c}">${c}</option>`).join('');
+    curClass.innerHTML = options;
+    optClass.innerHTML = options;
+
+    // Mobile number validation
+    const mobInput = document.getElementById('mobile');
+    mobInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, ''); 
+    });
+
+    // Form submission
+    document.getElementById('enquiryForm').onsubmit = (e) => {
+        e.preventDefault();
+        
+        if(mobInput.value.length !== 10) {
+            alert("Mobile number must be exactly 10 digits.");
+            return;
+        }
+
+        const container = document.getElementById('subCont');
+        const subBtn = document.getElementById('subBtn');
+        const successMsg = document.getElementById('successMsg');
+
+        // Trigger Snake animation
+        container.classList.add('animating');
+        subBtn.innerText = "Processing...";
+
+        setTimeout(() => {
+            // Stop Animation and Show Success
+            container.classList.remove('animating');
+            subBtn.style.display = 'none';
+            successMsg.style.display = 'block';
+
+            // Auto-close modal after success message is shown
+            setTimeout(() => {
+                closeEnquiryForm();
+            }, 2000); 
+
+        }, 2000); // Duration of the snake animation
+    };
+
+    // Close modal when clicking outside
+    window.onclick = (e) => {
+        if (e.target == document.getElementById('enquiryModal')) {
+            closeEnquiryForm();
+        }
+    };
+
+    // BACK TO TOP BUTTON FUNCTIONALITY
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    // Show/hide back to top button based on scroll position
+    window.addEventListener('scroll', () => {
+        if (backToTopBtn) {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+    });
+
+    // Smooth scroll to top when clicked
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Initialize chat assistant
+    setTimeout(() => {
+        if (document.getElementById('flow')) {
+            showMainBot();
+        }
+    }, 500);
+
+    // Refresh ScrollTriggers after all content is loaded
+    setTimeout(() => {
+        ScrollTrigger.refresh();
+    }, 100);
+}
+
+// Initialize website animations if intro was skipped
+if (!document.body.classList.contains('intro-active')) {
+    document.getElementById('main-website').style.display = 'block';
+    document.getElementById('main-website').style.opacity = '1';
+    initWebsiteAnimations();
+}
+
+// Prevent chat from interfering with other modals
+document.addEventListener('click', (e) => {
+    // Close chat if clicking outside while chat is open
+    if (chatCard && chatCard.style.display === 'flex' && 
+        !chatCard.contains(e.target) && 
+        !launcher.contains(e.target)) {
+        // Don't close if clicking on blog modal or enquiry modal
+        if (!document.getElementById('blogModal').contains(e.target) && 
+            !document.getElementById('enquiryModal').contains(e.target)) {
+            closeChat();
+        }
+    }
+});
+
+// Handle Escape key for chat
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && chatCard && chatCard.style.display === 'flex') {
+        closeChat();
+    }
+});
+</script>
+</body>
+</html>

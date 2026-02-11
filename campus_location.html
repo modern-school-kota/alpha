@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Calculator - Modern School, Kota</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    
+    <style>
+     /* ===== COLOR VARIABLES ===== */
+:root {
+    /* Primary Colors */
+    --primary-maroon: #800000;
+    --primary-cream: #fefaf0;
+    --primary-white: #ffffff;
+    --light-maroon: #A63232;
+    
+    /* Secondary Colors */
+    --secondary-dark-maroon: #5d2a2a;
+    --secondary-light-maroon: #8b4513;
+    --secondary-orange: #FF8C00;
+    --secondary-gold: #c5a059;
+    --secondary-light-cream: #fffcf0;
+    --secondary-gold-light: #FFD700;
+    
+    /* Text Colors */
+    --text-maroon: var(--primary-maroon);
+    --text-dark-maroon: var(--secondary-dark-maroon);
+    --text-light-maroon: var(--secondary-light-maroon);
+    --text-white: var(--primary-white);
+    --text-dark-gray: #2c3e50;
+    --text-light-gray: #6c757d;
+    
+    /* Border & Shadow Colors */
+    --border-light: #e0d6c2;
+    --border-maroon: var(--primary-maroon);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.15);
+    
+    /* Interactive Colors */
+    --hover-maroon: #990000;
+    --btn-maroon: var(--primary-maroon);
+    --btn-maroon-hover: var(--hover-maroon);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--primary-cream);
+    color: var(--text-dark-maroon);
+    line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
+}
+        
+        /* Top Navbar & Fixed Elements */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease; 
+        }
+
+        body.menu-open .navbar {
+            transform: translateY(-100%);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 24px;
+            justify-content: space-between;
+            position: fixed; 
+            top: 25px; 
+            left: 20px;
+            z-index: 1002; 
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #5d2a2a;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+        .admission-btn { 
+            background-color: transparent; 
+            color: #5d2a2a; 
+            border: 2px solid #5d2a2a; 
+            padding: 8px 18px; 
+            border-radius: 20px; 
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 1002;
+        }
+        .admission-btn:hover { background-color: #5d2a2a; color: white; }
+
+        /* Full Page Overlay Menu CONTAINER */
+        .overlay-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 1001; 
+            transform: translateX(-100%); /* Start hidden off-screen left */
+            transition: transform 0.5s ease;
+            overflow: hidden; /* Important for horizontal transitions */
+        }
+
+        .overlay-menu.active {
+            transform: translateX(0); /* Slide in from the left */
+        }
+
+        /* Menu Wrapper for Drill-Down Effect */
+        .menu-wrapper {
+            width: 100%; /* Changed from 200% to 100% */
+            height: 100%;
+            display: flex; /* Makes main and sub-menu components line up horizontally */
+            transition: transform 0.4s ease-in-out;
+            margin-top: 80px;
+        }
+
+        /* State when a submenu is active */
+        .overlay-menu.submenu-active .menu-wrapper {
+            transform: translateX(-100%); /* Slide the main menu out (left) and the submenu in (center) */
+        }
+        
+        /* Main Menu and Submenu Screen */
+        .main-menu-screen, .submenu-screen {
+            width: 100%; /* Each takes full width of the wrapper */
+            height: 100%;
+            list-style: none;
+            text-align: center;
+            padding: 20px;
+            flex-shrink: 0; /* Prevents shrinking */
+            overflow-y: auto; /* Allows scrolling if needed */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the menu items horizontally */
+        }
+
+        /* BACK BUTTON Container - Now positioned at top of submenu */
+        .submenu-header {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            text-align: left;
+            padding: 10px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, visibility 0.4s;
+            z-index: 1003;
+        }
+        
+        .overlay-menu.submenu-active .submenu-header {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #5d2a2a;
+            font-size: 28px; /* Same font size as main menu */
+            font-weight: 600;
+            cursor: pointer;
+            padding: 15px 10px;
+            border-radius: 5px;
+            transition: color 0.3s;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-btn:hover {
+            color: #8b4513; /* Same hover color as menu items */
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        /* Menu Item Styles - Shared */
+        .main-menu-screen li, .submenu-screen li {
+            margin: 0;
+            padding: 0;
+            width: 100%; /* Ensure full width for centering */
+            display: flex;
+            justify-content: center; /* Center the links */
+        }
+        
+        .main-menu-screen a, .submenu-screen a {
+            text-decoration: none;
+            color: #5d2a2a;
+            font-weight: 600;
+            display: block; 
+            padding: 15px 10px;
+            margin-bottom: 5px; /* Spacing between menu items */
+            transition: color 0.3s;
+            position: relative;
+            width: 100%; /* Take full width of the container */
+            max-width: 400px; /* Limit maximum width for better appearance */
+        }
+        
+        .main-menu-screen a, .submenu-screen a { 
+            font-size: 28px; 
+            text-align: center; /* Center the text */
+        }
+
+        /* Arrow Indicator for Drill-Down */
+        .main-menu-screen a.has-submenu::after {
+            content: '\f054'; /* Font Awesome Chevron Right */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        /* Hover Styles (unchanged from original intent) */
+        .main-menu-screen a:hover, .submenu-screen a:hover {
+            color: #8b4513;
+        }
+        
+        /* Submenu screen styling */
+        .submenu-screen {
+            background-color: white; /* Same background as main menu */
+        }
+        
+        /* Main Content - REDUCED PADDING */
+        .content {
+            padding-top: 80px; /* Reduced from 100px */
+            padding-bottom: 30px; /* Reduced from 50px */
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 20px; /* Reduced from 40px */
+            padding-bottom: 15px; /* Reduced from 20px */
+            border-bottom: 2px solid var(--primary-maroon);
+        }
+        
+        .page-header h1 {
+            color: var(--primary-maroon);
+            font-size: 2rem; /* Reduced from 2.5rem */
+            margin-bottom: 5px; /* Reduced from 10px */
+            font-weight: 700;
+        }
+        
+        .page-header p {
+            color: var(--text-light-gray);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+        
+        /* Calculator Card - REDUCED SPACING */
+        .calculator-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0d6c2;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .card-header-custom {
+            background-color: var(--primary-maroon);
+            color: white;
+            padding: 15px 25px; /* Reduced padding */
+            border-bottom: none;
+        }
+        
+        .card-header-custom h2 {
+            margin: 0;
+            font-size: 1.3rem; /* Reduced from 1.5rem */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-body-custom {
+            padding: 20px; /* Reduced from 30px */
+        }
+        
+        /* Map Container */
+        .map-container {
+            position: relative;
+            height: 350px;
+            border-radius: 8px;
+            border: 1px solid #e0d6c2;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        /* Updated: Super compact vertical Results Overlay */
+        .map-results-overlay {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 8px;
+            padding: 10px;
+            opacity: 0.95;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(3px);
+            width: 180px;
+            max-width: 200px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--primary-maroon);
+            padding-bottom: 6px;
+        }
+        
+        .results-header h3 {
+            margin: 0;
+            color: var(--primary-maroon);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .close-results {
+            background: none;
+            border: none;
+            color: var(--primary-maroon);
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 2px;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .close-results:hover {
+            background-color: rgba(93, 42, 42, 0.1);
+        }
+        
+        /* Vertical compact results layout */
+        .results-vertical {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Single compact result row */
+        .result-row-compact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .result-row-compact:last-child {
+            border-bottom: none;
+        }
+        
+        /* Left side: icon and label */
+        .result-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+        
+        .result-info i {
+            font-size: 0.8rem;
+            color: var(--primary-maroon);
+            width: 16px;
+            text-align: center;
+        }
+        
+        .result-info .label {
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Right side: value and unit */
+        .result-value {
+            display: flex;
+            align-items: baseline;
+            gap: 2px;
+        }
+        
+        .result-value .value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--secondary-orange);
+        }
+        
+        .result-value .unit {
+            font-size: 0.65rem;
+            color: #888;
+        }
+        
+        /* Location Controls - REDESIGNED */
+        .location-controls {
+            background: #f8f3e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 0;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .location-info {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0d6c2;
+            flex-grow: 1;
+        }
+        
+        .location-info h4 {
+            color: var(--primary-maroon);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .location-info p {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        #currentLocationText {
+            font-weight: 600;
+            color: var(--text-dark-maroon);
+            margin-bottom: 10px;
+        }
+        
+        #currentCoords {
+            color: var(--text-light-gray);
+            font-size: 0.8rem;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        /* UPDATED BUTTON STYLES - OUTLINE DESIGN */
+        .btn-custom {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            border: 2px solid;
+            background: transparent;
+            font-size: 0.95rem;
+        }
+        
+        .btn-custom-primary {
+            color: var(--primary-maroon);
+            border-color: var(--primary-maroon);
+        }
+        
+        .btn-custom-primary:hover {
+            background: var(--primary-maroon);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(128, 0, 0, 0.15);
+        }
+        
+        .btn-custom-secondary {
+            color: var(--secondary-orange);
+            border-color: var(--secondary-orange);
+        }
+        
+        .btn-custom-secondary:hover {
+            background: var(--secondary-orange);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.15);
+        }
+        
+        .btn-custom-success {
+            color: #28a745;
+            border-color: #28a745;
+        }
+        
+        .btn-custom-success:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.15);
+        }
+        
+        .btn-custom.active {
+            background: var(--primary-maroon);
+            color: white;
+            border-color: var(--primary-maroon);
+        }
+        
+        /* Button Group Layout */
+        .btn-action-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-group-row {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-group-row .btn-custom {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            text-align: center;
+            padding: 15px; /* Reduced padding */
+        }
+        
+        .spinner i {
+            font-size: 1.8rem; /* Reduced size */
+            color: var(--primary-maroon);
+            margin-bottom: 8px;
+        }
+        
+        .spinner p {
+            font-size: 0.9rem;
+            color: var(--text-light-gray);
+        }
+        
+        /* Alert Messages */
+        .alert-custom {
+            border-radius: 8px;
+            padding: 12px 15px; /* Reduced padding */
+            margin-bottom: 15px; /* Reduced margin */
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+        }
+        
+        .alert-info {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+        
+        /* Footer Styles */
+        .footer-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: #5d2a2a;
+            color: white;
+            padding: 40px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-col {
+            flex: 0 0 33.33%;
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-col.logo-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .info-col.address-col {
+            text-align: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .info-col.contact-col {
+            text-align: right;
+        }
+        
+        .footer-logo {
+            height: 80px;
+            margin-bottom: 15px;
+        }
+        
+        .info-col h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #f8d7b3;
+        }
+        
+        .info-col p {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .info-col a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .info-col a:hover {
+            color: #f8d7b3;
+            text-decoration: underline;
+        }
+        
+        /* Footer columns */
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: #5d2a2a;
+            color: white;
+            padding: 40px 20px;
+        }
+        
+        .footer-col {
+            flex: 0 0 16.66%;
+            min-width: 150px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+            color: #f8d7b3;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-col a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col a:hover {
+            color: #f8d7b3;
+            text-decoration: underline;
+        }
+        
+        /* Bottom footer section */
+        .footer-bottom {
+            background-color: #4a1f1f;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #f8d7b3;
+            text-decoration: underline;
+        }
+        
+        .footer-bottom-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .social-media {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-media a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-media a:hover {
+            color: #f8d7b3;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .info-col {
+                flex: 0 0 100%;
+                text-align: center !important;
+                border: none !important;
+                margin-bottom: 30px;
+            }
+            
+            .info-col.logo-col {
+                align-items: center;
+            }
+            
+            .footer-col {
+                flex: 0 0 33.33%;
+            }
+            
+            .content {
+                padding-top: 70px; /* Further reduced for mobile */
+            }
+            
+            .location-controls {
+                height: auto;
+                margin-bottom: 20px;
+            }
+            
+            .map-container {
+                height: 400px; /* Increased for better mobile view */
+            }
+            
+            .map-results-overlay {
+                width: 170px;
+                top: 10px;
+                left: 10px;
+            }
+            
+            .btn-group-row {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .footer-col {
+                flex: 0 0 50%;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .footer-bottom-right {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .social-media {
+                margin-right: 0;
+            }
+            
+            .copyright {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem; /* Further reduced */
+            }
+            
+            .page-header p {
+                font-size: 0.9rem;
+            }
+            
+            .map-container {
+                height: 350px;
+            }
+            
+            .map-results-overlay {
+                width: 160px;
+                padding: 8px;
+            }
+            
+            .results-header h3 {
+                font-size: 0.85rem;
+            }
+            
+            /* Hide routing instructions on mobile */
+            .leaflet-routing-container {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .footer-col {
+                flex: 0 0 100%;
+            }
+            
+            .map-results-overlay {
+                width: 150px;
+                padding: 6px;
+                top: 5px;
+                left: 5px;
+            }
+            
+            .content {
+                padding-top: 65px; /* Minimal padding */
+            }
+            
+            .page-header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 3px;
+            }
+            
+            .page-header {
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+            
+            .calculator-card {
+                margin-bottom: 20px;
+            }
+            
+            .card-body-custom {
+                padding: 15px;
+            }
+        }
+        /* ===== UPDATED NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--primary-white);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    flex-direction: column;
+}
+
+.navbar-content {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+}
+
+.navbar-logo-text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-dark-maroon);
+    letter-spacing: 2px;
+    display: flex;
+    gap: 2px;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    text-transform: uppercase;
+}
+
+.navbar-logo-text .letter {
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+    color: var(--text-dark-maroon);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo-text .letter.maroon {
+    color: var(--light-maroon);
+    text-shadow: none;
+}
+
+.navbar-text {
+    position: absolute;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary-dark-maroon);
+    letter-spacing: 2px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    text-transform: uppercase;
+}
+
+.navbar.scrolled .navbar-logo-text {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.navbar.scrolled .navbar-text {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Navbar Progress Bar */
+.navbar-progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+.navbar-progress-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--primary-maroon) 0%,
+        var(--secondary-gold) 25%,
+        var(--secondary-orange) 50%,
+        var(--secondary-gold) 75%,
+        var(--primary-maroon) 100%
+    );
+    background-size: 200% 100%;
+    animation: progressTrackFlow 2s linear infinite;
+}
+
+@keyframes progressTrackFlow {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.navbar-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        var(--primary-maroon) 0%, 
+        var(--secondary-dark-maroon) 50%, 
+        var(--primary-maroon) 100%);
+    transition: width 0.1s ease-out;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(128, 0, 0, 0.5);
+}
+
+body.menu-open .navbar {
+    transform: translateY(-100%);
+}
+
+/* Hamburger and admission button adjustments */
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    width: 30px;
+    height: 24px;
+    justify-content: space-between;
+    position: fixed;
+    top: 25px;
+    left: 20px;
+    z-index: 1002;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--text-dark-maroon);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+.admission-btn {
+    background-color: transparent;
+    color: var(--text-dark-maroon);
+    border: 2px solid var(--border-maroon);
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1002;
+}
+
+.admission-btn:hover { 
+    background-color: var(--btn-maroon); 
+    color: var(--text-white); 
+}
+
+/* Hide admission button by default */
+.admission-btn.menu-only {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show admission button when menu is open */
+body.menu-open .admission-btn.menu-only {
+    opacity: 1;
+    visibility: visible;
+}
+/* ===== FOOTER RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .info-col {
+        flex: 0 0 100%;
+        text-align: center !important;
+        border: none !important;
+        margin-bottom: 30px;
+    }
+    
+    .info-col.logo-col {
+        align-items: center;
+    }
+    
+    .footer-col {
+        flex: 0 0 33.33%;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-columns {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 30px 15px;
+    }
+    
+    .footer-col {
+        flex: 0 0 100%;
+        min-width: auto;
+        margin-bottom: 15px;
+        padding: 0 10px;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-columns {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Enquiry Button -->
+    <button class="admission-btn menu-only">Enquiry</button>
+
+    <!-- Updated Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo-text" id="navbarLogoText"></div>
+            <div class="navbar-text" id="navbarScrolledText"></div>
+        </div>
+        <div class="navbar-progress-container">
+            <div class="navbar-progress-track"></div>
+            <div class="navbar-progress-fill" id="navbarProgressFill"></div>
+        </div>
+    </nav>
+
+    <!-- Overlay Menu -->
+    <div class="overlay-menu" id="overlayMenu">
+        <div class="submenu-header" id="submenuHeader">
+            <button class="back-btn" id="backButton"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+        
+        <div class="menu-wrapper" id="menuWrapper">
+            <ul class="main-menu-screen" id="mainMenu">
+                <li><a href="index.html" class="close-menu">Home</a></li>
+                <li class="menu-item-with-submenu" data-submenu="about-us">
+                    <a href="#" class="has-submenu">About Us</a>
+                </li>
+                <li class="menu-item-with-submenu" data-submenu="academics">
+                    <a href="#" class="has-submenu">Academics</a>
+                </li>
+                <li><a href="#" class="close-menu">Admissions</a></li>
+                <li class="menu-item-with-submenu" data-submenu="campus-life">
+                    <a href="#" class="has-submenu">Campus Life</a>
+                </li>
+                <li class="menu-item-with-submenu" data-submenu="contact-us">
+                    <a href="#" class="has-submenu">Contact Us</a>
+                </li>
+            </ul>
+            <ul class="submenu-screen" id="submenuScreen"></ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="container">
+            <div class="page-header">
+                <h1>School Route Calculator</h1>
+                <p>Calculate actual road distance and travel time to Modern School, Kota</p>
+            </div>
+            
+            <!-- Calculator Card -->
+            <div class="calculator-card">
+                <div class="card-header-custom">
+                    <h2><i class="fas fa-route"></i> Route Calculation</h2>
+                </div>
+                
+                <div class="card-body-custom">
+                    <!-- Loading Spinner -->
+                    <div class="spinner" id="loadingSpinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Calculating road route... This may take a few seconds</p>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Left Column - Controls -->
+                        <div class="col-lg-4">
+                            <div class="location-controls">
+                                <!-- Your Location Section -->
+                                <div class="location-info">
+                                    <h4><i class="fas fa-map-marker-alt"></i> Your Location</h4>
+                                    <p id="currentLocationText">Click detect or drag marker on map</p>
+                                    <p id="currentCoords"><small>Coordinates: Not set</small></p>
+                                    
+                                    <!-- Updated: Outline button for location detection -->
+                                    <div class="btn-action-group">
+                                        <button class="btn-custom btn-custom-success" id="detectLocationBtn">
+                                            <i class="fas fa-location-crosshairs"></i> Detect Current Location
+                                        </button>
+                                        
+                                        <!-- Updated: Outline buttons for route actions -->
+                                        <div class="btn-group-row">
+                                            <button class="btn-custom btn-custom-primary" id="calculateRouteBtn">
+                                                <i class="fas fa-calculator"></i> Calculate
+                                            </button>
+                                            
+                                            <button class="btn-custom btn-custom-secondary" id="clearRouteBtn">
+                                                <i class="fas fa-trash-alt"></i> Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <p class="text-muted small">
+                                        <i class="fas fa-info-circle"></i> Drag the blue marker on map to adjust location
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Column - Map with Results Overlay -->
+                        <div class="col-lg-8">
+                            <div class="map-container">
+                                <!-- Map -->
+                                <div id="map"></div>
+                                
+                                <!-- Updated: Super compact vertical Results Overlay -->
+                                <div class="map-results-overlay" id="mapResultsOverlay">
+                                    <div class="results-header">
+                                        <h3><i class="fas fa-chart-line"></i> Route Results</h3>
+                                        <button class="close-results" id="closeResultsBtn">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="results-vertical">
+                                        <!-- Distance Row -->
+                                        <div class="result-row-compact">
+                                            <div class="result-info">
+                                                <i class="fas fa-road"></i>
+                                                <span class="label">Distance</span>
+                                            </div>
+                                            <div class="result-value">
+                                                <span class="value" id="routeDistanceOverlay">--</span>
+                                                <span class="unit">km</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Speed Row -->
+                                        <div class="result-row-compact">
+                                            <div class="result-info">
+                                                <i class="fas fa-tachometer-alt"></i>
+                                                <span class="label">Speed</span>
+                                            </div>
+                                            <div class="result-value">
+                                                <span class="value" id="averageSpeedOverlay">20</span>
+                                                <span class="unit">km/h</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Time Row -->
+                                        <div class="result-row-compact">
+                                            <div class="result-info">
+                                                <i class="fas fa-clock"></i>
+                                                <span class="label">Time</span>
+                                            </div>
+                                            <div class="result-value">
+                                                <span class="value" id="travelTimeOverlay">--</span>
+                                                <span class="unit">min</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Round Trip Row -->
+                                        <div class="result-row-compact">
+                                            <div class="result-info">
+                                                <i class="fas fa-retweet"></i>
+                                                <span class="label">Round Trip</span>
+                                            </div>
+                                            <div class="result-value">
+                                                <span class="value" id="roundTripTimeOverlay">--</span>
+                                                <span class="unit">min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-info">
+        <div class="info-col logo-col">
+            <img src="logo.png" alt="Modern School Logo" class="footer-logo">
+            <p>Excellence in Education Since 1973</p>
+        </div>
+        <div class="info-col address-col">
+            <h3>Our Address</h3>
+            <p>Modern School</p>
+            <p>Sector - A Talwandi,</p>
+            <p>Kota, Rajasthan 324005</p>
+            <p>India</p>
+        </div>
+        <div class="info-col contact-col">
+            <h3>Contact Information</h3>
+            <p><i class="fas fa-phone"></i> +91-744-24211167</p>
+            <p><i class="fas fa-mobile-alt"></i> +91-744-2411116</p>
+            <p><i class="fas fa-envelope"></i> info@modernschool.ac.in</p>
+            <p><i class="fas fa-globe"></i> www.modernschool.ac.in</p>
+            <div style="margin-top: 15px;">
+                <a style="font-size:20px;margin:5px;" href="#"><i class="fab fa-facebook"></i></a>
+                <a style="font-size:20px;margin:5px;" href="#"><i class="fab fa-twitter"></i></a>
+                <a style="font-size:20px;margin:5px;" href="#"><i class="fab fa-instagram"></i></a>
+                <a style="font-size:20px;margin:5px;" href="#"><i class="fab fa-linkedin"></i></a>
+                <a style="font-size:20px;margin:5px;" href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-columns">
+        <div class="footer-col">
+            <h3>Academics</h3>
+            <ul>
+                <li><a href="curriculum.html">Curriculum</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="exam.html">Time Table</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Informations</h3>
+            <ul>
+                <li><a href="fees.html">Tuition Fees</a></li>
+                <li><a href="cbse.html">CBSE Corner</a></li>
+                <li><a href="mandatory_disc.html">Mandatory Disclosures</a></li>
+                <li><a href="alumni.html">Alumni Network</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Campus Life</h3>
+            <ul>
+                <li><a href="student_council.html">Student Counsel</a></li>
+                <li><a href="event.html">Events</a></li>
+                <li><a href="sport.html">Athletics</a></li>
+                <li><a href="campus_facilities.html">Campus Facilities</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="history.html">Our History</a></li>
+                <li><a href="vision.html">Vision & Direction</a></li>
+                <li><a href="leadership.html">Leadership</a></li>
+                <li><a href="admin.html">Admin Team</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Connect</h3>
+            <ul>
+                <li><a href="campus_location.html">Campus Location</a></li>
+                <li><a href="career.html">Career</a></li>
+                <li><a href="tc_verification.html">TC Verification</a></li>
+                <li><a href="branches.html">Other Branches</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="copyright">
+            <p>&copy; <span id="currentYear"></span> Modern School, Kota. All rights reserved.</p>
+        </div>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="tnc.html">Terms & Conditions</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet Routing Machine JS -->
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        // Menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const overlayMenu = document.getElementById('overlayMenu');
+        const mainMenu = document.getElementById('mainMenu');
+        const submenuScreen = document.getElementById('submenuScreen');
+        const backButton = document.getElementById('backButton');
+        const body = document.body;
+        
+        // Define all submenu data
+        const submenus = {
+            'about-us': [
+                { text: 'Our History', href: 'history.html' },
+                { text: 'Vision & Direction', href: 'vision.html' },
+                { text: 'Leadership', href: 'leadership.html' },
+                { text: 'Admin Team', href: 'admin.html' },
+            ],
+            'academics': [
+                { text: 'Curriculum', href: 'Curriculum.html' },
+                { text: 'Calendar', href: 'calendar.html' },
+                { text: 'Time Table', href: 'exam.html' },
+            ],
+            'campus-life': [
+                { text: 'Student Counsel', href: 'student_counsel.html' },
+                { text: 'Events', href: 'event.html' },
+                { text: 'Athletics', href: 'sport.html' },
+                { text: 'Campus Facilities', href: 'campus_facilities.html' },
+            ],
+            'contact-us': [
+                { text: 'Campus Location', href: 'campus_location.html' },
+                { text: 'Career', href: 'career.html' },
+                { text: 'Enquiry', href: '#' },
+                { text: 'TC Verification', href: 'tc_verification.html' },
+                { text: 'Other Branches', href: 'branches.html' },
+            ]
+        };
+        
+        // Function to close the entire menu and reset the view
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            overlayMenu.classList.remove('active');
+            body.classList.remove('menu-open');
+            // Ensure menu returns to the main screen view
+            overlayMenu.classList.remove('submenu-active');
+            submenuScreen.innerHTML = ''; // Clear submenu content
+        }
+
+        // Toggle main menu when hamburger is clicked
+        hamburger.addEventListener('click', function() {
+            if (this.classList.contains('active')) {
+                closeMenu();
+            } else {
+                this.classList.add('active');
+                overlayMenu.classList.add('active');
+                body.classList.add('menu-open');
+            }
+        });
+
+        // Handle clicks on main menu items with submenus (drill-down)
+        document.querySelectorAll('.main-menu-screen a.has-submenu').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const menuItem = this.closest('.menu-item-with-submenu');
+                const submenuKey = menuItem.getAttribute('data-submenu');
+                const submenuData = submenus[submenuKey];
+
+                if (!submenuData) return;
+
+                // 1. Build the submenu content
+                submenuScreen.innerHTML = ''; // Clear previous content
+                submenuData.forEach(item => {
+                    const li = document.createElement('li');
+                    // Add the 'close-menu' class to submenu links to close the entire menu on click
+                    li.innerHTML = `<a href="${item.href}" class="close-menu">${item.text}</a>`; 
+                    submenuScreen.appendChild(li);
+                });
+                
+                // Re-attach the closeMenu listener to the newly created links
+                submenuScreen.querySelectorAll('.close-menu').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        closeMenu(); // Close on click
+                    });
+                });
+
+                // 2. Trigger the slide transition
+                overlayMenu.classList.add('submenu-active');
+            });
+        });
+
+        // Handle the Back Button click
+        backButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Slide back to the main menu view
+            overlayMenu.classList.remove('submenu-active');
+            // Clear the submenu content after the transition starts
+            setTimeout(() => {
+                submenuScreen.innerHTML = '';
+            }, 400); // 400ms to match the CSS transition duration
+        });
+
+        // Close menu when clicking on a close-menu link (home, admissions, etc.)
+        document.querySelectorAll('.close-menu').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                closeMenu();
+            });
+        });
+        
+        // Close menu when clicking outside of menu content (overlay background)
+        overlayMenu.addEventListener('click', function(e) {
+            // Check if the click target is the overlay background itself
+            if (e.target === this) {
+                closeMenu();
+            }
+        });
+
+        // Route Calculator functionality
+        // School coordinates
+        const SCHOOL_LOCATION = {
+            lat: 25.1502,
+            lng: 75.8496
+        };
+        
+        // Constant speed (20 km/h)
+        const CONSTANT_SPEED = 20;
+        
+        // Global variables
+        let map, userMarker, routingControl = null;
+        let userLocation = null;
+        let currentRoute = null;
+        let routeActive = false;
+
+        // Initialize the map
+        function initMap() {
+            // Create map
+            map = L.map('map').setView([SCHOOL_LOCATION.lat, SCHOOL_LOCATION.lng], 13);
+            
+            // Add map tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Add school marker
+            L.marker([SCHOOL_LOCATION.lat, SCHOOL_LOCATION.lng], {
+                icon: L.divIcon({
+                    html: '<i class="fas fa-school" style="color: #5d2a2a; font-size: 28px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"></i>',
+                    iconSize: [30, 30],
+                    className: 'school-marker'
+                })
+            })
+            .addTo(map)
+            .bindPopup('<b>Modern School, Kota</b><br>Sector - A Talwandi, Kota, Rajasthan<br><small>Destination</small>')
+            .openPopup();
+            
+            // Create user marker (draggable)
+            userMarker = L.marker([SCHOOL_LOCATION.lat + 0.01, SCHOOL_LOCATION.lng + 0.01], {
+                draggable: true,
+                icon: L.divIcon({
+                    html: '<i class="fas fa-map-marker-alt" style="color: #007bff; font-size: 36px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"></i>',
+                    iconSize: [30, 42],
+                    iconAnchor: [15, 42],
+                    className: 'user-marker'
+                })
+            }).addTo(map);
+            
+            userMarker.bindPopup('<b>Your Location</b><br>Drag me to adjust<br>Then click "Calculate"');
+            
+            // Update location when marker is dragged
+            userMarker.on('dragend', function(event) {
+                const marker = event.target;
+                const position = marker.getLatLng();
+                updateUserLocation(position.lat, position.lng);
+                userMarker.setPopupContent('<b>Your Location</b><br>Lat: ' + position.lat.toFixed(4) + '<br>Lng: ' + position.lng.toFixed(4) + '<br><small>Click "Calculate"</small>');
+                // If route is active, update it
+                if (routeActive) {
+                    calculateRoute();
+                }
+            });
+            
+            // Set initial user location
+            updateUserLocation(SCHOOL_LOCATION.lat + 0.01, SCHOOL_LOCATION.lng + 0.01);
+        }
+
+        // Update user location
+        function updateUserLocation(lat, lng) {
+            userLocation = { lat, lng };
+            document.getElementById('currentLocationText').textContent = 'Location set via map';
+            document.getElementById('currentCoords').innerHTML = 
+                `<small>Coordinates: ${lat.toFixed(4)}, ${lng.toFixed(4)}</small>`;
+        }
+
+        // Toggle button states
+        function toggleRouteButtons(isActive) {
+            const calcBtn = document.getElementById('calculateRouteBtn');
+            const clearBtn = document.getElementById('clearRouteBtn');
+            
+            if (isActive) {
+                calcBtn.classList.remove('active');
+                calcBtn.querySelector('i').className = 'fas fa-calculator';
+                calcBtn.innerHTML = '<i class="fas fa-calculator"></i> Calculate';
+            } else {
+                calcBtn.classList.add('active');
+                calcBtn.querySelector('i').className = 'fas fa-redo';
+                calcBtn.innerHTML = '<i class="fas fa-redo"></i> Recalculate';
+            }
+        }
+
+        // Show results overlay on map
+        function showResultsOverlay() {
+            document.getElementById('mapResultsOverlay').style.display = 'block';
+        }
+
+        // Hide results overlay on map
+        function hideResultsOverlay() {
+            document.getElementById('mapResultsOverlay').style.display = 'none';
+        }
+
+        // Close results overlay button
+        document.getElementById('closeResultsBtn').addEventListener('click', function() {
+            hideResultsOverlay();
+        });
+
+        // Detect current location
+        document.getElementById('detectLocationBtn').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        
+                        updateUserLocation(lat, lng);
+                        userMarker.setLatLng([lat, lng]);
+                        map.setView([lat, lng], 14);
+                        userMarker.setPopupContent('<b>Your Current Location</b><br>Detected via GPS<br>Click "Calculate"');
+                        
+                        showAlert('Location detected successfully!', 'success');
+                        
+                        // If route is active, update it
+                        if (routeActive) {
+                            calculateRoute();
+                        }
+                    },
+                    function(error) {
+                        showAlert('Unable to detect location. Drag marker instead.', 'warning');
+                    }
+                );
+            } else {
+                showAlert('Geolocation not supported. Drag marker instead.', 'warning');
+            }
+        });
+
+        // Calculate route button click
+        document.getElementById('calculateRouteBtn').addEventListener('click', function() {
+            if (!userLocation) {
+                showAlert('Please set your location first', 'warning');
+                return;
+            }
+            
+            if (!routeActive) {
+                // Calculate new route
+                calculateRoute();
+                routeActive = true;
+                toggleRouteButtons(false);
+            } else {
+                // Recalculate route
+                calculateRoute();
+                showAlert('Route recalculated', 'info');
+            }
+        });
+
+        // Clear route button click
+        document.getElementById('clearRouteBtn').addEventListener('click', function() {
+            if (routeActive) {
+                clearRoute();
+                routeActive = false;
+                toggleRouteButtons(true);
+                hideResultsOverlay();
+                showAlert('Route cleared', 'info');
+            } else {
+                showAlert('No route to clear', 'warning');
+            }
+        });
+
+        // Main route calculation function
+        function calculateRoute() {
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'block';
+            
+            // Clear any existing route
+            clearRouteVisuals();
+            
+            // Calculate route using OSRM (always fastest route)
+            calculateRouteWithOSRM(userLocation, SCHOOL_LOCATION, CONSTANT_SPEED);
+        }
+
+        // Calculate route using OSRM
+        async function calculateRouteWithOSRM(start, end, speed) {
+            try {
+                // Use OSRM demo server (free, no API key needed)
+                const profile = 'driving'; // driving, walking, cycling
+                const coordinates = `${start.lng},${start.lat};${end.lng},${end.lat}`;
+                
+                // OSRM API endpoint
+                const url = `https://router.project-osrm.org/route/v1/${profile}/${coordinates}?overview=full&geometries=geojson&steps=true`;
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error('OSRM API request failed');
+                }
+                
+                const data = await response.json();
+                
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                if (data.code !== 'Ok' || !data.routes || data.routes.length === 0) {
+                    throw new Error('No route found');
+                }
+                
+                // Get the first route (usually the fastest one)
+                const route = data.routes[0];
+                
+                // Process the route data
+                processOSRMRouteData(route, speed);
+                
+            } catch (error) {
+                console.error('Error calculating route with OSRM:', error);
+                
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                // Fallback to Leaflet Routing Machine if OSRM fails
+                showAlert('Using alternative routing service...', 'info');
+                calculateRouteWithLeafletRouting(start, end, speed);
+            }
+        }
+
+        // Process OSRM route data
+        function processOSRMRouteData(route, speed) {
+            // Get distance in km
+            const distance = route.distance / 1000;
+            
+            // Calculate time based on constant speed
+            const time = Math.round((distance / speed) * 60);
+            
+            // Store route for display
+            currentRoute = {
+                distance: distance,
+                time: time,
+                geometry: route.geometry,
+                legs: route.legs
+            };
+            
+            // Display results in overlay
+            displayResultsOverlay(distance, time, speed);
+            
+            // Draw route on map
+            drawOSRMRouteOnMap(route.geometry);
+            
+            // Show results overlay
+            showResultsOverlay();
+            
+            showAlert('Road route calculated successfully!', 'success');
+        }
+
+        // Fallback: Use Leaflet Routing Machine
+        function calculateRouteWithLeafletRouting(start, end, speed) {
+            try {
+                // Remove any existing routing control
+                if (routingControl) {
+                    map.removeControl(routingControl);
+                }
+                
+                // Create new routing control
+                routingControl = L.Routing.control({
+                    waypoints: [
+                        L.latLng(start.lat, start.lng),
+                        L.latLng(end.lat, end.lng)
+                    ],
+                    routeWhileDragging: false,
+                    showAlternatives: false,
+                    lineOptions: {
+                        styles: [{color: '#5d2a2a', opacity: 0.7, weight: 5}]
+                    },
+                    createMarker: function() { return null; }, // Don't create default markers
+                    router: new L.Routing.OSRMv1({
+                        serviceUrl: 'https://router.project-osrm.org/route/v1'
+                    })
+                }).addTo(map);
+                
+                // When route is found
+                routingControl.on('routesfound', function(e) {
+                    const routes = e.routes;
+                    if (routes && routes.length > 0) {
+                        const route = routes[0];
+                        const distance = route.summary.totalDistance / 1000; // Convert to km
+                        const time = Math.round((distance / speed) * 60);
+                        
+                        // Store route for display
+                        currentRoute = {
+                            distance: distance,
+                            time: time
+                        };
+                        
+                        // Display results in overlay
+                        displayResultsOverlay(distance, time, speed);
+                        
+                        // Show results overlay
+                        showResultsOverlay();
+                        
+                        showAlert('Road route calculated!', 'success');
+                    }
+                });
+                
+                // Handle errors
+                routingControl.on('routingerror', function(e) {
+                    showAlert('Routing failed. Using approximate road distance.', 'warning');
+                    calculateApproximateRoadRoute(start, end, speed);
+                });
+                
+            } catch (error) {
+                console.error('Error with Leaflet Routing:', error);
+                showAlert('Routing service unavailable. Using approximate road distance.', 'warning');
+                calculateApproximateRoadRoute(start, end, speed);
+            }
+        }
+
+        // Ultimate fallback: Calculate approximate road route
+        function calculateApproximateRoadRoute(start, end, speed) {
+            // Calculate straight line distance
+            const straightDistance = calculateDistance(start.lat, start.lng, end.lat, end.lng);
+            
+            // Apply road factor for fastest route
+            const roadFactor = 1.3;
+            
+            const roadDistance = straightDistance * roadFactor;
+            const time = Math.round((roadDistance / speed) * 60);
+            
+            // Display results in overlay
+            displayResultsOverlay(roadDistance, time, speed);
+            
+            // Draw approximate curved path (simulating roads)
+            drawApproximateRoadPath(start, end);
+            
+            // Show results overlay
+            showResultsOverlay();
+            
+            showAlert('Using approximate road distance.', 'info');
+        }
+
+        // Calculate distance using Haversine formula
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Display results in overlay
+        function displayResultsOverlay(distance, time, speed) {
+            // Format distance to 1 decimal place
+            const formattedDistance = distance.toFixed(1);
+            
+            // Display results in overlay
+            document.getElementById('routeDistanceOverlay').textContent = formattedDistance;
+            document.getElementById('travelTimeOverlay').textContent = time;
+            document.getElementById('roundTripTimeOverlay').textContent = time * 2;
+            document.getElementById('averageSpeedOverlay').textContent = speed;
+        }
+
+        // Draw OSRM route on map
+        function drawOSRMRouteOnMap(geometry) {
+            // Clear previous route if exists
+            clearRouteVisuals();
+            
+            // Convert GeoJSON coordinates to LatLng array
+            const coordinates = geometry.coordinates.map(coord => [coord[1], coord[0]]);
+            
+            // Draw the route with a nice style
+            L.polyline(coordinates, {
+                color: '#5d2a2a',
+                weight: 5,
+                opacity: 0.7,
+                lineJoin: 'round',
+                lineCap: 'round',
+                dashArray: null // Solid line for actual road route
+            }).addTo(map).bindPopup('<b>Road Route to School</b><br>Follow this path on actual roads');
+            
+            // Fit map to show the route with padding
+            const bounds = L.latLngBounds(coordinates);
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+
+        // Draw approximate road path (curved to simulate roads)
+        function drawApproximateRoadPath(start, end) {
+            // Clear previous route if exists
+            clearRouteVisuals();
+            
+            // Create a curved path that simulates roads
+            const midLat = (start.lat + end.lat) / 2;
+            const midLng = (start.lng + end.lng) / 2;
+            
+            // Add some curvature to simulate road path
+            const curveOffset = 0.002;
+            const curvedPath = [
+                [start.lat, start.lng],
+                [midLat + curveOffset, midLng - curveOffset], // Curve point 1
+                [midLat - curveOffset, midLng + curveOffset], // Curve point 2
+                [end.lat, end.lng]
+            ];
+            
+            // Draw the approximate road path
+            L.polyline(curvedPath, {
+                color: '#5d2a2a',
+                weight: 5,
+                opacity: 0.7,
+                lineJoin: 'round',
+                lineCap: 'round',
+                dashArray: '10, 10' // Dashed line for approximate route
+            }).addTo(map).bindPopup('<b>Approximate Road Route</b><br>Actual route may vary');
+            
+            // Fit map to show the route
+            map.fitBounds([
+                [start.lat, start.lng],
+                [end.lat, end.lng]
+            ], { padding: [50, 50] });
+        }
+
+        // Clear route from map
+        function clearRoute() {
+            // Remove routing control if exists
+            if (routingControl) {
+                map.removeControl(routingControl);
+                routingControl = null;
+            }
+            
+            // Clear visual route
+            clearRouteVisuals();
+            
+            // Hide loading spinner
+            document.getElementById('loadingSpinner').style.display = 'none';
+            currentRoute = null;
+        }
+
+        // Clear visual route elements
+        function clearRouteVisuals() {
+            // Remove all polylines from map
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Polyline) {
+                    map.removeLayer(layer);
+                }
+            });
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            // Remove existing alerts
+            const existingAlerts = document.querySelectorAll('.alert-custom');
+            existingAlerts.forEach(alert => alert.remove());
+            
+            // Create new alert
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert-custom alert-${type}`;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            if (type === 'info') icon = 'info-circle';
+            
+            alertDiv.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${icon} me-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // Insert at top
+            const cardBody = document.querySelector('.card-body-custom');
+            const spinner = document.getElementById('loadingSpinner');
+            if (spinner.style.display === 'block') {
+                cardBody.insertBefore(alertDiv, spinner.nextSibling);
+            } else {
+                cardBody.insertBefore(alertDiv, cardBody.firstChild);
+            }
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            
+            // Initialize button states
+            toggleRouteButtons(true);
+            
+            // Update copyright year
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Add initial information
+            showAlert('Click "Detect Current Location" or drag the blue marker to set your starting point.', 'info');
+        });
+        
+        // ===== NAVBAR TEXT COLOR WAVE EFFECT =====
+        function initNavbarTextEffect() {
+            const navbarLogoText = document.getElementById('navbarLogoText');
+            const navbarScrolledText = document.getElementById('navbarScrolledText');
+            const text = 'MODERN SCHOOL';
+            
+            // Clear existing content
+            navbarLogoText.innerHTML = '';
+            navbarScrolledText.innerHTML = '';
+            
+            // Create arrays to store all letter elements
+            const logoLetters = [];
+            const scrolledLetters = [];
+            
+            // Create letter spans for both versions
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                
+                // For navbar-logo-text (visible when not scrolled)
+                const logoLetter = document.createElement('span');
+                logoLetter.className = 'letter';
+                logoLetter.textContent = char;
+                logoLetter.dataset.index = i;
+                // Handle space differently
+                if (char === ' ') {
+                    logoLetter.style.width = '8px'; // Space width
+                    logoLetter.style.pointerEvents = 'none'; // Disable interaction for space
+                }
+                navbarLogoText.appendChild(logoLetter);
+                logoLetters.push(logoLetter);
+                
+                // For navbar-text (visible when scrolled)
+                const scrolledLetter = document.createElement('span');
+                scrolledLetter.className = 'letter';
+                scrolledLetter.textContent = char;
+                scrolledLetter.dataset.index = i;
+                // Handle space differently
+                if (char === ' ') {
+                    scrolledLetter.style.width = '8px'; // Space width
+                    scrolledLetter.style.pointerEvents = 'none'; // Disable interaction for space
+                }
+                navbarScrolledText.appendChild(scrolledLetter);
+                scrolledLetters.push(scrolledLetter);
+            }
+            
+            const totalLetters = text.length;
+            const progressFill = document.getElementById('navbarProgressFill');
+            
+            function updateNavbarEffects() {
+                const scrollY = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = scrollY / docHeight;
+                
+                // Update progress bar width
+                progressFill.style.width = `${scrollPercent * 100}%`;
+                
+                // Calculate which letters should be highlighted based on scroll position
+                const effectStart = 0.1;
+                const effectEnd = 1.0;
+                
+                if (scrollPercent < effectStart) {
+                    // Reset all letters to original color at the top
+                    logoLetters.forEach(letter => {
+                        if (letter.textContent !== ' ') {
+                            letter.classList.remove('maroon');
+                        }
+                    });
+                    scrolledLetters.forEach(letter => {
+                        if (letter.textContent !== ' ') {
+                            letter.classList.remove('maroon');
+                        }
+                    });
+                } else if (scrollPercent > effectEnd) {
+                    // At the end, keep only the last letter highlighted
+                    logoLetters.forEach((letter, index) => {
+                        if (letter.textContent !== ' ') {
+                            if (index === totalLetters - 1) {
+                                letter.classList.add('maroon');
+                            } else {
+                                letter.classList.remove('maroon');
+                            }
+                        }
+                    });
+                    scrolledLetters.forEach((letter, index) => {
+                        if (letter.textContent !== ' ') {
+                            if (index === totalLetters - 1) {
+                                letter.classList.add('maroon');
+                            } else {
+                                letter.classList.remove('maroon');
+                            }
+                        }
+                    });
+                } else {
+                    // Calculate progress within the effect range
+                    const effectProgress = (scrollPercent - effectStart) / (effectEnd - effectStart);
+                    
+                    // Determine which single letter should be highlighted
+                    // Skip spaces when calculating position
+                    const nonSpaceLetters = Array.from(text).filter(char => char !== ' ');
+                    const highlightPosition = Math.floor(effectProgress * nonSpaceLetters.length);
+                    
+                    // Convert highlight position back to original string position
+                    let currentPosition = -1;
+                    let targetIndex = -1;
+                    for (let i = 0; i < text.length; i++) {
+                        if (text[i] !== ' ') {
+                            currentPosition++;
+                            if (currentPosition === highlightPosition) {
+                                targetIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // Apply maroon class to only one letter at a time
+                    logoLetters.forEach((letter, index) => {
+                        if (letter.textContent !== ' ') {
+                            if (index === targetIndex) {
+                                letter.classList.add('maroon');
+                            } else {
+                                letter.classList.remove('maroon');
+                            }
+                        }
+                    });
+                    
+                    scrolledLetters.forEach((letter, index) => {
+                        if (letter.textContent !== ' ') {
+                            if (index === targetIndex) {
+                                letter.classList.add('maroon');
+                            } else {
+                                letter.classList.remove('maroon');
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // Initial call to set colors
+            updateNavbarEffects();
+            
+            // Update effects on scroll
+            window.addEventListener('scroll', updateNavbarEffects);
+            
+            // Also update on resize
+            window.addEventListener('resize', updateNavbarEffects);
+        }
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        function initNavbarScrollEffect() {
+            const navbar = document.querySelector('.navbar');
+            
+            function handleScroll() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+            
+            // Initial check
+            handleScroll();
+            
+            // Add scroll event listener
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        // Initialize on DOM loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavbarScrollEffect();
+            initNavbarTextEffect();
+        });
+    </script>
+</body>
+</html>

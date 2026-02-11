@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern School Branch Selector</title>
+
+    <style>
+        /* Base Styles and Typography */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container for the Grid */
+        .school-selector-container {
+            width: 90%;
+            max-width: 1300px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Styling with Logo */
+        .selector-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .selector-header img {
+            height: 200px; /* Bigger logo */
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .selector-header p {
+            color: #6c757d;
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        /* The Grid System */
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* School Card Container */
+        .school-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Changed from center to flex-start */
+            align-items: center;
+            height: 85px;
+            min-height: 85px;
+            text-decoration: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            padding: 10px 5px; /* Increased top padding */
+            overflow: hidden;
+            border: 2px solid transparent;
+            background-color: #ffffff;
+        }
+
+        /* UNSELECTED CARD: Outline Style */
+        .school-card:not(.selected) {
+            color: #5d2a2a;
+            border-color: #e0e6f0;
+        }
+
+        /* Hover effect for UNSELECTED CARDS */
+        .school-card:not(.selected):hover {
+            border-color: #5d2a2a;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        /* SELECTED CARD: Enhanced Outline Style */
+        .school-card.selected {
+            border: 2px solid #5d2a2a;
+            box-shadow: 0 0 0 2px rgba(93, 42, 42, 0.15),
+                        0 10px 20px rgba(93, 42, 42, 0.15);
+            height: 85px;
+            min-height: 85px;
+        }
+
+        /* Checkmark for selected card */
+        .school-card.selected::before {
+            content: "✓";
+            position: absolute;
+            top: 10px; /* Adjusted position */
+            right: 10px; /* Adjusted position */
+            background-color: #5d2a2a;
+            color: white;
+            width: 22px; /* Slightly smaller */
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px; /* Smaller font */
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        /* School info container */
+        .school-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px; /* Reduced gap */
+            width: 100%;
+            margin-top: 8px; /* Move content higher */
+        }
+
+        /* Main school name styling */
+        .school-name {
+            font-weight: 700;
+            font-size: 1.0em;
+            color: inherit;
+            margin-bottom: 2px; /* Reduced margin */
+        }
+
+        /* Location text */
+        .school-card span {
+            display: block;
+            font-size: 0.75em;
+            font-weight: 500;
+            color: #666;
+            padding: 0 10px;
+            line-height: 1.2; /* Tighter line height */
+        }
+
+        .school-card.selected span {
+            color: #5d2a2a;
+            font-weight: 600;
+        }
+
+        /* Action Button - Will be added dynamically */
+        .action-button {
+            position: absolute;
+            bottom: 10px; /* Moved higher */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 16px; /* Adjusted padding */
+            background-color: #5d2a2a;
+            color: white;
+            border: none;
+            border-radius: 6px; /* Smaller radius */
+            font-size: 0.85em; /* Smaller font */
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(93, 42, 42, 0.2);
+            width: 90%;
+            max-width: 180px; /* Smaller max width */
+            animation: slideUp 0.3s ease;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            z-index: 3;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .action-button:hover {
+            background-color: #4a2121;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 4px 8px rgba(93, 42, 42, 0.3);
+        }
+
+        .action-button:active {
+            transform: translateX(-50%) translateY(0);
+            box-shadow: 0 2px 4px rgba(93, 42, 42, 0.2);
+        }
+
+        /* Overlay to dim text when button is shown */
+        .text-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to top, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0.7) 70%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .school-card.selected .text-overlay {
+            opacity: 0.2;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .selector-header img {
+                height: 180px; /* Adjusted for smaller screens */
+            }
+            
+            .branch-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .selector-header img {
+                height: 150px;
+            }
+            
+            .selector-header p {
+                font-size: 1.1em;
+            }
+            
+            .branch-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 18px;
+            }
+            
+            .school-card {
+                height: 95px;
+                min-height: 95px;
+                padding: 12px 5px;
+            }
+            
+            .school-info {
+                margin-top: 6px;
+            }
+            
+            .action-button {
+                padding: 7px 14px;
+                font-size: 0.8em;
+                bottom: 8px;
+                max-width: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .school-selector-container {
+                padding: 25px 20px;
+            }
+            
+            .selector-header {
+                margin-bottom: 30px;
+            }
+            
+            .selector-header img {
+                height: 120px;
+            }
+            
+            .selector-header p {
+                font-size: 1em;
+            }
+            
+            .branch-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .school-card {
+                height: 90px;
+                min-height: 90px;
+                padding: 10px 5px;
+            }
+            
+            .school-info {
+                margin-top: 5px;
+                gap: 2px;
+            }
+            
+            .school-name {
+                font-size: 0.95em;
+            }
+            
+            .school-card span {
+                font-size: 0.7em;
+            }
+            
+            .action-button {
+                padding: 6px 12px;
+                font-size: 0.75em;
+                bottom: 7px;
+                max-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <div class="school-selector-container">
+        
+        <header class="selector-header">
+            <img src="ms_logo.png" alt="Modern School Logo">
+            <p>Please choose the branch you wish to visit.</p>
+        </header>
+
+        <div class="branch-grid">
+            
+            <!-- Kota Branch -->
+            <div class="school-card selected" data-url="kota.html" data-is-main="true">
+                <div class="text-overlay"></div>
+                <div class="school-info">
+                    <div class="school-name">Modern School</div>
+                    <span>Location: Kota- Talwandi</span>
+                </div>
+                <!-- Button will be added by JavaScript -->
+            </div>
+            
+            <!-- Naya Nohra Branch -->
+            <div class="school-card" data-url="naya-nohra.html" data-is-main="false">
+                <div class="text-overlay"></div>
+                <div class="school-info">
+                    <div class="school-name">Modern School</div>
+                    <span>Location: Kota- Naya Nohra</span>
+                </div>
+            </div>
+            
+            <!-- Baran Branch -->
+            <div class="school-card" data-url="baran.html" data-is-main="false">
+                <div class="text-overlay"></div>
+                <div class="school-info">
+                    <div class="school-name">Modern School</div>
+                    <span>Location: Baran</span>
+                </div>
+            </div>
+            
+            <!-- Jaipur Branch -->
+            <div class="school-card" data-url="jaipur.html" data-is-main="false">
+                <div class="text-overlay"></div>
+                <div class="school-info">
+                    <div class="school-name">Modern School</div>
+                    <span>Location: Jaipur</span>
+                </div>
+            </div>
+            
+            <!-- Bharatpur Branch -->
+            <div class="school-card" data-url="bharatpur.html" data-is-main="false">
+                <div class="text-overlay"></div>
+                <div class="school-info">
+                    <div class="school-name">Modern School</div>
+                    <span>Location: Bharatpur</span>
+                </div>
+            </div>
+            
+            <!-- Steps Pre School -->
+            <div class="school-card" data-url="steps-kota.html" data-is-main="false">
+                <div class="text-overlay"></div>
+                <div class="school-info">
+                    <div class="school-name">Steps Pre School</div>
+                    <span>Location: Kota</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const schoolCards = document.querySelectorAll('.school-card');
+            let currentSelectedCard = null;
+            
+            // Function to add action button to a card
+            function addActionButton(card) {
+                // Remove any existing action button first
+                const existingButton = card.querySelector('.action-button');
+                if (existingButton) {
+                    existingButton.remove();
+                }
+                
+                // Get card data
+                const url = card.getAttribute('data-url');
+                const isMain = card.getAttribute('data-is-main') === 'true';
+                const buttonText = isMain ? 'Back to Website' : 'Proceed to Website';
+                
+                // Create and add the action button
+                const actionButton = document.createElement('a');
+                actionButton.href = url;
+                actionButton.className = 'action-button';
+                actionButton.textContent = buttonText;
+                
+                // Add click handler to prevent card click event
+                actionButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+                
+                card.appendChild(actionButton);
+            }
+            
+            // Function to remove action button from a card
+            function removeActionButton(card) {
+                const button = card.querySelector('.action-button');
+                if (button) {
+                    button.remove();
+                }
+            }
+            
+            // Function to select a school
+            function selectSchool(card) {
+                // Remove selected class and button from previously selected card
+                if (currentSelectedCard && currentSelectedCard !== card) {
+                    currentSelectedCard.classList.remove('selected');
+                    removeActionButton(currentSelectedCard);
+                }
+                
+                // Add selected class to clicked card
+                card.classList.add('selected');
+                
+                // Add action button to selected card
+                addActionButton(card);
+                
+                // Update current selected card
+                currentSelectedCard = card;
+            }
+            
+            // Add click event to all school cards
+            schoolCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't do anything if clicking the overlay or button
+                    if (e.target.classList.contains('action-button') || 
+                        e.target.classList.contains('text-overlay')) {
+                        return;
+                    }
+                    
+                    // Only select if not already selected
+                    if (!this.classList.contains('selected')) {
+                        selectSchool(this);
+                    }
+                });
+            });
+            
+            // Initialize with Kota selected
+            const initialCard = document.querySelector('.school-card.selected');
+            if (initialCard) {
+                selectSchool(initialCard);
+            }
+        });
+    </script>
+</body>
+</html>
