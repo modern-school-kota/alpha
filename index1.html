@@ -56,12 +56,13 @@
             font-family: 'Cinzel', serif;
         }
 
-        .intro-main-wrapper {
-            text-align: center;
-            width: 95%;
-            max-width: 1100px;
-            margin-top: 50px; 
-        }
+       .intro-main-wrapper {
+    position: relative; /* Add this */
+    text-align: center;
+    width: 95%;
+    max-width: 1100px;
+    margin-top: 50px; 
+}
 
         .logo-row {
             display: flex;
@@ -145,13 +146,24 @@
         @keyframes softRiseLeft { 0% { bottom: -100px; opacity: 0; transform: translateX(0); } 40% { bottom: 0; opacity: 0; transform: translateX(0); } 100% { bottom: 0; opacity: 1; transform: translateX(-170px); } }
         @keyframes softRiseRight { 0% { bottom: -100px; opacity: 0; transform: translateX(0); } 40% { bottom: 0; opacity: 0; transform: translateX(0); } 100% { bottom: 0; opacity: 1; transform: translateX(170px); } }
 
-        .asterisk {
-            position: absolute;
-            color: var(--royal-gold);
-            font-size: 6rem;
-            animation: twinkle 4s infinite ease-in-out;
-        }
+       .asterisk {
+    position: absolute;
+    color: var(--royal-gold);
+    font-size: 6rem;
+    animation: twinkle 4s infinite ease-in-out;
+    z-index: 1; /* Ensure they appear above other elements */
+}
 
+/* Adjust positioning to be within container */
+.asterisk:nth-child(1) {
+    left: 50px; /* Changed from -120px */
+    bottom: 50px; /* Changed from -100px */
+}
+
+.asterisk:nth-child(2) {
+    right: 50px; /* Changed from -120px */
+    top: 100px; /* Changed from -60px */
+}
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
 
         #final-logo-container {
@@ -1777,11 +1789,11 @@
     </div>
 
     <div class="cards-container" id="all-cards">
-        <div class="card"><img src="intro2a.JPG" alt="1"></div>
+        <div class="card"><img src="intro2a.jpg" alt="1"></div>
         <div class="card"><img src="intro2b.jpg" alt="2"></div>
         <div class="card"><img src="intro2c.jpg" alt="3"></div>
         <div class="card"><img src="intro2d.jpg" alt="4"></div>
-        <div class="card"><img src="intro2e.JPG" alt="5"></div>
+        <div class="card"><img src="intro2e.jpg" alt="5"></div>
     </div>
 
     <div class="final-text-wrapper" id="final-msg">
@@ -2793,5 +2805,4 @@ document.addEventListener('keydown', (e) => {
 });
 </script>
 </body>
-
 </html>
