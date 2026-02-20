@@ -167,11 +167,13 @@
             <div class="row g-3 mb-3">
                 <div class="col-md-4">
                     <label class="form-label required-label">Position Applied For</label>
-                    <select class="form-select" id="posSelect" onchange="handleSubjectLogic()" required>
-                        <option value="">-- Select --</option>
-                        <option value="PGT">PGT</option><option value="TGT">TGT</option>
-                        <option value="PRT">PRT</option><option value="Admin">Admin</option>
-                    </select>
+                  <select class="form-select" id="posSelect" onchange="handleSubjectLogic()" required>
+    <option value="">-- Select --</option>
+    <option value="PGT">PGT</option>
+    <option value="TGT">TGT</option>
+    <option value="PRT">PRT</option>
+    <option value="Other">Other (Staff/Admin)</option>
+</select>
                 </div>
                 <div class="col-md-8 d-none" id="subField">
                     <label class="form-label required-label">Subject Specialization</label>
@@ -348,18 +350,40 @@
     }
 
     // 3. Subject Selection Logic
-    function handleSubjectLogic() {
-        const pos = document.getElementById('posSelect').value;
-        const wrap = document.getElementById('subField');
-        const list = document.getElementById('subList');
-        wrap.classList.add('d-none'); 
-        list.innerHTML = '';
-        if(['PGT','TGT','PRT'].includes(pos)) {
-            wrap.classList.remove('d-none');
-            const subs = ['English', 'Hindi', 'Mathematics', 'Science', 'Social Science', 'Computer', 'Commerce'];
-            subs.forEach(s => list.add(new Option(s, s)));
-        }
+   // Updated Subject and Position Logic
+function handleSubjectLogic() {
+    const pos = document.getElementById('posSelect').value;
+    const wrap = document.getElementById('subField');
+    const list = document.getElementById('subList');
+    
+    // Reset view
+    wrap.classList.add('d-none'); 
+    list.innerHTML = '';
+    list.required = false;
+
+    let subjects = [];
+
+    if (pos === 'PGT') {
+        subjects = ['English', 'Physical Education', 'Physics', 'Chemistry', 'Mathematics', 'Accountancy', 'Economics', 'Business Studies', 'Informatics Practices (IP)', 'Geography', 'History', 'Political Science', 'Psychology'];
+    } 
+    else if (pos === 'TGT') {
+        subjects = ['English', 'Hindi', 'Mathematics', 'Science', 'Social Science'];
+    } 
+    else if (pos === 'PRT') {
+        subjects = ['English', 'Hindi', 'Arts', 'Sanskrit', 'Mathematics', 'Science', 'Social Science'];
+    } 
+    else if (pos === 'Other') {
+        subjects = ['Front Office', 'Back Office', 'IT', 'Accounts', 'Library', 'Others'];
     }
+
+    if (subjects.length > 0) {
+        wrap.classList.remove('d-none');
+        list.required = true;
+        // Add default placeholder
+        list.add(new Option("-- Select Subject/Department --", ""));
+        subjects.forEach(s => list.add(new Option(s, s)));
+    }
+}
 
     // 4. Grid Additions (Education & Experience)
     function addNewEdu() {
