@@ -19,7 +19,40 @@
             margin-bottom: 40px;
         }
         .header-logo { height: 120px; width: auto;   filter: brightness(0) invert(1);}
+/* Responsive Header Logic */
+.header-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row; /* Default: Side by side */
+    gap: 20px;
+}
 
+.header-text-container {
+    text-align: center;
+}
+
+/* Mobile View Adjustments (under 768px) */
+@media (max-width: 767px) {
+    .header-content-wrapper {
+        flex-direction: column; /* Stack vertically */
+        text-align: center;
+    }
+
+    .header-logo {
+        height: 100px; /* Slightly smaller logo for mobile */
+        margin-right: 0 !important; /* Remove desktop margin */
+    }
+
+    .main-header h1 {
+        font-size: 1.5rem; /* Scale down text size for small screens */
+        margin-top: 10px;
+    }
+    
+    .form-card {
+        padding: 20px; /* Reduce padding on mobile for better fit */
+    }
+}
         .form-card { 
             background: white; 
             border: none; 
@@ -79,11 +112,12 @@
 <body>
 
 <div class="main-header">
-    <div class="container d-flex align-items-center">
-        <img src="ms_logo.png" alt="Logo" class="header-logo me-4" >
-        <div class="flex-grow-1 text-center me-5">
-            <h1 class="fw-bold mb-0">FACULTY RECRUITMENT PORTAL</h1>
-         
+    <div class="container">
+        <div class="header-content-wrapper">
+            <img src="ms_logo.png" alt="Logo" class="header-logo">
+            <div class="header-text-container">
+                <h1 class="fw-bold mb-0">FACULTY RECRUITMENT PORTAL</h1>
+            </div>
         </div>
     </div>
 </div>
