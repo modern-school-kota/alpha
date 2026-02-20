@@ -324,7 +324,8 @@
 </div>
 
 <script>
-    // Nationality - India Default
+ 
+    // 1. Nationality Population - India Default
     const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
     const nat = document.getElementById('natSelect');
     let india = new Option("India", "India");
@@ -333,7 +334,7 @@
     countries.forEach(c => nat.add(new Option(c, c)));
     document.getElementById('subDate').valueAsDate = new Date();
 
-    // Logic: Address Sync
+    // 2. Address Sync Logic
     function syncAddress() {
         const check = document.getElementById('sameAddress');
         const perm = document.getElementById('permAddr');
@@ -346,12 +347,13 @@
         }
     }
 
-    // Logic: Subject Selection
+    // 3. Subject Selection Logic
     function handleSubjectLogic() {
         const pos = document.getElementById('posSelect').value;
         const wrap = document.getElementById('subField');
         const list = document.getElementById('subList');
-        wrap.classList.add('d-none'); list.innerHTML = '';
+        wrap.classList.add('d-none'); 
+        list.innerHTML = '';
         if(['PGT','TGT','PRT'].includes(pos)) {
             wrap.classList.remove('d-none');
             const subs = ['English', 'Hindi', 'Mathematics', 'Science', 'Social Science', 'Computer', 'Commerce'];
@@ -359,10 +361,10 @@
         }
     }
 
-    // Logic: Grid Additions
+    // 4. Grid Additions (Education & Experience)
     function addNewEdu() {
         const row = document.getElementById('eduTbl').getElementsByTagName('tbody')[0].insertRow();
-        row.innerHTML = `<td><select required><option value="">Select</option><option>Graduation</option><option>Post Graduation</option><option>B.Ed</option></select></td><td><input type="text" required></td><td><input type="text" required></td><td><input type="number" required></td><td><input type="text" required></td><td><button type="button" class="btn btn-link text-danger p-0" onclick="this.closest('tr').remove()"><i class="bi bi-trash-fill"></i></button></td>`;
+        row.innerHTML = `<td><select required class="form-select border-0"><option value="">Select</option><option>Graduation</option><option>Post Graduation</option><option>B.Ed</option></select></td><td><input type="text" required></td><td><input type="text" required></td><td><input type="number" required></td><td><input type="text" required></td><td><button type="button" class="btn btn-link text-danger p-0" onclick="this.closest('tr').remove()"><i class="bi bi-trash-fill"></i></button></td>`;
     }
 
     function addNewExp() {
@@ -377,38 +379,105 @@
         if(s && e) {
             const d1 = new Date(s), d2 = new Date(e);
             let months = (d2.getFullYear() - d1.getFullYear()) * 12 + (d2.getMonth() - d1.getMonth());
+            if (months < 0) months = 0;
             tr.querySelector('.dur-res').value = `${Math.floor(months/12)}Y, ${months%12}M`;
         }
     }
 
-    // Photo Preview
+    // 5. Photo Preview (Maintains Top Face Area Instruction)
     document.getElementById('photoInp').onchange = function(e) {
-        const reader = new FileReader();
-        reader.onload = f => document.getElementById('photoBox').innerHTML = `<img src="${f.target.result}">`;
-        reader.readAsDataURL(this.files[0]);
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = f => {
+                const photoBox = document.getElementById('photoBox');
+                photoBox.innerHTML = `<img src="${f.target.result}" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">`;
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
     };
 
-    // Sig Pad
+    // 6. Signature Pad (Desktop + Mobile Fix)
     const canvas = document.getElementById('sig-canvas');
     const ctx = canvas.getContext('2d');
     let drawing = false;
-    canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
-    function start(e) { drawing = true; draw(e); }
-    function stop() { drawing = false; ctx.beginPath(); }
-    function draw(e) {
-        if(!drawing) return;
-        ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.strokeStyle = "#002b5e";
-        const r = canvas.getBoundingClientRect();
-        const x = (e.clientX || e.touches[0].clientX) - r.left;
-        const y = (e.clientY || e.touches[0].clientY) - r.top;
-        ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
-    }
-    canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', stop);
-    function clearSig() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-    // Final Submission with Success Handling
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        ctx.scale(ratio, ratio);
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        let clientX, clientY;
+        if (e.touches && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        return {
+            x: clientX - rect.left,
+            y: clientY - rect.top
+        };
+    }
+
+    function start(e) {
+        drawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        if (e.type.includes('touch')) e.preventDefault();
+    }
+
+    function draw(e) {
+        if (!drawing) return;
+        if (e.type.includes('touch')) e.preventDefault();
+        const pos = getPos(e);
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = "#002b5e";
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+    }
+
+    function stop() {
+        drawing = false;
+    }
+
+    // Desktop Listeners
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stop);
+
+    // Mobile Listeners
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stop);
+
+    function clearSig() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+    }
+
+    // 7. Form Submission
     document.getElementById('recruitmentForm').onsubmit = function(e) {
         e.preventDefault();
+        
+        // Basic validation for signature
+        const blank = document.createElement('canvas');
+        blank.width = canvas.width;
+        blank.height = canvas.height;
+        if (canvas.toDataURL() === blank.toDataURL()) {
+            Swal.fire({ icon: 'error', title: 'Signature Required', text: 'Please sign in the signature pad.' });
+            return;
+        }
+
         const invalid = this.querySelectorAll(':invalid');
         if (invalid.length > 0) {
             invalid[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -435,11 +504,11 @@
             allowOutsideClick: false
         }).then((result) => {
             if (result.isConfirmed) {
-                // Refresh page after modal close
                 location.reload();
             }
         });
     };
+
 </script>
 
 </body>
