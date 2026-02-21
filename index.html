@@ -37,6 +37,19 @@
             .header-logo { height: 100px; margin-right: 0 !important; }
             .main-header h1 { font-size: 1.5rem; margin-top: 10px; }
             .form-card { padding: 20px; }
+            
+            /* Mobile fixes for place and recaptcha */
+            .mobile-stack {
+                flex-direction: column !important;
+            }
+            .mobile-stack > div {
+                width: 100% !important;
+                margin-bottom: 15px;
+            }
+            .g-recaptcha {
+                transform: scale(0.9);
+                transform-origin: left center;
+            }
         }
 
         .form-card { 
@@ -88,14 +101,50 @@
         .table-custom th, .table-custom td { border: 1px solid #212529 !important; vertical-align: middle; }
         .table-custom input, .table-custom select { border: none !important; width: 100%; padding: 10px; background: transparent; }
 
-        .sig-wrapper { border: 2px solid #6c757d; border-radius: 6px; background: #fff; position: relative; height: 200px; width: 100%; }
-        #sig-canvas { width: 100%; height: 100%; cursor: crosshair; }
+        .sig-wrapper { 
+            border: 2px solid #6c757d; 
+            border-radius: 6px; 
+            background: #fff; 
+            position: relative; 
+            height: 200px; 
+            width: 100%; 
+        }
+        #sig-canvas { 
+            width: 100%; 
+            height: 100%; 
+            cursor: crosshair; 
+            display: block;
+            touch-action: none; /* Prevents page scroll on touch devices */
+        }
+        
+        /* Metadata styling - moved outside canvas */
+        .signature-metadata {
+            font-size: 10px;
+            color: #666;
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+            text-align: center;
+            font-style: italic;
+            border: 1px solid #dee2e6;
+        }
 
         .note-alert { background-color: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; font-weight: 600; color: #856404; }
 
         .photo-hint { font-size: 0.75rem; color: #6c757d; margin-top: 5px; }
         
         select.form-select { cursor: pointer; }
+        
+        /* Fixed positioning for signature controls */
+        .sig-clear-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 10;
+            font-size: 10px;
+            padding: 2px 6px;
+        }
     </style>
 </head>
 <body>
@@ -330,18 +379,25 @@
                 <div class="col-md-6">
                     <label class="form-label required-label">Signature Pad</label>
                     <div class="sig-wrapper">
-                        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="clearSig()" style="font-size: 10px; z-index: 10;">Clear Pad</button>
+                        <button type="button" class="btn btn-danger btn-sm sig-clear-btn" onclick="clearSig()">Clear Pad</button>
                         <canvas id="sig-canvas"></canvas>
+                    </div>
+                    <!-- Metadata moved outside canvas and below signature pad -->
+                    <div id="signatureMetadata" class="signature-metadata">
+                        <span id="metaLocation">Loc: Fetching...</span> | 
+                        <span id="metaIP">IP: Fetching...</span> | 
+                        <span id="metaDateTime">Date: </span>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <div class="row g-3">
-                        <div class="col-4">
+                    <!-- Added mobile-stack class for responsive behavior -->
+                    <div class="row g-3 mobile-stack">
+                        <div class="col-4 col-md-4">
                             <label class="form-label required-label">Place</label>
                             <input type="text" id="placeInput" class="form-control" placeholder="Enter City" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required>
                         </div>
-                        <div class="col-8 d-flex justify-content-center">
+                        <div class="col-8 col-md-8">
                             <div class="g-recaptcha" data-sitekey="6Lel43IsAAAAABGbWyo2lb99btAY35kfvxmw46LS" data-callback="enableSubmit" data-expired-callback="disableSubmit"></div>
                         </div>
                         <div class="col-12 mt-4">
@@ -501,35 +557,49 @@
         }
     }
 
+    // Variables for metadata
     let userIP = "Fetching...";
     let userLocStr = "Loc: Fetching...";
+
+    // Function to update metadata in the separate div
+    function updateMetadataDisplay() {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+        
+        document.getElementById('metaLocation').textContent = userLocStr;
+        document.getElementById('metaIP').textContent = 'IP: ' + userIP;
+        document.getElementById('metaDateTime').textContent = 'Date: ' + dateStr;
+    }
 
     fetch('https://api.ipify.org?format=json')
         .then(res => res.json())
         .then(data => {
             userIP = data.ip;
-            drawMetadata();
+            updateMetadataDisplay();
         })
         .catch(() => {
             userIP = "Unavailable";
-            drawMetadata();
+            updateMetadataDisplay();
         });
 
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 userLocStr = `Lat: ${position.coords.latitude.toFixed(4)}, Lon: ${position.coords.longitude.toFixed(4)}`;
-                drawMetadata();
+                updateMetadataDisplay();
             },
             (error) => {
                 userLocStr = "Loc: Nil";
-                drawMetadata();
+                updateMetadataDisplay();
             }
         );
     } else {
         userLocStr = "Loc: Nil";
-        drawMetadata();
+        updateMetadataDisplay();
     }
+
+    // Update metadata every second to keep time current
+    setInterval(updateMetadataDisplay, 1000);
 
     function enableSubmit(response) { 
         document.getElementById("submitBtn").disabled = false; 
@@ -600,108 +670,110 @@
         reader.readAsDataURL(file);
     };
 
-    // SIGNATURE PAD - Fully restored from original
+    // SIGNATURE PAD - Fixed alignment issue
     const canvas = document.getElementById('sig-canvas');
     const ctx = canvas.getContext('2d');
     let drawing = false;
 
     function resizeCanvas() {
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
-        ctx.scale(ratio, ratio);
+        const container = canvas.parentElement;
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+        
+        // Set canvas dimensions to match container exactly
+        canvas.width = containerWidth;
+        canvas.height = containerHeight;
+        
+        // Reset context properties after resize
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.strokeStyle = "#000";
-        drawMetadata(); 
+        ctx.imageSmoothingEnabled = true;
     }
     
     window.addEventListener('resize', resizeCanvas);
-    setTimeout(resizeCanvas, 200);
+    
+    // Initial resize with slight delay to ensure container is ready
+    setTimeout(() => {
+        resizeCanvas();
+    }, 100);
 
-    function drawMetadata() {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString() + " " + now.toLocaleTimeString();
-        const metaText = `${userLocStr} | IP: ${userIP} | Date: ${dateStr}`;
-        const w = canvas.width / (window.devicePixelRatio || 1);
-        const h = canvas.height / (window.devicePixelRatio || 1);
-
-        ctx.save();
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.clearRect(0, h-40, w, 40);
-        
-        ctx.beginPath();
-        ctx.strokeStyle = "#ddd";
-        ctx.lineWidth = 1;
-        ctx.moveTo(10, h - 35);
-        ctx.lineTo(w - 10, h - 35);
-        ctx.stroke();
-
-        ctx.fillStyle = "#888";
-        ctx.font = "italic 10px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(metaText, w/2, h - 15);
-        ctx.restore();
-    }
-
-    function getPos(e) {
+    function getCanvasCoordinates(e) {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
         
         let clientX, clientY;
+        
         if (e.touches) {
+            // Touch event
             clientX = e.touches[0].clientX;
             clientY = e.touches[0].clientY;
+            e.preventDefault(); // Prevent scrolling
         } else {
+            // Mouse event
             clientX = e.clientX;
             clientY = e.clientY;
         }
         
-        return { 
-            x: (clientX - rect.left) * scaleX, 
-            y: (clientY - rect.top) * scaleY 
-        };
+        // Calculate canvas coordinates
+        const canvasX = (clientX - rect.left) * scaleX;
+        const canvasY = (clientY - rect.top) * scaleY;
+        
+        return { x: canvasX, y: canvasY };
     }
 
-    function start(e) { 
-        drawing = true; 
-        const p = getPos(e); 
-        ctx.beginPath(); 
-        ctx.moveTo(p.x, p.y); 
-        if(e.touches) e.preventDefault(); 
+    function startDrawing(e) {
+        e.preventDefault();
+        drawing = true;
+        const coords = getCanvasCoordinates(e);
+        ctx.beginPath();
+        ctx.moveTo(coords.x, coords.y);
     }
-    
+
     function draw(e) {
+        e.preventDefault();
         if (!drawing) return;
-        const p = getPos(e);
-        ctx.lineTo(p.x, p.y); 
+        
+        const coords = getCanvasCoordinates(e);
+        ctx.lineTo(coords.x, coords.y);
         ctx.stroke();
-        if(e.touches) e.preventDefault();
     }
-    
-    function stop() { drawing = false; }
 
-    canvas.addEventListener('mousedown', start);
+    function stopDrawing() {
+        drawing = false;
+        ctx.beginPath(); // Prevents line connecting when restarting
+    }
+
+    // Mouse events
+    canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
-    window.addEventListener('mouseup', stop);
-    canvas.addEventListener('touchstart', start, {passive:false});
-    canvas.addEventListener('touchmove', draw, {passive:false});
-    canvas.addEventListener('touchend', stop);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+
+    // Touch events
+    canvas.addEventListener('touchstart', startDrawing, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchcancel', stopDrawing);
 
     function clearSig() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawMetadata();
     }
 
     // FORM SUBMIT
     document.getElementById('recruitmentForm').onsubmit = function(e) {
         e.preventDefault();
         
-        const blank = document.createElement('canvas');
-        blank.width = canvas.width;
-        blank.height = canvas.height;
-        if (canvas.toDataURL() === blank.toDataURL()) {
+        // Check if canvas is empty (all white/transparent)
+        const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        const isCanvasEmpty = pixelData.every((value, index) => {
+            // Check alpha channel (every 4th value)
+            return (index + 1) % 4 !== 0 || value === 0;
+        });
+        
+        if (isCanvasEmpty) {
             Swal.fire({ 
                 icon: 'error', 
                 title: 'Signature Required', 
