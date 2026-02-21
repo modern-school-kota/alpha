@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Portal | Modern School Kota</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        /* [Rule: Using Helvetica / Sans-Serif No Italics] */
+        body { 
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden; 
+        }
+
+        /* [Rule: Background image top face area always shown - No Black Opacity] */
+        .bg-campus {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('background.jpg') no-repeat;
+            background-size: cover;
+            background-position: top center; 
+        }
+
+        .modern-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 245, 255, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            height:370px;
+        }
+
+        .input-box {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* [Rule: Active blue for focus] */
+        .input-box:focus-within {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            transition: all 0.2s ease;
+        }
+
+        /* Styled disabled state for button */
+        .btn-primary:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15));
+        }
+
+        .footer-text {
+            color: #64748b;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-top:-40px;
+        }
+
+        /* Shrink reCAPTCHA slightly to fit compact card */
+        .g-recaptcha {
+            transform: scale(0.85);
+            transform-origin: 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-campus"></div>
+
+    <div class="relative z-10 w-full flex flex-col items-center px-4">
+        
+        <div class="flex justify-center">
+            <img src="ms_logo.png" alt="School Logo" class="logo-glow object-contain" 
+                 style="width: 100%; max-width: 320px; height: auto;">
+        </div>
+
+        <div class="modern-card rounded-[1.5rem] p-6 sm:p-8 mt-6">
+            
+            <div id="loginSection" class="space-y-4">
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-slate-500 text-[9px] uppercase font-bold tracking-widest ml-1 mb-1 block">Username</label>
+                        <div class="input-box rounded-xl px-4 py-2.5">
+                            <input type="text" placeholder="Staff ID" class="bg-transparent border-none outline-none text-slate-800 w-full placeholder:text-slate-400 text-sm font-medium">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-slate-500 text-[9px] uppercase font-bold tracking-widest ml-1">Password</label>
+                            <button onclick="toggleView('forgot')" class="text-[9px] font-bold text-blue-600 hover:text-blue-700 uppercase" hidden disabled>Forgot?</button>
+                        </div>
+                        <div class="input-box rounded-xl px-4 py-2.5">
+                            <input type="password" placeholder="••••••••" class="bg-transparent border-none outline-none text-slate-800 w-full placeholder:text-slate-400 text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-1">
+                    <div class="g-recaptcha" 
+                         data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" 
+                         data-callback="onCaptchaSuccess"
+                         data-expired-callback="onCaptchaExpired"></div>
+                </div>
+
+                <button id="loginBtn" disabled class="btn-primary w-full text-white font-bold py-3 rounded-xl uppercase tracking-widest text-xs shadow-md shadow-blue-900/20">
+                    Sign In
+                </button>
+            </div>
+
+            <div id="forgotSection" class="hidden space-y-4">
+                <div class="text-center">
+                    <h2 class="text-slate-800 text-sm font-bold uppercase tracking-tight">Recover Account</h2>
+                </div>
+                <div class="input-box rounded-xl px-4 py-2.5">
+                    <input type="email" placeholder="Institutional Email" class="bg-transparent border-none outline-none text-slate-800 w-full placeholder:text-slate-400 text-sm font-medium">
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="toggleView('login')" class="flex-1 bg-slate-100 text-slate-600 font-bold py-3 rounded-xl text-[9px] uppercase hover:bg-slate-200">Back</button>
+                    <button class="flex-[2] btn-primary text-white font-bold py-3 rounded-xl text-[9px] uppercase">Reset</button>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-between items-center border-t border-slate-200 pt-4">
+                <span class="footer-text uppercase">Version 1.0  </span>
+                <span class="footer-text uppercase text-[8px]">Version Control<span class="text-blue-600">MSKT</span></span>
+            </div>
+        </div>
+
+        <p class="mt-6 text-center text-slate-800 text-[9px] uppercase font-bold tracking-[0.4em] opacity-60">
+            Secure Staff Access
+        </p>
+    </div>
+
+    <script>
+        // [NEW] Logic to enable button on success
+        function onCaptchaSuccess() {
+            document.getElementById('loginBtn').disabled = false;
+        }
+
+        // Disable button if captcha expires
+        function onCaptchaExpired() {
+            document.getElementById('loginBtn').disabled = true;
+        }
+
+        function toggleView(view) {
+            const login = document.getElementById('loginSection');
+            const forgot = document.getElementById('forgotSection');
+
+            if(view === 'forgot') {
+                login.classList.add('hidden');
+                forgot.classList.remove('hidden');
+            } else {
+                login.classList.remove('hidden');
+                forgot.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
