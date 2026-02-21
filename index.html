@@ -103,7 +103,7 @@
 <div class="main-header">
     <div class="container">
         <div class="header-content-wrapper">
-            <img src="ms_logo.png" alt="Logo" class="header-logo">
+            <img src="ms_logo.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
             <div class="header-text-container">
                 <h1 class="fw-bold mb-0">FACULTY RECRUITMENT PORTAL</h1>
             </div>
@@ -121,7 +121,7 @@
                     <div class="row g-3">
                         <div class="col-md-8">
                             <label class="form-label required-label">Full Name</label>
-                            <input type="text" id="fullName" class="form-control" placeholder="Full Name" required>
+                            <input type="text" id="fullName" class="form-control" placeholder="Full Name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label required-label">Date of Birth</label>
@@ -150,7 +150,7 @@
                             <label class="form-label required-label">Mobile Number</label>
                             <div class="input-group">
                                 <span class="input-group-text fw-bold border-secondary">+91</span>
-                                <input type="text" class="form-control" pattern="\d{10}" maxlength="10" placeholder="10 Digits" required>
+                                <input type="text" class="form-control" pattern="\d{10}" maxlength="10" placeholder="10 Digits" onkeypress="return onlyNumberKey(event)" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -161,7 +161,7 @@
                         <!-- Address Fields with fixed height class and proper sync logic -->
                         <div class="col-md-6">
                             <label class="form-label required-label">Permanent Address</label>
-                            <textarea id="permAddr" class="form-control address-textarea" rows="3" oninput="syncOnType()" required></textarea>
+                            <textarea id="permAddr" class="form-control address-textarea" rows="3" oninput="syncOnType(); validateSafeText(this)" required></textarea>
                         </div>
                         
                         <div class="col-md-6">
@@ -172,7 +172,7 @@
                                     <label class="form-check-label fw-bold small" for="sameAddress">Same as Permanent</label>
                                 </div>
                             </div>
-                            <textarea id="currAddr" class="form-control address-textarea" rows="3" required></textarea>
+                            <textarea id="currAddr" class="form-control address-textarea" rows="3" oninput="validateSafeText(this)" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -259,24 +259,24 @@
                     <tbody>
                         <tr>
                             <td><input type="text" value="Secondary (10th)" readonly class="bg-light fw-bold"></td>
-                            <td><input type="text" required></td>
-                            <td><input type="text" required></td>
-                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" required title="Please enter a 4-digit year"></td>
-                            <td><input type="text" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
                         </tr>
                         <tr>
                             <td><input type="text" value="Sr. Secondary (12th)" readonly class="bg-light fw-bold"></td>
-                            <td><input type="text" required></td>
-                            <td><input type="text" required></td>
-                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" required title="Please enter a 4-digit year"></td>
-                            <td><input type="text" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
                         </tr>
                         <tr>
                             <td><input type="text" value="Graduation" readonly class="bg-light fw-bold"></td>
-                            <td><input type="text" required></td>
-                            <td><input type="text" required></td>
-                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" required title="Please enter a 4-digit year"></td>
-                            <td><input type="text" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
                         </tr>
                     </tbody>
                 </table>
@@ -297,8 +297,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" required></td>
-                            <td><input type="text" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
                             <td><input type="date" class="d-start" onchange="autoCalc(this)" required></td>
                             <td><input type="date" class="d-end" onchange="autoCalc(this)" required></td>
                             <td><input type="text" class="dur-res bg-light text-center fw-bold" readonly placeholder="Auto"></td>
@@ -310,7 +310,7 @@
 
             <div class="mb-4">
                 <label class="form-label fw-bold">Extra-Curricular Achievements</label>
-                <textarea class="form-control" style="height: 100px; resize: none;" placeholder="Sports, NCC, etc."></textarea>
+                <textarea class="form-control" style="height: 100px; resize: none;" placeholder="Sports, NCC, etc." onkeyup="validateSafeText(this)" onblur="validateSafeText(this)"></textarea>
             </div>
 
             <div class="section-heading">3. Declaration & Submission</div>
@@ -339,7 +339,7 @@
                     <div class="row g-3">
                         <div class="col-4">
                             <label class="form-label required-label">Place</label>
-                            <input type="text" id="placeInput" class="form-control" placeholder="Enter City" required>
+                            <input type="text" id="placeInput" class="form-control" placeholder="Enter City" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required>
                         </div>
                         <div class="col-8 d-flex justify-content-center">
                             <div class="g-recaptcha" data-sitekey="6Lel43IsAAAAABGbWyo2lb99btAY35kfvxmw46LS" data-callback="enableSubmit" data-expired-callback="disableSubmit"></div>
@@ -358,6 +358,28 @@
 </div>
 
 <script>
+    // Function to allow only numbers in year and mobile fields
+    function onlyNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        // Only allow number keys
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+    // Function to validate safe characters: letters, numbers, spaces, and allowed symbols / - , .
+    function validateSafeText(inputElement) {
+        let value = inputElement.value;
+        // Regular expression: allow alphanumeric, spaces, and / - , .
+        let safeRegex = /[^a-zA-Z0-9\s\/\-,.]/g;
+        if (safeRegex.test(value)) {
+            // Replace any invalid character with empty string
+            inputElement.value = value.replace(safeRegex, '');
+            // Optional: show a small warning (but we'll just sanitize silently)
+        }
+    }
+
     // Initialize dropdowns on page load
     (function initDropdowns() {
         // Experience Years (0-30)
@@ -525,19 +547,19 @@
     function addNewEdu() {
         const tbody = document.getElementById('eduTbl').getElementsByTagName('tbody')[0];
         const row = tbody.insertRow();
-        row.innerHTML = `<td><input type="text" placeholder="Degree" required></td>
-                        <td><input type="text" required></td>
-                        <td><input type="text" required></td>
-                        <td><input type="text" pattern="\\d{4}" maxlength="4" placeholder="YYYY" required title="4-digit year"></td>
-                        <td><input type="text" required></td>
+        row.innerHTML = `<td><input type="text" placeholder="Degree" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" pattern="\\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="4-digit year"></td>
+                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
                         <td><button type="button" class="btn btn-link text-danger p-0" onclick="this.closest('tr').remove()"><i class="bi bi-trash-fill"></i></button></td>`;
     }
 
     function addNewExp() {
         const tbody = document.getElementById('expTbl').getElementsByTagName('tbody')[0];
         const row = tbody.insertRow();
-        row.innerHTML = `<td><input type="text" required></td>
-                        <td><input type="text" required></td>
+        row.innerHTML = `<td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
                         <td><input type="date" class="d-start" onchange="autoCalc(this)" required></td>
                         <td><input type="date" class="d-end" onchange="autoCalc(this)" required></td>
                         <td><input type="text" class="dur-res bg-light text-center" readonly></td>
@@ -578,7 +600,7 @@
         reader.readAsDataURL(file);
     };
 
-    // SIGNATURE PAD
+    // SIGNATURE PAD - Fully restored from original
     const canvas = document.getElementById('sig-canvas');
     const ctx = canvas.getContext('2d');
     let drawing = false;
