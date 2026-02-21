@@ -1132,16 +1132,16 @@
             eduRows.forEach(row => {
                 eduTableHTML += `
                     <tr>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.level}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.board}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.institution}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.year}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.percentage}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.level}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.board}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.institution}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.year}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.percentage}</td>
                     </tr>
                 `;
             });
         } else {
-            eduTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 5px; text-align: center; font-size: 11px;">No education details added</td></tr>';
+            eduTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 3px; text-align: center; font-size: 9px;">No education details added</td></tr>';
         }
         
         // Build experience table HTML
@@ -1150,16 +1150,16 @@
             expRows.forEach(row => {
                 expTableHTML += `
                     <tr>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.org}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.desig}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.from}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.to}</td>
-                        <td style="border: 1px solid #000; padding: 5px; font-size: 11px;">${row.dur}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.org}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.desig}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.from}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.to}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.dur}</td>
                     </tr>
                 `;
             });
         } else {
-            expTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 5px; text-align: center; font-size: 11px;">No experience added</td></tr>';
+            expTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 3px; text-align: center; font-size: 9px;">No experience added</td></tr>';
         }
         
         // Create a new window for PDF content
@@ -1173,7 +1173,7 @@
             return;
         }
         
-        // Write the complete PDF HTML content
+        // Write the complete PDF HTML content - OPTIMIZED FOR SINGLE PAGE
         pdfWindow.document.write(`
             <!DOCTYPE html>
             <html>
@@ -1189,7 +1189,7 @@
                     body {
                         font-family: Arial, Helvetica, sans-serif;
                         background: white;
-                        padding: 15px;
+                        padding: 10px;
                         color: #000;
                     }
                     
@@ -1197,94 +1197,31 @@
                         max-width: 1000px;
                         margin: 0 auto;
                         background: white;
-                        border: 1px solid #ccc;
-                        padding: 15px;
                     }
                     
-                    .header {
-                        text-align: center;
-                        margin-bottom: 15px;
-                        border-bottom: 3px solid #002b5e;
-                        padding-bottom: 8px;
-                    }
-                    
-                    .header h1 {
-                        font-size: 24px;
+                    /* Compact header - no school name */
+                    .app-badge {
+                        font-size: 10px;
                         color: #002b5e;
-                        margin: 0 0 3px 0;
                         font-weight: bold;
+                        margin-bottom: 5px;
                     }
                     
-                    .header h3 {
-                        font-size: 16px;
-                        color: #444;
-                        margin: 0 0 5px 0;
-                        font-weight: normal;
-                    }
-                    
-                    .app-info {
-                        font-size: 12px;
-                        background: #f0f0f0;
-                        padding: 5px 10px;
-                        border-radius: 4px;
-                        display: inline-block;
-                        margin-top: 5px;
-                    }
-                    
-                    .section {
-                        margin-bottom: 12px;
-                        border: 1px solid #999;
-                        border-radius: 5px;
-                        overflow: hidden;
-                    }
-                    
-                    .section-title {
-                        background: #002b5e;
-                        color: white;
-                        padding: 5px 10px;
-                        font-size: 13px;
-                        font-weight: bold;
-                        text-transform: uppercase;
-                    }
-                    
-                    .section-content {
-                        padding: 8px;
-                        background: white;
-                    }
-                    
-                    .row {
+                    /* Photo and Personal Info Row - Side by Side */
+                    .top-row {
                         display: flex;
-                        margin-bottom: 4px;
-                        border-bottom: 1px dotted #ccc;
-                        padding-bottom: 3px;
-                    }
-                    
-                    .label {
-                        font-weight: bold;
-                        width: 140px;
-                        color: #333;
-                        font-size: 11px;
-                    }
-                    
-                    .value {
-                        flex: 1;
-                        color: #000;
-                        font-size: 11px;
-                    }
-                    
-                    .photo-section {
-                        display: flex;
-                        gap: 15px;
-                        margin-bottom: 10px;
+                        gap: 10px;
+                        margin-bottom: 8px;
                     }
                     
                     .photo-box {
-                        width: 100px;
-                        height: 120px;
+                        width: 85px;
+                        height: 105px;
                         border: 2px solid #002b5e;
-                        border-radius: 5px;
+                        border-radius: 4px;
                         overflow: hidden;
                         background: #f5f5f5;
+                        flex-shrink: 0;
                     }
                     
                     .photo-box img {
@@ -1301,199 +1238,292 @@
                         justify-content: center;
                         background: #f5f5f5;
                         color: #999;
-                        font-size: 11px;
+                        font-size: 9px;
                     }
                     
+                    .info-panel {
+                        flex: 1;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 5px;
+                        background: #f8f9fa;
+                        padding: 6px;
+                        border-radius: 4px;
+                        border: 1px solid #ddd;
+                    }
+                    
+                    .info-chip {
+                        background: white;
+                        border-radius: 3px;
+                        padding: 3px 6px;
+                        font-size: 9px;
+                        border: 1px solid #e0e0e0;
+                        flex: 1 1 auto;
+                    }
+                    
+                    .info-chip strong {
+                        color: #002b5e;
+                        margin-right: 3px;
+                    }
+                    
+                    /* Section styling - compact */
+                    .section {
+                        margin-bottom: 6px;
+                        border: 1px solid #999;
+                        border-radius: 4px;
+                        overflow: hidden;
+                    }
+                    
+                    .section-title {
+                        background: #002b5e;
+                        color: white;
+                        padding: 3px 6px;
+                        font-size: 10px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                    }
+                    
+                    .section-content {
+                        padding: 5px;
+                        background: white;
+                    }
+                    
+                    /* Compact grid for personal info inside section 1 */
+                    .compact-grid {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 5px;
+                    }
+                    
+                    .grid-item {
+                        flex: 1 1 calc(50% - 5px);
+                        display: flex;
+                        border-bottom: 1px dotted #ccc;
+                        padding: 2px 0;
+                        font-size: 9px;
+                    }
+                    
+                    .grid-label {
+                        font-weight: bold;
+                        width: 90px;
+                        color: #333;
+                        font-size: 9px;
+                    }
+                    
+                    .grid-value {
+                        flex: 1;
+                        color: #000;
+                        font-size: 9px;
+                    }
+                    
+                    /* Full width items */
+                    .full-width {
+                        flex: 1 1 100%;
+                    }
+                    
+                    /* Tables - ultra compact */
                     table {
                         width: 100%;
                         border-collapse: collapse;
-                        margin-top: 5px;
                     }
                     
                     th {
                         background: #e0e0e0;
                         border: 1px solid #000;
-                        padding: 5px;
+                        padding: 3px;
                         text-align: left;
                         font-weight: bold;
-                        font-size: 11px;
+                        font-size: 8px;
                     }
                     
                     td {
                         border: 1px solid #000;
-                        padding: 5px;
-                        font-size: 11px;
+                        padding: 3px;
+                        font-size: 8px;
+                    }
+                    
+                    /* Signature row */
+                    .signature-row {
+                        display: flex;
+                        gap: 8px;
+                        margin-top: 4px;
                     }
                     
                     .signature-box {
-                        border: 2px solid #333;
-                        border-radius: 5px;
-                        padding: 8px;
-                        margin-top: 5px;
-                        min-height: 80px;
+                        flex: 1;
+                        border: 1px solid #333;
+                        border-radius: 3px;
+                        padding: 4px;
+                        min-height: 50px;
                     }
                     
                     .signature-box img {
                         max-width: 100%;
-                        max-height: 60px;
+                        max-height: 40px;
                     }
                     
+                    /* Digital info - compact */
                     .digital-info {
                         background: #f8f9fa;
-                        border-left: 4px solid #002b5e;
-                        padding: 6px 10px;
-                        margin: 8px 0;
-                        font-size: 10px;
+                        border-left: 3px solid #002b5e;
+                        padding: 4px 6px;
+                        margin: 4px 0;
+                        font-size: 8px;
                     }
                     
                     .digital-row {
                         display: flex;
                         flex-wrap: wrap;
-                        gap: 15px;
-                        margin-top: 3px;
+                        gap: 10px;
+                        margin-top: 2px;
                     }
                     
                     .digital-item {
-                        font-size: 10px;
+                        font-size: 8px;
                     }
                     
-                    .digital-item strong {
-                        color: #002b5e;
-                    }
-                    
+                    /* Footer */
                     .footer {
                         text-align: center;
-                        margin-top: 12px;
-                        font-size: 9px;
+                        margin-top: 8px;
+                        font-size: 7px;
                         color: #666;
                         border-top: 1px solid #ccc;
-                        padding-top: 4px;
+                        padding-top: 3px;
                     }
                     
-                    .two-col {
-                        display: flex;
-                        gap: 15px;
-                    }
-                    
-                    .col {
-                        flex: 1;
+                    /* Page break control */
+                    .page-break-before {
+                        page-break-before: always;
                     }
                 </style>
             </head>
             <body>
                 <div class="container">
-                    <!-- Header -->
-                    <div class="header">
-                        <h1>MODERN SCHOOL KOTA</h1>
-                        <h3>Faculty Recruitment Application Form</h3>
-                        <div class="app-info">
-                            <strong>Application No:</strong> ${appNo} | 
-                            <strong>Date:</strong> ${submissionDateTime}
-                        </div>
+                    <!-- Application ID Badge (no school header) -->
+                    <div class="app-badge">
+                        Application No: ${appNo} | ${submissionDateTime}
                     </div>
                     
-                    <!-- Photo and Basic Info -->
-                    <div class="photo-section">
+                    <!-- TOP ROW: Photo + Personal Info Chip (moved APPLICANT DETAILS here) -->
+                    <div class="top-row">
+                        <!-- Photo -->
                         <div class="photo-box">
                             ${photoImage ? 
-                                `<img src="${photoImage}" alt="Applicant Photo">` : 
+                                `<img src="${photoImage}" alt="Photo">` : 
                                 '<div class="photo-placeholder">No Photo</div>'
                             }
                         </div>
-                        <div style="flex: 1;">
-                            <div style="background: #002b5e; color: white; padding: 4px 8px; font-size: 12px; font-weight: bold; margin-bottom: 5px; border-radius: 3px;">
-                                APPLICANT DETAILS
+                        
+                        <!-- Personal Info Chips (APPLICANT DETAILS) -->
+                        <div class="info-panel">
+                            <div class="info-chip">
+                                <strong>Name:</strong> ${fullName}
                             </div>
-                            <div style="font-size: 11px;">
-                                <p><strong>Name:</strong> ${fullName}</p>
-                                <p><strong>Position:</strong> ${position}</p>
-                                <p><strong>Application Date:</strong> ${submissionDateTime}</p>
+                            <div class="info-chip">
+                                <strong>DOB:</strong> ${dob}
+                            </div>
+                            <div class="info-chip">
+                                <strong>Gender:</strong> ${gender}
+                            </div>
+                            <div class="info-chip">
+                                <strong>Mobile:</strong> ${mobile}
+                            </div>
+                            <div class="info-chip">
+                                <strong>Email:</strong> ${email}
+                            </div>
+                            <div class="info-chip">
+                                <strong>Position:</strong> ${position}
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Section 1: Personal Information -->
+                    <!-- SECTION 1: PERSONAL INFORMATION (Full details) - Now in same row as photo -->
                     <div class="section">
                         <div class="section-title">1. PERSONAL INFORMATION</div>
                         <div class="section-content">
-                            <div class="row">
-                                <div class="label">Full Name:</div>
-                                <div class="value">${fullName}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Date of Birth:</div>
-                                <div class="value">${dob}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Gender:</div>
-                                <div class="value">${gender}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Nationality:</div>
-                                <div class="value">${nationality}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Religion:</div>
-                                <div class="value">${religion}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Mobile Number:</div>
-                                <div class="value">+91 ${mobile}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Email Address:</div>
-                                <div class="value">${email}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Permanent Address:</div>
-                                <div class="value">${permAddr}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Current Address:</div>
-                                <div class="value">${currAddr}</div>
+                            <div class="compact-grid">
+                                <div class="grid-item">
+                                    <span class="grid-label">Full Name:</span>
+                                    <span class="grid-value">${fullName}</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Date of Birth:</span>
+                                    <span class="grid-value">${dob}</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Gender:</span>
+                                    <span class="grid-value">${gender}</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Nationality:</span>
+                                    <span class="grid-value">${nationality}</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Religion:</span>
+                                    <span class="grid-value">${religion}</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Mobile:</span>
+                                    <span class="grid-value">+91 ${mobile}</span>
+                                </div>
+                                <div class="grid-item full-width">
+                                    <span class="grid-label">Email:</span>
+                                    <span class="grid-value">${email}</span>
+                                </div>
+                                <div class="grid-item full-width">
+                                    <span class="grid-label">Permanent Address:</span>
+                                    <span class="grid-value">${permAddr}</span>
+                                </div>
+                                <div class="grid-item full-width">
+                                    <span class="grid-label">Current Address:</span>
+                                    <span class="grid-value">${currAddr}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Section 2: Professional Requirements -->
+                    <!-- SECTION 2: PROFESSIONAL REQUIREMENTS -->
                     <div class="section">
                         <div class="section-title">2. PROFESSIONAL REQUIREMENTS</div>
                         <div class="section-content">
-                            <div class="row">
-                                <div class="label">Position Applied:</div>
-                                <div class="value">${position}</div>
-                            </div>
-                            ${subject !== 'N/A' ? `
-                            <div class="row">
-                                <div class="label">Subject/Role:</div>
-                                <div class="value">${subject}</div>
-                            </div>
-                            ` : ''}
-                            ${prefClass !== 'N/A' ? `
-                            <div class="row">
-                                <div class="label">Preferred Classes:</div>
-                                <div class="value">${prefClass}</div>
-                            </div>
-                            ` : ''}
-                            <div class="row">
-                                <div class="label">Total Experience:</div>
-                                <div class="value">${expYears} Years, ${expMonths} Months</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Expected Joining:</div>
-                                <div class="value">${joiningDate}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Notice Period:</div>
-                                <div class="value">${noticePeriod} Months</div>
+                            <div class="compact-grid">
+                                <div class="grid-item">
+                                    <span class="grid-label">Position:</span>
+                                    <span class="grid-value">${position}</span>
+                                </div>
+                                ${subject !== 'N/A' ? `
+                                <div class="grid-item">
+                                    <span class="grid-label">Subject:</span>
+                                    <span class="grid-value">${subject}</span>
+                                </div>
+                                ` : ''}
+                                ${prefClass !== 'N/A' ? `
+                                <div class="grid-item">
+                                    <span class="grid-label">Classes:</span>
+                                    <span class="grid-value">${prefClass}</span>
+                                </div>
+                                ` : ''}
+                                <div class="grid-item">
+                                    <span class="grid-label">Experience:</span>
+                                    <span class="grid-value">${expYears}Y ${expMonths}M</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Joining:</span>
+                                    <span class="grid-value">${joiningDate}</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Notice Period:</span>
+                                    <span class="grid-value">${noticePeriod}M</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Section 3: Education Details -->
+                    <!-- SECTION 3: EDUCATION DETAILS -->
                     <div class="section">
                         <div class="section-title">3. EDUCATION DETAILS</div>
-                        <div class="section-content">
+                        <div class="section-content" style="padding: 3px;">
                             <table>
                                 <thead>
                                     <tr>
@@ -1501,7 +1531,7 @@
                                         <th>Board/University</th>
                                         <th>Institution</th>
                                         <th>Year</th>
-                                        <th>% / CGPA</th>
+                                        <th>%</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1511,10 +1541,10 @@
                         </div>
                     </div>
                     
-                    <!-- Section 4: Teaching Experience -->
+                    <!-- SECTION 4: TEACHING EXPERIENCE -->
                     <div class="section">
                         <div class="section-title">4. TEACHING EXPERIENCE</div>
-                        <div class="section-content">
+                        <div class="section-content" style="padding: 3px;">
                             <table>
                                 <thead>
                                     <tr>
@@ -1532,68 +1562,67 @@
                         </div>
                     </div>
                     
-                    <!-- Section 5: Additional Information -->
+                    <!-- SECTION 5: ADDITIONAL INFORMATION -->
                     <div class="section">
                         <div class="section-title">5. ADDITIONAL INFORMATION</div>
                         <div class="section-content">
-                            <div class="row">
-                                <div class="label">Extra-Curricular:</div>
-                                <div class="value">${extraCurr}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Place:</div>
-                                <div class="value">${place}</div>
+                            <div class="compact-grid">
+                                <div class="grid-item full-width">
+                                    <span class="grid-label">Extra-Curricular:</span>
+                                    <span class="grid-value">${extraCurr}</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Place:</span>
+                                    <span class="grid-value">${place}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Section 6: Declaration & Signature -->
+                    <!-- PAGE BREAK - SECTION 6 starts on next page -->
+                    <div style="page-break-before: always;"></div>
+                    
+                    <!-- SECTION 6: DECLARATION & DIGITAL SIGNATURE (Always on next page) -->
                     <div class="section">
                         <div class="section-title">6. DECLARATION & DIGITAL SIGNATURE</div>
                         <div class="section-content">
-                            <div class="row">
-                                <div class="label">Declaration:</div>
-                                <div class="value">I hereby declare that all information provided is accurate. I understand that any false statement may lead to disqualification.</div>
+                            <div class="compact-grid">
+                                <div class="grid-item full-width">
+                                    <span class="grid-label">Declaration:</span>
+                                    <span class="grid-value">I hereby declare that all information provided is accurate.</span>
+                                </div>
                             </div>
                             
-                            <div class="two-col">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="label">Signed by:</div>
-                                        <div class="value">${fullName}</div>
+                            <div class="signature-row">
+                                <div style="flex: 1;">
+                                    <div class="grid-item">
+                                        <span class="grid-label">Signed by:</span>
+                                        <span class="grid-value">${fullName}</span>
                                     </div>
-                                    <div class="row">
-                                        <div class="label">Place:</div>
-                                        <div class="value">${place}</div>
+                                    <div class="grid-item">
+                                        <span class="grid-label">Place:</span>
+                                        <span class="grid-value">${place}</span>
                                     </div>
-                                    <div class="row">
-                                        <div class="label">Date:</div>
-                                        <div class="value">${submissionDateTime}</div>
+                                    <div class="grid-item">
+                                        <span class="grid-label">Date:</span>
+                                        <span class="grid-value">${submissionDateTime}</span>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="signature-box">
-                                        <strong style="font-size: 11px;">Digital Signature:</strong>
-                                        ${signatureImage ? 
-                                            `<img src="${signatureImage}" alt="Signature" style="margin-top: 5px;">` : 
-                                            '<div style="color: #999; font-size: 11px; margin-top: 5px;">Not signed</div>'
-                                        }
-                                    </div>
+                                <div class="signature-box">
+                                    <strong style="font-size: 8px;">Signature:</strong>
+                                    ${signatureImage ? 
+                                        `<img src="${signatureImage}" alt="Signature" style="margin-top: 2px;">` : 
+                                        '<div style="color: #999; font-size: 8px;">Not signed</div>'
+                                    }
                                 </div>
                             </div>
                             
                             <div class="digital-info">
-                                <strong>🔒 DIGITAL SIGNATURE VERIFICATION</strong>
+                                <strong>🔒 DIGITAL VERIFICATION</strong>
                                 <div class="digital-row">
-                                    <div class="digital-item">
-                                        <strong>IP Address:</strong> ${userIP}
-                                    </div>
-                                    <div class="digital-item">
-                                        <strong>Location:</strong> ${userLocStr}
-                                    </div>
-                                    <div class="digital-item">
-                                        <strong>Timestamp:</strong> ${submissionDateTime}
-                                    </div>
+                                    <div class="digital-item"><strong>IP:</strong> ${userIP}</div>
+                                    <div class="digital-item"><strong>Location:</strong> ${userLocStr}</div>
+                                    <div class="digital-item"><strong>Time:</strong> ${submissionDateTime}</div>
                                 </div>
                             </div>
                         </div>
@@ -1601,8 +1630,7 @@
                     
                     <!-- Footer -->
                     <div class="footer">
-                        <p>This is a computer generated document. Generated on ${submissionDateTime}</p>
-                        <p>Modern School Kota - Faculty Recruitment Portal | This document is digitally verified</p>
+                        Generated: ${submissionDateTime} | Modern School Kota
                     </div>
                 </div>
                 
