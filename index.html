@@ -1147,16 +1147,16 @@
             eduRows.forEach(row => {
                 eduTableHTML += `
                     <tr>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.level}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.board}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.institution}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.year}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.percentage}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.level}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.board}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.institution}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.year}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.percentage}</td>
                     </tr>
                 `;
             });
         } else {
-            eduTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 3px; text-align: center; font-size: 9px;">No education details added</td></tr>';
+            eduTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 3px; text-align: center; font-size: 12px;">No education details added</td></tr>';
         }
         
         // Build experience table HTML
@@ -1165,16 +1165,16 @@
             expRows.forEach(row => {
                 expTableHTML += `
                     <tr>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.org}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.desig}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.from}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.to}</td>
-                        <td style="border: 1px solid #000; padding: 3px; font-size: 9px;">${row.dur}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.org}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.desig}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.from}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.to}</td>
+                        <td style="border: 1px solid #000; padding: 3px; font-size: 12px;">${row.dur}</td>
                     </tr>
                 `;
             });
         } else {
-            expTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 3px; text-align: center; font-size: 9px;">No experience added</td></tr>';
+            expTableHTML = '<tr><td colspan="5" style="border: 1px solid #000; padding: 3px; text-align: center; font-size: 12px;">No experience added</td></tr>';
         }
         
         // Create a new window for PDF content
@@ -1234,8 +1234,8 @@
                     }
                     
                     .photo-box {
-                        width: 150px;
-                        height: 100%;
+                        width: 250px;
+                        height: 185px;
                         border: 1.5px solid #002b5e;
                         border-radius: 3px;
                         overflow: hidden;
@@ -1641,10 +1641,10 @@
                                     </div>
                                 </div>
                                 <div class="signature-box">
-                                    <strong style="font-size: 7px;">Signature:</strong>
+                                    <strong style="font-size: 12px;">Signature:</strong>
                                     ${signatureImage ? 
                                         `<img src="${signatureImage}" alt="Signature" style="margin-top: 2px;">` : 
-                                        '<div style="color: #999; font-size: 7px;">Not signed</div>'
+                                        '<div style="color: #999; font-size: 12px;">Not signed</div>'
                                     }
                                 </div>
                             </div>
