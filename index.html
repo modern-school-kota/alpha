@@ -36,7 +36,7 @@
             .header-content-wrapper { flex-direction: column; text-align: center; }
             .header-logo { height: 100px; margin-right: 0 !important; }
             .main-header h1 { font-size: 1.5rem; margin-top: 10px; }
-            .form-card { padding: 20px; }
+            .form-card { padding: 15px; }
             
             /* Mobile fixes for place and recaptcha */
             .mobile-stack {
@@ -49,6 +49,66 @@
             .g-recaptcha {
                 transform: scale(0.9);
                 transform-origin: left center;
+            }
+            
+            /* Table responsiveness improvements */
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 0 -15px;
+                padding: 0 15px;
+                width: calc(100% + 30px);
+                max-width: none;
+            }
+            
+            .table-custom {
+                min-width: 650px;
+                font-size: 14px;
+            }
+            
+            .table-custom input, 
+            .table-custom select {
+                font-size: 14px;
+                padding: 8px 5px;
+                min-width: 100px;
+            }
+            
+            .table-custom td:last-child input {
+                min-width: 80px;
+            }
+            
+            .scroll-hint {
+                display: block;
+                text-align: center;
+                font-size: 12px;
+                color: #6c757d;
+                margin-bottom: 8px;
+                background: #e9ecef;
+                padding: 5px;
+                border-radius: 4px;
+            }
+            
+            .scroll-hint i {
+                margin-right: 5px;
+            }
+            
+            /* Mobile scroll to element fix */
+            html {
+                scroll-padding-top: 20px;
+                scroll-behavior: smooth;
+            }
+        }
+        
+        .scroll-hint {
+            display: none;
+        }
+        
+        @media (min-width: 768px) {
+            .scroll-hint {
+                display: none !important;
+            }
+            html {
+                scroll-behavior: smooth;
             }
         }
 
@@ -75,8 +135,38 @@
         .form-label { font-weight: 600; font-size: 0.9rem; color: #444; }
         .required-label::after { content: " *"; color: #dc3545; }
 
-        .form-control, .form-select { border: 2px solid #ced4da !important; padding: 10px; }
-        .form-control:focus { border-color: #002b5e !important; box-shadow: none; }
+        .form-control, .form-select { 
+            border: 2px solid #ced4da !important; 
+            padding: 10px; 
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus { 
+            border-color: #002b5e !important; 
+            box-shadow: 0 0 0 3px rgba(0,43,94,0.1) !important; 
+        }
+        
+        /* Invalid field styling */
+        .form-control.is-invalid, 
+        .form-select.is-invalid,
+        .table-custom input.is-invalid,
+        .table-custom select.is-invalid {
+            border-color: #dc3545 !important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            padding-right: 35px;
+        }
+        
+        /* Highlight for focused invalid field */
+        .form-control.is-invalid:focus,
+        .form-select.is-invalid:focus,
+        .table-custom input.is-invalid:focus,
+        .table-custom select.is-invalid:focus {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 3px rgba(220,53,69,0.1) !important;
+        }
 
         /* Fixed height for address textareas - no resize */
         .address-textarea { 
@@ -96,10 +186,46 @@
         }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
-        .table-custom { border: 2px solid #212529 !important; }
-        .table-custom thead { background: #002b5e; color: white; }
-        .table-custom th, .table-custom td { border: 1px solid #212529 !important; vertical-align: middle; }
-        .table-custom input, .table-custom select { border: none !important; width: 100%; padding: 10px; background: transparent; }
+        .table-custom { 
+            border: 2px solid #212529 !important;
+            background: white;
+        }
+        
+        .table-custom thead { 
+            background: #002b5e; 
+            color: white; 
+        }
+        
+        .table-custom th, 
+        .table-custom td { 
+            border: 1px solid #212529 !important; 
+            vertical-align: middle;
+            padding: 8px;
+        }
+        
+        .table-custom input, 
+        .table-custom select { 
+            border: 1px solid #ced4da !important;
+            width: 100%; 
+            padding: 8px; 
+            background: white;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .table-custom input:focus,
+        .table-custom select:focus {
+            border-color: #002b5e !important;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,43,94,0.1);
+        }
+        
+        .table-custom input[readonly] {
+            background-color: #e9ecef;
+            border: none !important;
+            font-weight: 600;
+        }
 
         .sig-wrapper { 
             border: 2px solid #6c757d; 
@@ -114,10 +240,9 @@
             height: 100%; 
             cursor: crosshair; 
             display: block;
-            touch-action: none; /* Prevents page scroll on touch devices */
+            touch-action: none;
         }
         
-        /* Metadata styling - moved outside canvas */
         .signature-metadata {
             font-size: 10px;
             color: #666;
@@ -136,7 +261,6 @@
         
         select.form-select { cursor: pointer; }
         
-        /* Fixed positioning for signature controls */
         .sig-clear-btn {
             position: absolute;
             top: 5px;
@@ -144,6 +268,71 @@
             z-index: 10;
             font-size: 10px;
             padding: 2px 6px;
+        }
+        
+        .btn-dark.btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        /* Signature pad invalid state */
+        .sig-wrapper.is-invalid {
+            border-color: #dc3545;
+        }
+        
+        /* Error summary styling */
+        .error-summary {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-summary.show {
+            display: block;
+        }
+        
+        .error-summary ul {
+            margin-top: 10px;
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        
+        .error-summary li {
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 576px) {
+            .table-custom {
+                min-width: 550px;
+                font-size: 13px;
+            }
+            
+            .table-custom input,
+            .table-custom select {
+                font-size: 13px;
+                padding: 6px 4px;
+            }
+            
+            .table-custom th {
+                font-size: 12px;
+                white-space: nowrap;
+                padding: 8px 4px;
+            }
+            
+            .section-heading {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+            
+            /* Mobile scroll fix */
+            .is-invalid {
+                scroll-margin-top: 100px;
+            }
         }
     </style>
 </head>
@@ -164,6 +353,12 @@
     <form id="recruitmentForm" novalidate>
         <div class="card form-card">
             
+            <!-- Error Summary Container -->
+            <div id="errorSummary" class="error-summary">
+                <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>Please fix the following errors:</strong>
+                <ul id="errorList"></ul>
+            </div>
+            
             <div class="row g-4">
                 <div class="col-lg-9">
                     <div class="section-heading mt-0">1. Personal Information</div>
@@ -174,11 +369,11 @@
                         </div>
                         <div class="col-md-4">
                             <label class="form-label required-label">Date of Birth</label>
-                            <input type="date" class="form-control" required>
+                            <input type="date" id="dob" class="form-control" required>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label required-label">Gender</label>
-                            <select class="form-select" required>
+                            <select class="form-select" id="gender" required>
                                 <option value="">Select</option>
                                 <option>Male</option><option>Female</option><option>Other</option>
                             </select>
@@ -189,7 +384,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="form-label required-label">Religion</label>
-                            <select class="form-select" required>
+                            <select class="form-select" id="religion" required>
                                 <option value="">Select</option>
                                 <option>Hinduism</option><option>Islam</option><option>Sikhism</option>
                                 <option>Christianity</option><option>Jainism</option><option>Buddhism</option><option>Other</option>
@@ -199,15 +394,15 @@
                             <label class="form-label required-label">Mobile Number</label>
                             <div class="input-group">
                                 <span class="input-group-text fw-bold border-secondary">+91</span>
-                                <input type="text" class="form-control" pattern="\d{10}" maxlength="10" placeholder="10 Digits" onkeypress="return onlyNumberKey(event)" required>
+                                <input type="text" id="mobile" class="form-control" pattern="\d{10}" maxlength="10" placeholder="10 Digits" onkeypress="return onlyNumberKey(event)" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label required-label">Email Address</label>
-                            <input type="email" class="form-control" placeholder="example@email.com" required>
+                            <input type="email" id="email" class="form-control" placeholder="example@email.com" required>
                         </div>
                         
-                        <!-- Address Fields with fixed height class and proper sync logic -->
+                        <!-- Address Fields -->
                         <div class="col-md-6">
                             <label class="form-label required-label">Permanent Address</label>
                             <textarea id="permAddr" class="form-control address-textarea" rows="3" oninput="syncOnType(); validateSafeText(this)" required></textarea>
@@ -238,6 +433,7 @@
                         <div class="photo-hint mt-2 text-muted">
                             <i class="bi bi-info-circle"></i> Only JPG/PNG, max 500KB
                         </div>
+                        <div id="photoError" class="invalid-feedback"></div>
                     </div>
                 </div>
             </div>
@@ -257,11 +453,11 @@
                 </div>
                 <div class="col-md-4 d-none" id="subField">
                     <label class="form-label required-label">Subject Specialization</label>
-                    <select class="form-select" id="subList"></select>
+                    <select class="form-select" id="subList" required></select>
                 </div>
                 <div class="col-md-4 d-none" id="prefClassField">
                     <label class="form-label required-label">Preferred Classes</label>
-                    <select class="form-select" id="prefClass"></select>
+                    <select class="form-select" id="prefClass" required></select>
                 </div>
             </div>
 
@@ -270,62 +466,66 @@
                     <label class="form-label required-label">Exp (Years)</label>
                     <select class="form-select" id="expYears" required>
                         <option value="">Years</option>
-                        <!-- Options 0-30 generated by JS -->
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label required-label">Exp (Months)</label>
                     <select class="form-select" id="expMonths" required>
                         <option value="">Months</option>
-                        <!-- Options 0-11 generated by JS -->
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label required-label">Expected Joining Date</label>
-                    <input type="date" class="form-control" required>
+                    <input type="date" id="joiningDate" class="form-control" required>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label required-label">Notice Period</label>
                     <select class="form-select" id="noticePeriod" required>
                         <option value="">-- Select Months --</option>
-                        <!-- Options 1-6 generated by JS -->
                     </select>
                 </div>
             </div>
 
             <label class="form-label fw-bold mb-2">Education Details</label>
+            <div class="scroll-hint">
+                <i class="bi bi-arrow-left-right"></i> Scroll horizontally to see all columns <i class="bi bi-arrow-left-right"></i>
+            </div>
             <div class="table-responsive mb-4">
                 <table class="table table-custom text-center align-middle" id="eduTbl">
                     <thead>
                         <tr>
-                            <th width="25%">Level</th>
-                            <th>Board / University</th>
-                            <th>Institution</th>
+                            <th width="20%">Level</th>
+                            <th width="25%">Board / University</th>
+                            <th width="25%">Institution</th>
                             <th width="15%">Year</th>
                             <th width="15%">% / CGPA</th>
+                            <th width="5%"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><input type="text" value="Secondary (10th)" readonly class="bg-light fw-bold"></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-board" placeholder="Board name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-institution" placeholder="School name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-year" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
+                            <td><input type="text" class="edu-percentage" placeholder="Percentage" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td><input type="text" value="Sr. Secondary (12th)" readonly class="bg-light fw-bold"></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-board" placeholder="Board name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-institution" placeholder="School/College" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-year" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
+                            <td><input type="text" class="edu-percentage" placeholder="Percentage" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td><input type="text" value="Graduation" readonly class="bg-light fw-bold"></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="text" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-board" placeholder="University name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-institution" placeholder="College name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="edu-year" pattern="\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="Please enter a 4-digit year"></td>
+                            <td><input type="text" class="edu-percentage" placeholder="Percentage" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -333,24 +533,29 @@
             </div>
 
             <label class="form-label fw-bold mb-2">Teaching Experience Grid</label>
+            <div class="scroll-hint">
+                <i class="bi bi-arrow-left-right"></i> Scroll horizontally to see all columns <i class="bi bi-arrow-left-right"></i>
+            </div>
             <div class="table-responsive mb-4">
                 <table class="table table-custom text-center align-middle" id="expTbl">
                     <thead>
                         <tr>
-                            <th>Organization</th>
-                            <th>Designation</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th width="180">Duration</th>
+                            <th width="20%">Organization</th>
+                            <th width="20%">Designation</th>
+                            <th width="15%">From</th>
+                            <th width="15%">To</th>
+                            <th width="20%">Duration</th>
+                            <th width="5%"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                            <td><input type="date" class="d-start" onchange="autoCalc(this)" required></td>
-                            <td><input type="date" class="d-end" onchange="autoCalc(this)" required></td>
-                            <td><input type="text" class="dur-res bg-light text-center fw-bold" readonly placeholder="Auto"></td>
+                            <td><input type="text" class="exp-org" placeholder="Organization name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="text" class="exp-desig" placeholder="Designation" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                            <td><input type="date" class="d-start exp-from" onchange="autoCalc(this)" required></td>
+                            <td><input type="date" class="d-end exp-to" onchange="autoCalc(this)" required></td>
+                            <td><input type="text" class="dur-res bg-light text-center fw-bold" readonly placeholder="Auto calculate"></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -359,7 +564,7 @@
 
             <div class="mb-4">
                 <label class="form-label fw-bold">Extra-Curricular Achievements</label>
-                <textarea class="form-control" style="height: 100px; resize: none;" placeholder="Sports, NCC, etc." onkeyup="validateSafeText(this)" onblur="validateSafeText(this)"></textarea>
+                <textarea class="form-control" id="extraCurr" style="height: 100px; resize: none;" placeholder="Sports, NCC, etc." onkeyup="validateSafeText(this)" onblur="validateSafeText(this)"></textarea>
             </div>
 
             <div class="section-heading">3. Declaration & Submission</div>
@@ -378,11 +583,10 @@
             <div class="row g-4 align-items-end">
                 <div class="col-md-6">
                     <label class="form-label required-label">Signature Pad</label>
-                    <div class="sig-wrapper">
+                    <div class="sig-wrapper" id="sigWrapper">
                         <button type="button" class="btn btn-danger btn-sm sig-clear-btn" onclick="clearSig()">Clear Pad</button>
                         <canvas id="sig-canvas"></canvas>
                     </div>
-                    <!-- Metadata moved outside canvas and below signature pad -->
                     <div id="signatureMetadata" class="signature-metadata">
                         <span id="metaLocation">Loc: Fetching...</span> | 
                         <span id="metaIP">IP: Fetching...</span> | 
@@ -391,7 +595,6 @@
                 </div>
 
                 <div class="col-md-6">
-                    <!-- Added mobile-stack class for responsive behavior -->
                     <div class="row g-3 mobile-stack">
                         <div class="col-4 col-md-4">
                             <label class="form-label required-label">Place</label>
@@ -401,7 +604,7 @@
                             <div class="g-recaptcha" data-sitekey="6Lel43IsAAAAABGbWyo2lb99btAY35kfvxmw46LS" data-callback="enableSubmit" data-expired-callback="disableSubmit"></div>
                         </div>
                         <div class="col-12 mt-4">
-                            <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-100 fw-bold" style="background-color: #002b5e;" disabled>
+                            <button type="button" id="submitBtn" class="btn btn-primary btn-lg w-100 fw-bold" style="background-color: #002b5e;" onclick="validateAndSubmitForm()" disabled>
                                 SUBMIT APPLICATION
                             </button>
                         </div>
@@ -417,42 +620,35 @@
     // Function to allow only numbers in year and mobile fields
     function onlyNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
-        // Only allow number keys
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
         return true;
     }
 
-    // Function to validate safe characters: letters, numbers, spaces, and allowed symbols / - , .
+    // Function to validate safe characters
     function validateSafeText(inputElement) {
         let value = inputElement.value;
-        // Regular expression: allow alphanumeric, spaces, and / - , .
         let safeRegex = /[^a-zA-Z0-9\s\/\-,.]/g;
         if (safeRegex.test(value)) {
-            // Replace any invalid character with empty string
             inputElement.value = value.replace(safeRegex, '');
-            // Optional: show a small warning (but we'll just sanitize silently)
         }
     }
 
-    // Initialize dropdowns on page load
+    // Initialize dropdowns
     (function initDropdowns() {
-        // Experience Years (0-30)
         const expYears = document.getElementById('expYears');
         for (let i = 0; i <= 30; i++) {
             let opt = new Option(i + (i === 1 ? ' Year' : ' Years'), i);
             expYears.add(opt);
         }
         
-        // Experience Months (0-11)
         const expMonths = document.getElementById('expMonths');
         for (let i = 0; i <= 11; i++) {
             let opt = new Option(i + (i === 1 ? ' Month' : ' Months'), i);
             expMonths.add(opt);
         }
         
-        // Notice Period (1-6 months)
         const notice = document.getElementById('noticePeriod');
         for (let i = 1; i <= 6; i++) {
             let opt = new Option(i + (i === 1 ? ' Month' : ' Months'), i);
@@ -460,7 +656,7 @@
         }
     })();
 
-    // Address synchronization logic - improved
+    // Address synchronization
     function toggleAddressSync() {
         const check = document.getElementById('sameAddress');
         const perm = document.getElementById('permAddr');
@@ -476,7 +672,6 @@
         }
     }
 
-    // When permanent address changes and sync is on, update current address
     function syncOnType() {
         const check = document.getElementById('sameAddress');
         const perm = document.getElementById('permAddr');
@@ -487,7 +682,7 @@
         }
     }
 
-    // Handle subject and preferred class visibility based on position
+    // Handle subject and class logic
     function handleSubjectAndClassLogic() {
         const pos = document.getElementById('posSelect').value;
         const subField = document.getElementById('subField');
@@ -495,40 +690,30 @@
         const subList = document.getElementById('subList');
         const prefSelect = document.getElementById('prefClass');
         
-        // Hide both initially
         subField.classList.add('d-none');
         prefField.classList.add('d-none');
         subList.required = false;
         prefSelect.required = false;
-        subList.innerHTML = ''; // Clear previous options
-        prefSelect.innerHTML = ''; // Clear class options
+        subList.innerHTML = '';
+        prefSelect.innerHTML = '';
 
-        // For teaching positions (PGT, TGT, PRT, Kindergarten) show both subject and preferred classes
         if (pos === 'PGT' || pos === 'TGT' || pos === 'PRT' || pos === 'Kindergarten') {
-            // Show preferred class field with specific options
             prefField.classList.remove('d-none');
             prefSelect.required = true;
             
-            // Add default placeholder
             prefSelect.add(new Option("-- Select Class --", ""));
             
-            // Add class options based on position
             if (pos === 'PGT') {
-                // For PGT: 11, 12
                 [11, 12].forEach(cls => prefSelect.add(new Option("Class " + cls, cls)));
             } else if (pos === 'TGT') {
-                // For TGT: 6,7,8,9,10
                 [6,7,8,9,10].forEach(cls => prefSelect.add(new Option("Class " + cls, cls)));
             } else if (pos === 'PRT') {
-                // For PRT: 1,2,3,4,5
                 [1,2,3,4,5].forEach(cls => prefSelect.add(new Option("Class " + cls, cls)));
             } else if (pos === 'Kindergarten') {
-                // For Kindergarten: LKG, HKG
                 prefSelect.add(new Option("LKG", "LKG"));
                 prefSelect.add(new Option("HKG", "HKG"));
             }
             
-            // Setup subjects based on position
             let subjects = [];
             if (pos === 'PGT') {
                 subjects = ['English', 'Physical Education', 'Physics', 'Chemistry','Biology', 'Mathematics', 'Accountancy', 'Economics', 'Business Studies', 'Informatics Practices (IP)', 'Geography', 'History', 'Political Science', 'Psychology'];
@@ -540,28 +725,24 @@
                 subjects = ['Early Childhood Education', 'General Teacher', 'Art & Craft', 'Music', 'Physical Education'];
             }
             
-            // Show subject field
             subField.classList.remove('d-none');
             subList.required = true;
             subList.add(new Option("-- Select Subject/Department --", ""));
             subjects.forEach(s => subList.add(new Option(s, s)));
         }
-        // For Other (Staff/Admin), show only subject field with roles including Sports
         else if (pos === 'Other') {
             subField.classList.remove('d-none');
             subList.required = true;
-            // Add Sports to the list of Other roles
             const roles = ['Front Office', 'Back Office', 'IT', 'Accounts', 'Library', 'Sports', 'Others'];
             subList.add(new Option("-- Select Role --", ""));
             roles.forEach(r => subList.add(new Option(r, r)));
         }
     }
 
-    // Variables for metadata
+    // Metadata variables
     let userIP = "Fetching...";
     let userLocStr = "Loc: Fetching...";
 
-    // Function to update metadata in the separate div
     function updateMetadataDisplay() {
         const now = new Date();
         const dateStr = now.toLocaleDateString() + " " + now.toLocaleTimeString();
@@ -598,7 +779,6 @@
         updateMetadataDisplay();
     }
 
-    // Update metadata every second to keep time current
     setInterval(updateMetadataDisplay, 1000);
 
     function enableSubmit(response) { 
@@ -617,23 +797,27 @@
     function addNewEdu() {
         const tbody = document.getElementById('eduTbl').getElementsByTagName('tbody')[0];
         const row = tbody.insertRow();
-        row.innerHTML = `<td><input type="text" placeholder="Degree" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                        <td><input type="text" pattern="\\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="4-digit year"></td>
-                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                        <td><button type="button" class="btn btn-link text-danger p-0" onclick="this.closest('tr').remove()"><i class="bi bi-trash-fill"></i></button></td>`;
+        row.innerHTML = `<td><input type="text" class="edu-level" placeholder="Degree name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" class="edu-board" placeholder="University name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" class="edu-institution" placeholder="College name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" class="edu-year" pattern="\\d{4}" maxlength="4" placeholder="YYYY" onkeypress="return onlyNumberKey(event)" required title="4-digit year"></td>
+                        <td><input type="text" class="edu-percentage" placeholder="Percentage" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-trash-fill"></i></button></td>`;
     }
 
     function addNewExp() {
         const tbody = document.getElementById('expTbl').getElementsByTagName('tbody')[0];
         const row = tbody.insertRow();
-        row.innerHTML = `<td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                        <td><input type="text" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
-                        <td><input type="date" class="d-start" onchange="autoCalc(this)" required></td>
-                        <td><input type="date" class="d-end" onchange="autoCalc(this)" required></td>
-                        <td><input type="text" class="dur-res bg-light text-center" readonly></td>
-                        <td><button type="button" class="btn btn-link text-danger p-0" onclick="this.closest('tr').remove()"><i class="bi bi-trash-fill"></i></button></td>`;
+        row.innerHTML = `<td><input type="text" class="exp-org" placeholder="Organization name" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="text" class="exp-desig" placeholder="Designation" onkeyup="validateSafeText(this)" onblur="validateSafeText(this)" required></td>
+                        <td><input type="date" class="d-start exp-from" onchange="autoCalc(this)" required></td>
+                        <td><input type="date" class="d-end exp-to" onchange="autoCalc(this)" required></td>
+                        <td><input type="text" class="dur-res bg-light text-center" readonly placeholder="Auto"></td>
+                        <td><button type="button" class="btn btn-link text-danger p-0" onclick="removeRow(this)"><i class="bi bi-trash-fill"></i></button></td>`;
+    }
+
+    function removeRow(btn) {
+        btn.closest('tr').remove();
     }
 
     function autoCalc(el) {
@@ -646,7 +830,7 @@
         }
     }
 
-    // Photo Preview with size & type validation
+    // Photo Preview with validation
     document.getElementById('photoInp').onchange = function(e) {
         const file = this.files[0];
         if (!file) return;
@@ -670,21 +854,16 @@
         reader.readAsDataURL(file);
     };
 
-    // SIGNATURE PAD - Fixed alignment issue
+    // SIGNATURE PAD
     const canvas = document.getElementById('sig-canvas');
     const ctx = canvas.getContext('2d');
     let drawing = false;
 
     function resizeCanvas() {
         const container = canvas.parentElement;
-        const containerWidth = container.clientWidth;
-        const containerHeight = container.clientHeight;
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
         
-        // Set canvas dimensions to match container exactly
-        canvas.width = containerWidth;
-        canvas.height = containerHeight;
-        
-        // Reset context properties after resize
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -694,7 +873,6 @@
     
     window.addEventListener('resize', resizeCanvas);
     
-    // Initial resize with slight delay to ensure container is ready
     setTimeout(() => {
         resizeCanvas();
     }, 100);
@@ -707,21 +885,21 @@
         let clientX, clientY;
         
         if (e.touches) {
-            // Touch event
             clientX = e.touches[0].clientX;
             clientY = e.touches[0].clientY;
-            e.preventDefault(); // Prevent scrolling
+            e.preventDefault();
         } else {
-            // Mouse event
             clientX = e.clientX;
             clientY = e.clientY;
         }
         
-        // Calculate canvas coordinates
         const canvasX = (clientX - rect.left) * scaleX;
         const canvasY = (clientY - rect.top) * scaleY;
         
-        return { x: canvasX, y: canvasY };
+        return { 
+            x: Math.max(0, Math.min(canvas.width, canvasX)), 
+            y: Math.max(0, Math.min(canvas.height, canvasY)) 
+        };
     }
 
     function startDrawing(e) {
@@ -743,16 +921,14 @@
 
     function stopDrawing() {
         drawing = false;
-        ctx.beginPath(); // Prevents line connecting when restarting
+        ctx.beginPath();
     }
 
-    // Mouse events
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseleave', stopDrawing);
 
-    // Touch events
     canvas.addEventListener('touchstart', startDrawing, { passive: false });
     canvas.addEventListener('touchmove', draw, { passive: false });
     canvas.addEventListener('touchend', stopDrawing);
@@ -760,38 +936,129 @@
 
     function clearSig() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById('sigWrapper').classList.remove('is-invalid');
     }
 
-    // FORM SUBMIT
-    document.getElementById('recruitmentForm').onsubmit = function(e) {
-        e.preventDefault();
+    // Form validation and submission
+    function validateAndSubmitForm() {
+        // Remove all previous invalid classes
+        document.querySelectorAll('.is-invalid').forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+        document.getElementById('sigWrapper').classList.remove('is-invalid');
         
-        // Check if canvas is empty (all white/transparent)
+        let errors = [];
+        let firstInvalidElement = null;
+        
+        // Validate all required fields
+        const requiredFields = document.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+            if (field.type === 'file') {
+                // Check if photo is uploaded
+                if (!field.files || field.files.length === 0) {
+                    field.classList.add('is-invalid');
+                    errors.push('Please upload a photo');
+                    if (!firstInvalidElement) firstInvalidElement = field;
+                }
+            } else if (field.tagName === 'SELECT' || field.tagName === 'INPUT' || field.tagName === 'TEXTAREA') {
+                if (!field.value || field.value.trim() === '') {
+                    field.classList.add('is-invalid');
+                    
+                    // Get field label
+                    let label = '';
+                    const fieldId = field.id;
+                    if (fieldId) {
+                        const labelEl = document.querySelector(`label[for="${fieldId}"]`);
+                        if (labelEl) label = labelEl.textContent.trim().replace('*', '').trim();
+                    }
+                    
+                    if (!label) {
+                        // Try to find parent label
+                        const parent = field.closest('td');
+                        if (parent) {
+                            const thIndex = parent.cellIndex;
+                            const table = field.closest('table');
+                            if (table) {
+                                const headerCell = table.querySelector(`thead th:nth-child(${thIndex + 1})`);
+                                if (headerCell) label = headerCell.textContent.trim();
+                            }
+                        }
+                    }
+                    
+                    errors.push(`${label || 'A required field'} is missing`);
+                    if (!firstInvalidElement) firstInvalidElement = field;
+                }
+            }
+        });
+        
+        // Validate signature
         const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
         const isCanvasEmpty = pixelData.every((value, index) => {
-            // Check alpha channel (every 4th value)
             return (index + 1) % 4 !== 0 || value === 0;
         });
         
         if (isCanvasEmpty) {
-            Swal.fire({ 
-                icon: 'error', 
-                title: 'Signature Required', 
-                text: 'Please sign in the signature pad.' 
+            document.getElementById('sigWrapper').classList.add('is-invalid');
+            errors.push('Please sign in the signature pad');
+            if (!firstInvalidElement) {
+                firstInvalidElement = document.getElementById('sigWrapper');
+            }
+        }
+        
+        // Validate declaration checkbox
+        const declareCheck = document.getElementById('declareCheck');
+        if (!declareCheck.checked) {
+            declareCheck.classList.add('is-invalid');
+            errors.push('Please accept the declaration');
+            if (!firstInvalidElement) firstInvalidElement = declareCheck;
+        }
+        
+        // Validate reCAPTCHA
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse || recaptchaResponse.length === 0) {
+            errors.push('Please complete the reCAPTCHA');
+            if (!firstInvalidElement) {
+                firstInvalidElement = document.querySelector('.g-recaptcha');
+            }
+        }
+        
+        if (errors.length > 0) {
+            // Show error summary
+            const errorList = document.getElementById('errorList');
+            errorList.innerHTML = '';
+            errors.forEach(error => {
+                const li = document.createElement('li');
+                li.textContent = error;
+                errorList.appendChild(li);
             });
+            
+            const errorSummary = document.getElementById('errorSummary');
+            errorSummary.classList.add('show');
+            
+            // Scroll to first error
+            if (firstInvalidElement) {
+                setTimeout(() => {
+                    firstInvalidElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                    
+                    // Focus on the element if it's an input/select/textarea
+                    if (firstInvalidElement.tagName === 'INPUT' || 
+                        firstInvalidElement.tagName === 'SELECT' || 
+                        firstInvalidElement.tagName === 'TEXTAREA') {
+                        firstInvalidElement.focus();
+                    }
+                }, 100);
+            }
+            
             return;
         }
         
-        const invalid = this.querySelectorAll(':invalid');
-        if (invalid.length > 0) {
-            Swal.fire({ 
-                icon: 'warning', 
-                title: 'Missing Info', 
-                text: 'Please fill all mandatory fields.' 
-            });
-            return;
-        }
+        // Hide error summary if visible
+        document.getElementById('errorSummary').classList.remove('show');
         
+        // All validations passed - submit form
         const appNo = "MSK-" + Math.floor(100000 + Math.random() * 900000);
         const name = document.getElementById('fullName').value;
         const post = document.getElementById('posSelect').value;
@@ -808,7 +1075,40 @@
             `,
             confirmButtonColor: '#002b5e' 
         }).then(() => location.reload());
-    };
+    }
+
+    // Add real-time validation removal on input/change
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('is-invalid')) {
+            e.target.classList.remove('is-invalid');
+            
+            // Hide error summary if no more errors
+            const hasInvalid = document.querySelectorAll('.is-invalid').length > 0;
+            if (!hasInvalid) {
+                document.getElementById('errorSummary').classList.remove('show');
+            }
+        }
+    });
+    
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('is-invalid')) {
+            e.target.classList.remove('is-invalid');
+            
+            const hasInvalid = document.querySelectorAll('.is-invalid').length > 0;
+            if (!hasInvalid) {
+                document.getElementById('errorSummary').classList.remove('show');
+            }
+        }
+    });
+    
+    // Remove invalid class from signature wrapper when drawing starts
+    canvas.addEventListener('mousedown', function() {
+        document.getElementById('sigWrapper').classList.remove('is-invalid');
+    });
+    
+    canvas.addEventListener('touchstart', function() {
+        document.getElementById('sigWrapper').classList.remove('is-invalid');
+    });
 </script>
 
 </body>
