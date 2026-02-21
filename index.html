@@ -662,7 +662,20 @@
                 <textarea class="form-control" id="extraCurr" style="height: 100px; resize: none;" placeholder="Sports, NCC, etc." onkeyup="validateSafeText(this)" onblur="validateSafeText(this)"></textarea>
             </div>
 
-            <div class="section-heading">3. Declaration & Submission</div>
+            <!-- New Section for CTC Details -->
+            <div class="section-heading">3. Compensation Details</div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label required-label">Current CTC (per month) ₹</label>
+                    <input type="text" id="currentCTC" class="form-control" placeholder="Enter current monthly CTC" onkeypress="return onlyNumberKey(event)" maxlength="6" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label required-label">Expected CTC (per month) ₹</label>
+                    <input type="text" id="expectedCTC" class="form-control" placeholder="Enter expected monthly CTC" onkeypress="return onlyNumberKey(event)" maxlength="6" required>
+                </div>
+            </div>
+
+            <div class="section-heading">4. Declaration & Submission</div>
             
             <div class="note-alert mb-4">
                 <i class="bi bi-info-circle-fill me-2"></i>  IMPORTANT: Fluency in English (written & spoken) is a mandatory requirement for all teaching faculty positions.
@@ -1076,6 +1089,8 @@
         const noticePeriod = document.getElementById('noticePeriod')?.value || '';
         const extraCurr = document.getElementById('extraCurr')?.value || 'Not provided';
         const place = document.getElementById('placeInput')?.value || '';
+        const currentCTC = document.getElementById('currentCTC')?.value || '';
+        const expectedCTC = document.getElementById('expectedCTC')?.value || '';
         
         // Collect ALL education data
         let eduRows = [];
@@ -1173,7 +1188,7 @@
             return;
         }
         
-        // Write the complete PDF HTML content - OPTIMIZED FOR SINGLE PAGE
+        // Write the complete PDF HTML content - ULTRA COMPACT FOR SINGLE PAGE
         pdfWindow.document.write(`
             <!DOCTYPE html>
             <html>
@@ -1189,8 +1204,9 @@
                     body {
                         font-family: Arial, Helvetica, sans-serif;
                         background: white;
-                        padding: 10px;
+                        padding: 8px;
                         color: #000;
+                        line-height: 1.2;
                     }
                     
                     .container {
@@ -1199,26 +1215,29 @@
                         background: white;
                     }
                     
-                    /* Compact header - no school name */
+                    /* Application ID - ultra compact */
                     .app-badge {
-                        font-size: 10px;
+                        font-size: 9px;
                         color: #002b5e;
                         font-weight: bold;
-                        margin-bottom: 5px;
+                        margin-bottom: 4px;
+                        text-align: right;
+                        border-bottom: 1px solid #ccc;
+                        padding-bottom: 2px;
                     }
                     
-                    /* Photo and Personal Info Row - Side by Side */
+                    /* Photo and Basic Info Row */
                     .top-row {
                         display: flex;
-                        gap: 10px;
-                        margin-bottom: 8px;
+                        gap: 8px;
+                        margin-bottom: 6px;
                     }
                     
                     .photo-box {
-                        width: 85px;
-                        height: 105px;
-                        border: 2px solid #002b5e;
-                        border-radius: 4px;
+                        width: 70px;
+                        height: 85px;
+                        border: 1.5px solid #002b5e;
+                        border-radius: 3px;
                         overflow: hidden;
                         background: #f5f5f5;
                         flex-shrink: 0;
@@ -1238,90 +1257,88 @@
                         justify-content: center;
                         background: #f5f5f5;
                         color: #999;
-                        font-size: 9px;
+                        font-size: 7px;
                     }
                     
-                    .info-panel {
+                    /* Compact info chips */
+                    .info-chips {
                         flex: 1;
                         display: flex;
                         flex-wrap: wrap;
-                        gap: 5px;
-                        background: #f8f9fa;
-                        padding: 6px;
-                        border-radius: 4px;
+                        gap: 3px;
+                        align-content: flex-start;
+                    }
+                    
+                    .chip {
+                        background: #f0f0f0;
+                        border-radius: 2px;
+                        padding: 2px 5px;
+                        font-size: 8px;
                         border: 1px solid #ddd;
+                        display: inline-block;
                     }
                     
-                    .info-chip {
-                        background: white;
-                        border-radius: 3px;
-                        padding: 3px 6px;
-                        font-size: 9px;
-                        border: 1px solid #e0e0e0;
-                        flex: 1 1 auto;
-                    }
-                    
-                    .info-chip strong {
+                    .chip strong {
                         color: #002b5e;
-                        margin-right: 3px;
+                        margin-right: 2px;
                     }
                     
-                    /* Section styling - compact */
+                    /* Section styling - extremely compact */
                     .section {
-                        margin-bottom: 6px;
+                        margin-bottom: 5px;
                         border: 1px solid #999;
-                        border-radius: 4px;
+                        border-radius: 3px;
                         overflow: hidden;
                     }
                     
                     .section-title {
                         background: #002b5e;
                         color: white;
-                        padding: 3px 6px;
-                        font-size: 10px;
+                        padding: 2px 5px;
+                        font-size: 9px;
                         font-weight: bold;
                         text-transform: uppercase;
                     }
                     
                     .section-content {
-                        padding: 5px;
+                        padding: 4px;
                         background: white;
                     }
                     
-                    /* Compact grid for personal info inside section 1 */
-                    .compact-grid {
+                    /* Grid for 2-column layout */
+                    .grid-2 {
                         display: flex;
                         flex-wrap: wrap;
-                        gap: 5px;
+                        gap: 4px;
                     }
                     
                     .grid-item {
-                        flex: 1 1 calc(50% - 5px);
+                        flex: 1 1 calc(50% - 4px);
                         display: flex;
                         border-bottom: 1px dotted #ccc;
                         padding: 2px 0;
-                        font-size: 9px;
+                        font-size: 8px;
                     }
                     
                     .grid-label {
                         font-weight: bold;
-                        width: 90px;
+                        width: 80px;
                         color: #333;
-                        font-size: 9px;
+                        font-size: 8px;
                     }
                     
                     .grid-value {
                         flex: 1;
                         color: #000;
-                        font-size: 9px;
+                        font-size: 8px;
+                        word-break: break-word;
                     }
                     
-                    /* Full width items */
                     .full-width {
                         flex: 1 1 100%;
                     }
                     
-                    /* Tables - ultra compact */
+                    /* Tables - compact */
                     table {
                         width: 100%;
                         border-collapse: collapse;
@@ -1330,82 +1347,102 @@
                     th {
                         background: #e0e0e0;
                         border: 1px solid #000;
-                        padding: 3px;
+                        padding: 2px;
                         text-align: left;
                         font-weight: bold;
-                        font-size: 8px;
+                        font-size: 7px;
                     }
                     
                     td {
                         border: 1px solid #000;
-                        padding: 3px;
-                        font-size: 8px;
+                        padding: 2px;
+                        font-size: 7px;
                     }
                     
                     /* Signature row */
                     .signature-row {
                         display: flex;
-                        gap: 8px;
+                        gap: 6px;
                         margin-top: 4px;
                     }
                     
-                    .signature-box {
+                    .signature-info {
                         flex: 1;
+                    }
+                    
+                    .signature-box {
+                        width: 120px;
                         border: 1px solid #333;
-                        border-radius: 3px;
-                        padding: 4px;
-                        min-height: 50px;
+                        border-radius: 2px;
+                        padding: 3px;
+                        min-height: 45px;
                     }
                     
                     .signature-box img {
                         max-width: 100%;
-                        max-height: 40px;
+                        max-height: 35px;
                     }
                     
                     /* Digital info - compact */
                     .digital-info {
                         background: #f8f9fa;
-                        border-left: 3px solid #002b5e;
-                        padding: 4px 6px;
-                        margin: 4px 0;
-                        font-size: 8px;
+                        border-left: 2px solid #002b5e;
+                        padding: 3px 5px;
+                        margin: 3px 0;
+                        font-size: 7px;
                     }
                     
                     .digital-row {
                         display: flex;
                         flex-wrap: wrap;
-                        gap: 10px;
+                        gap: 8px;
                         margin-top: 2px;
                     }
                     
                     .digital-item {
-                        font-size: 8px;
+                        font-size: 7px;
                     }
                     
-                    /* Footer */
+                    .digital-item strong {
+                        color: #002b5e;
+                    }
+                    
+                    /* Footer - no URL, just page number */
                     .footer {
                         text-align: center;
-                        margin-top: 8px;
+                        margin-top: 5px;
                         font-size: 7px;
                         color: #666;
                         border-top: 1px solid #ccc;
-                        padding-top: 3px;
+                        padding-top: 2px;
                     }
                     
-                    /* Page break control */
-                    .page-break-before {
-                        page-break-before: always;
+                    /* Page number */
+                    .page-number {
+                        text-align: center;
+                        font-size: 7px;
+                        color: #999;
+                        margin-top: 2px;
+                    }
+                    
+                    /* CTC highlight */
+                    .ctc-highlight {
+                        background: #e8f0fe;
+                        border-radius: 2px;
+                        padding: 2px 4px;
+                        font-weight: bold;
                     }
                 </style>
             </head>
             <body>
                 <div class="container">
-                    <!-- Application ID Badge (no school header) -->
+                    <!-- Application ID Badge - no URL -->
                     <div class="app-badge">
-                        Application No: ${appNo} | ${submissionDateTime}
+                        <span style="float:left;">Modern School Kota</span>
+                        App No: ${appNo} | ${submissionDateTime}
                     </div>
                     
-                    <!-- TOP ROW: Photo + Personal Info Chip (moved APPLICANT DETAILS here) -->
+                    <!-- TOP ROW: Photo + Basic Info Chips -->
                     <div class="top-row">
                         <!-- Photo -->
                         <div class="photo-box">
@@ -1415,40 +1452,28 @@
                             }
                         </div>
                         
-                        <!-- Personal Info Chips (APPLICANT DETAILS) -->
-                        <div class="info-panel">
-                            <div class="info-chip">
-                                <strong>Name:</strong> ${fullName}
-                            </div>
-                            <div class="info-chip">
-                                <strong>DOB:</strong> ${dob}
-                            </div>
-                            <div class="info-chip">
-                                <strong>Gender:</strong> ${gender}
-                            </div>
-                            <div class="info-chip">
-                                <strong>Mobile:</strong> ${mobile}
-                            </div>
-                            <div class="info-chip">
-                                <strong>Email:</strong> ${email}
-                            </div>
-                            <div class="info-chip">
-                                <strong>Position:</strong> ${position}
-                            </div>
+                        <!-- Basic Info Chips -->
+                        <div class="info-chips">
+                            <span class="chip"><strong>Name:</strong> ${fullName}</span>
+                            <span class="chip"><strong>DOB:</strong> ${dob}</span>
+                            <span class="chip"><strong>Gender:</strong> ${gender}</span>
+                            <span class="chip"><strong>Mobile:</strong> ${mobile}</span>
+                            <span class="chip"><strong>Position:</strong> ${position}</span>
+                            <span class="chip"><strong>Email:</strong> ${email}</span>
                         </div>
                     </div>
                     
-                    <!-- SECTION 1: PERSONAL INFORMATION (Full details) - Now in same row as photo -->
+                    <!-- SECTION 1: PERSONAL INFORMATION -->
                     <div class="section">
                         <div class="section-title">1. PERSONAL INFORMATION</div>
                         <div class="section-content">
-                            <div class="compact-grid">
+                            <div class="grid-2">
                                 <div class="grid-item">
                                     <span class="grid-label">Full Name:</span>
                                     <span class="grid-value">${fullName}</span>
                                 </div>
                                 <div class="grid-item">
-                                    <span class="grid-label">Date of Birth:</span>
+                                    <span class="grid-label">DOB:</span>
                                     <span class="grid-value">${dob}</span>
                                 </div>
                                 <div class="grid-item">
@@ -1487,7 +1512,7 @@
                     <div class="section">
                         <div class="section-title">2. PROFESSIONAL REQUIREMENTS</div>
                         <div class="section-content">
-                            <div class="compact-grid">
+                            <div class="grid-2">
                                 <div class="grid-item">
                                     <span class="grid-label">Position:</span>
                                     <span class="grid-value">${position}</span>
@@ -1513,17 +1538,34 @@
                                     <span class="grid-value">${joiningDate}</span>
                                 </div>
                                 <div class="grid-item">
-                                    <span class="grid-label">Notice Period:</span>
+                                    <span class="grid-label">Notice:</span>
                                     <span class="grid-value">${noticePeriod}M</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- SECTION 3: EDUCATION DETAILS -->
+                    <!-- SECTION 3: CTC DETAILS (New) -->
                     <div class="section">
-                        <div class="section-title">3. EDUCATION DETAILS</div>
-                        <div class="section-content" style="padding: 3px;">
+                        <div class="section-title">3. COMPENSATION DETAILS</div>
+                        <div class="section-content">
+                            <div class="grid-2">
+                                <div class="grid-item">
+                                    <span class="grid-label">Current CTC:</span>
+                                    <span class="grid-value"><span class="ctc-highlight">₹ ${currentCTC || 'Not specified'}</span>/month</span>
+                                </div>
+                                <div class="grid-item">
+                                    <span class="grid-label">Expected CTC:</span>
+                                    <span class="grid-value"><span class="ctc-highlight">₹ ${expectedCTC || 'Not specified'}</span>/month</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SECTION 4: EDUCATION DETAILS -->
+                    <div class="section">
+                        <div class="section-title">4. EDUCATION DETAILS</div>
+                        <div class="section-content" style="padding: 2px;">
                             <table>
                                 <thead>
                                     <tr>
@@ -1541,10 +1583,10 @@
                         </div>
                     </div>
                     
-                    <!-- SECTION 4: TEACHING EXPERIENCE -->
+                    <!-- SECTION 5: TEACHING EXPERIENCE -->
                     <div class="section">
-                        <div class="section-title">4. TEACHING EXPERIENCE</div>
-                        <div class="section-content" style="padding: 3px;">
+                        <div class="section-title">5. TEACHING EXPERIENCE</div>
+                        <div class="section-content" style="padding: 2px;">
                             <table>
                                 <thead>
                                     <tr>
@@ -1562,11 +1604,11 @@
                         </div>
                     </div>
                     
-                    <!-- SECTION 5: ADDITIONAL INFORMATION -->
+                    <!-- SECTION 6: ADDITIONAL INFORMATION -->
                     <div class="section">
-                        <div class="section-title">5. ADDITIONAL INFORMATION</div>
+                        <div class="section-title">6. ADDITIONAL INFORMATION</div>
                         <div class="section-content">
-                            <div class="compact-grid">
+                            <div class="grid-2">
                                 <div class="grid-item full-width">
                                     <span class="grid-label">Extra-Curricular:</span>
                                     <span class="grid-value">${extraCurr}</span>
@@ -1579,14 +1621,11 @@
                         </div>
                     </div>
                     
-                    <!-- PAGE BREAK - SECTION 6 starts on next page -->
-                    <div style="page-break-before: always;"></div>
-                    
-                    <!-- SECTION 6: DECLARATION & DIGITAL SIGNATURE (Always on next page) -->
+                    <!-- SECTION 7: DECLARATION & DIGITAL SIGNATURE -->
                     <div class="section">
-                        <div class="section-title">6. DECLARATION & DIGITAL SIGNATURE</div>
+                        <div class="section-title">7. DECLARATION & DIGITAL SIGNATURE</div>
                         <div class="section-content">
-                            <div class="compact-grid">
+                            <div class="grid-2">
                                 <div class="grid-item full-width">
                                     <span class="grid-label">Declaration:</span>
                                     <span class="grid-value">I hereby declare that all information provided is accurate.</span>
@@ -1594,7 +1633,7 @@
                             </div>
                             
                             <div class="signature-row">
-                                <div style="flex: 1;">
+                                <div class="signature-info">
                                     <div class="grid-item">
                                         <span class="grid-label">Signed by:</span>
                                         <span class="grid-value">${fullName}</span>
@@ -1609,10 +1648,10 @@
                                     </div>
                                 </div>
                                 <div class="signature-box">
-                                    <strong style="font-size: 8px;">Signature:</strong>
+                                    <strong style="font-size: 7px;">Signature:</strong>
                                     ${signatureImage ? 
                                         `<img src="${signatureImage}" alt="Signature" style="margin-top: 2px;">` : 
-                                        '<div style="color: #999; font-size: 8px;">Not signed</div>'
+                                        '<div style="color: #999; font-size: 7px;">Not signed</div>'
                                     }
                                 </div>
                             </div>
@@ -1628,9 +1667,9 @@
                         </div>
                     </div>
                     
-                    <!-- Footer -->
+                    <!-- Footer with page number - NO URL -->
                     <div class="footer">
-                        Generated: ${submissionDateTime} | Modern School Kota
+                        Generated: ${submissionDateTime} | Page 1 of 1
                     </div>
                 </div>
                 
