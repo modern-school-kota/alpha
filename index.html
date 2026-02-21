@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         body { background-color: #f0f2f5; color: #333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -38,7 +39,6 @@
             .main-header h1 { font-size: 1.5rem; margin-top: 10px; }
             .form-card { padding: 15px; }
             
-            /* Mobile fixes for place and recaptcha */
             .mobile-stack {
                 flex-direction: column !important;
             }
@@ -51,7 +51,6 @@
                 transform-origin: left center;
             }
             
-            /* Table responsiveness improvements */
             .table-responsive {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
@@ -92,10 +91,25 @@
                 margin-right: 5px;
             }
             
-            /* Mobile scroll to element fix */
             html {
                 scroll-padding-top: 20px;
                 scroll-behavior: smooth;
+            }
+            
+            /* SweetAlert mobile adjustments */
+            .swal2-popup {
+                font-size: 14px !important;
+            }
+            
+            .swal2-html-container .applicant-details {
+                flex-direction: column !important;
+                gap: 5px !important;
+            }
+            
+            .swal2-html-container .detail-item {
+                width: 100% !important;
+                text-align: left !important;
+                padding: 3px 0 !important;
             }
         }
         
@@ -146,7 +160,6 @@
             box-shadow: 0 0 0 3px rgba(0,43,94,0.1) !important; 
         }
         
-        /* Invalid field styling */
         .form-control.is-invalid, 
         .form-select.is-invalid,
         .table-custom input.is-invalid,
@@ -159,7 +172,6 @@
             padding-right: 35px;
         }
         
-        /* Highlight for focused invalid field */
         .form-control.is-invalid:focus,
         .form-select.is-invalid:focus,
         .table-custom input.is-invalid:focus,
@@ -168,7 +180,6 @@
             box-shadow: 0 0 0 3px rgba(220,53,69,0.1) !important;
         }
 
-        /* Fixed height for address textareas - no resize */
         .address-textarea { 
             height: 100px; 
             resize: none; 
@@ -276,12 +287,10 @@
             margin-top: 10px;
         }
         
-        /* Signature pad invalid state */
         .sig-wrapper.is-invalid {
             border-color: #dc3545;
         }
         
-        /* Error summary styling */
         .error-summary {
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
@@ -329,10 +338,186 @@
                 padding: 10px 15px;
             }
             
-            /* Mobile scroll fix */
             .is-invalid {
                 scroll-margin-top: 100px;
             }
+        }
+        
+        /* Styles for PDF generation */
+        .pdf-form-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #002b5e;
+            padding-bottom: 10px;
+        }
+        
+        .pdf-header h2 {
+            color: #002b5e;
+            margin-bottom: 5px;
+        }
+        
+        .pdf-section {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .pdf-section-title {
+            background: #002b5e;
+            color: white;
+            padding: 8px 15px;
+            font-weight: bold;
+        }
+        
+        .pdf-section-content {
+            padding: 15px;
+            background: white;
+        }
+        
+        .pdf-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 8px;
+        }
+        
+        .pdf-label {
+            font-weight: 600;
+            width: 200px;
+            color: #555;
+        }
+        
+        .pdf-value {
+            flex: 1;
+        }
+        
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .pdf-table th {
+            background: #f0f2f5;
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .pdf-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        .pdf-signature {
+            max-width: 300px;
+            max-height: 100px;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+        
+        .pdf-footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 10px;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        
+        /* SweetAlert custom styles */
+        .swal2-popup .applicant-summary {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        
+        .swal2-popup .applicant-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .swal2-popup .detail-item {
+            flex: 1;
+            text-align: center;
+            padding: 5px 10px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .swal2-popup .detail-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .swal2-popup .detail-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #002b5e;
+            word-break: break-word;
+        }
+        
+        .swal2-popup .digital-info {
+            background: #e9ecef;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 15px 0 5px;
+            font-size: 11px;
+            color: #495057;
+            border-left: 3px solid #002b5e;
+        }
+        
+        .swal2-popup .digital-info i {
+            color: #002b5e;
+            margin-right: 5px;
+        }
+        
+        .swal2-popup .digital-info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        
+        .swal2-popup .digital-info-item {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .swal2-popup .print-btn {
+            background: #002b5e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .swal2-popup .print-btn:hover {
+            background: #1a3f5c;
+        }
+        
+        .swal2-popup .print-btn i {
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -616,6 +801,9 @@
     </form>
 </div>
 
+<!-- Hidden container for PDF generation -->
+<div id="pdfContainer" style="display: none;"></div>
+
 <script>
     // Function to allow only numbers in year and mobile fields
     function onlyNumberKey(evt) {
@@ -742,6 +930,7 @@
     // Metadata variables
     let userIP = "Fetching...";
     let userLocStr = "Loc: Fetching...";
+    let submissionDateTime = "";
 
     function updateMetadataDisplay() {
         const now = new Date();
@@ -939,6 +1128,217 @@
         document.getElementById('sigWrapper').classList.remove('is-invalid');
     }
 
+    // Function to generate PDF from form data
+    function generatePDF(appNo, name, post) {
+        // Get current date and time for submission
+        const now = new Date();
+        submissionDateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+        
+        // Create PDF content
+        const pdfContent = document.createElement('div');
+        pdfContent.className = 'pdf-form-container';
+        pdfContent.innerHTML = `
+            <div class="pdf-header">
+                <h2>MODERN SCHOOL KOTA</h2>
+                <h3>Faculty Recruitment Application Form</h3>
+                <p><strong>Application No:</strong> ${appNo} | <strong>Date:</strong> ${submissionDateTime}</p>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">1. Personal Information</div>
+                <div class="pdf-section-content">
+                    <div class="pdf-row">
+                        <div class="pdf-label">Full Name:</div>
+                        <div class="pdf-value">${document.getElementById('fullName').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Date of Birth:</div>
+                        <div class="pdf-value">${document.getElementById('dob').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Gender:</div>
+                        <div class="pdf-value">${document.getElementById('gender').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Nationality:</div>
+                        <div class="pdf-value">${document.getElementById('natSelect').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Religion:</div>
+                        <div class="pdf-value">${document.getElementById('religion').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Mobile:</div>
+                        <div class="pdf-value">+91 ${document.getElementById('mobile').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Email:</div>
+                        <div class="pdf-value">${document.getElementById('email').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Permanent Address:</div>
+                        <div class="pdf-value">${document.getElementById('permAddr').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Current Address:</div>
+                        <div class="pdf-value">${document.getElementById('currAddr').value}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">2. Professional Requirements</div>
+                <div class="pdf-section-content">
+                    <div class="pdf-row">
+                        <div class="pdf-label">Position Applied:</div>
+                        <div class="pdf-value">${document.getElementById('posSelect').value}</div>
+                    </div>
+                    ${document.getElementById('subField').classList.contains('d-none') ? '' : `
+                    <div class="pdf-row">
+                        <div class="pdf-label">Subject/Role:</div>
+                        <div class="pdf-value">${document.getElementById('subList').value}</div>
+                    </div>
+                    `}
+                    ${document.getElementById('prefClassField').classList.contains('d-none') ? '' : `
+                    <div class="pdf-row">
+                        <div class="pdf-label">Preferred Classes:</div>
+                        <div class="pdf-value">${document.getElementById('prefClass').value}</div>
+                    </div>
+                    `}
+                    <div class="pdf-row">
+                        <div class="pdf-label">Total Experience:</div>
+                        <div class="pdf-value">${document.getElementById('expYears').value} Years, ${document.getElementById('expMonths').value} Months</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Expected Joining:</div>
+                        <div class="pdf-value">${document.getElementById('joiningDate').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Notice Period:</div>
+                        <div class="pdf-value">${document.getElementById('noticePeriod').value} Months</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">3. Education Details</div>
+                <div class="pdf-section-content">
+                    <table class="pdf-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Board/University</th>
+                                <th>Institution</th>
+                                <th>Year</th>
+                                <th>% / CGPA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Array.from(document.querySelectorAll('#eduTbl tbody tr')).map(row => {
+                                const inputs = row.querySelectorAll('input');
+                                if (inputs.length >= 5) {
+                                    return `<tr>
+                                        <td>${inputs[0].value || '-'}</td>
+                                        <td>${inputs[1].value || '-'}</td>
+                                        <td>${inputs[2].value || '-'}</td>
+                                        <td>${inputs[3].value || '-'}</td>
+                                        <td>${inputs[4].value || '-'}</td>
+                                    </tr>`;
+                                }
+                                return '';
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">4. Teaching Experience</div>
+                <div class="pdf-section-content">
+                    <table class="pdf-table">
+                        <thead>
+                            <tr>
+                                <th>Organization</th>
+                                <th>Designation</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Array.from(document.querySelectorAll('#expTbl tbody tr')).map(row => {
+                                const org = row.querySelector('.exp-org')?.value || '-';
+                                const desig = row.querySelector('.exp-desig')?.value || '-';
+                                const from = row.querySelector('.exp-from')?.value || '-';
+                                const to = row.querySelector('.exp-to')?.value || '-';
+                                const dur = row.querySelector('.dur-res')?.value || '-';
+                                return `<tr>
+                                    <td>${org}</td>
+                                    <td>${desig}</td>
+                                    <td>${from}</td>
+                                    <td>${to}</td>
+                                    <td>${dur}</td>
+                                </tr>`;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">5. Additional Information</div>
+                <div class="pdf-section-content">
+                    <div class="pdf-row">
+                        <div class="pdf-label">Extra-Curricular Achievements:</div>
+                        <div class="pdf-value">${document.getElementById('extraCurr').value || 'Not provided'}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Place:</div>
+                        <div class="pdf-value">${document.getElementById('placeInput').value}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">6. Declaration & Digital Signature</div>
+                <div class="pdf-section-content">
+                    <div class="pdf-row">
+                        <div class="pdf-label">Declaration:</div>
+                        <div class="pdf-value">I hereby declare that all information provided is accurate.</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Digitally Signed by:</div>
+                        <div class="pdf-value">${document.getElementById('fullName').value}</div>
+                    </div>
+                    <div class="pdf-row">
+                        <div class="pdf-label">Digital Signature Metadata:</div>
+                        <div class="pdf-value">
+                            <strong>IP Address:</strong> ${userIP}<br>
+                            <strong>Location:</strong> ${userLocStr}<br>
+                            <strong>Timestamp:</strong> ${submissionDateTime}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pdf-footer">
+                <p>This is a computer generated document. Generated on ${submissionDateTime}</p>
+                <p>Modern School Kota - Faculty Recruitment Portal</p>
+            </div>
+        `;
+        
+        // Generate PDF
+        const opt = {
+            margin: [0.5, 0.5, 0.5, 0.5],
+            filename: `Application_${appNo}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, letterRendering: true },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        
+        html2pdf().set(opt).from(pdfContent).save();
+    }
+
     // Form validation and submission
     function validateAndSubmitForm() {
         // Remove all previous invalid classes
@@ -954,7 +1354,6 @@
         const requiredFields = document.querySelectorAll('[required]');
         requiredFields.forEach(field => {
             if (field.type === 'file') {
-                // Check if photo is uploaded
                 if (!field.files || field.files.length === 0) {
                     field.classList.add('is-invalid');
                     errors.push('Please upload a photo');
@@ -964,7 +1363,6 @@
                 if (!field.value || field.value.trim() === '') {
                     field.classList.add('is-invalid');
                     
-                    // Get field label
                     let label = '';
                     const fieldId = field.id;
                     if (fieldId) {
@@ -973,7 +1371,6 @@
                     }
                     
                     if (!label) {
-                        // Try to find parent label
                         const parent = field.closest('td');
                         if (parent) {
                             const thIndex = parent.cellIndex;
@@ -1023,7 +1420,6 @@
         }
         
         if (errors.length > 0) {
-            // Show error summary
             const errorList = document.getElementById('errorList');
             errorList.innerHTML = '';
             errors.forEach(error => {
@@ -1035,7 +1431,6 @@
             const errorSummary = document.getElementById('errorSummary');
             errorSummary.classList.add('show');
             
-            // Scroll to first error
             if (firstInvalidElement) {
                 setTimeout(() => {
                     firstInvalidElement.scrollIntoView({ 
@@ -1043,7 +1438,6 @@
                         block: 'center' 
                     });
                     
-                    // Focus on the element if it's an input/select/textarea
                     if (firstInvalidElement.tagName === 'INPUT' || 
                         firstInvalidElement.tagName === 'SELECT' || 
                         firstInvalidElement.tagName === 'TEXTAREA') {
@@ -1058,23 +1452,62 @@
         // Hide error summary if visible
         document.getElementById('errorSummary').classList.remove('show');
         
-        // All validations passed - submit form
+        // All validations passed - show success modal with print button
         const appNo = "MSK-" + Math.floor(100000 + Math.random() * 900000);
         const name = document.getElementById('fullName').value;
         const post = document.getElementById('posSelect').value;
         
+        // Get current date and time
+        const now = new Date();
+        submissionDateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+        
         Swal.fire({ 
             icon: 'success', 
-            title: 'Application Submitted!',
+            title: 'Application Submitted Successfully!',
             html: `
-                <div class="text-start mt-3 p-3 bg-light border">
-                    <p class="mb-1"><strong>Application Number:</strong> ${appNo}</p>
-                    <p class="mb-1"><strong>Candidate Name:</strong> ${name}</p>
-                    <p class="mb-0"><strong>Position Applied:</strong> ${post}</p>
+                <div class="applicant-summary">
+                    <div class="applicant-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Application No.</div>
+                            <div class="detail-value">${appNo}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Candidate Name</div>
+                            <div class="detail-value">${name}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Position Applied</div>
+                            <div class="detail-value">${post}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="digital-info">
+                        <i class="bi bi-shield-lock"></i> <strong>Digitally Signed & Verified</strong>
+                        <div class="digital-info-row">
+                            <div class="digital-info-item">
+                                <i class="bi bi-geo-alt"></i> ${userLocStr}
+                            </div>
+                            <div class="digital-info-item">
+                                <i class="bi bi-globe"></i> IP: ${userIP}
+                            </div>
+                            <div class="digital-info-item">
+                                <i class="bi bi-clock"></i> ${submissionDateTime}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="generatePDF('${appNo}', '${name}', '${post}')" class="print-btn">
+                        <i class="bi bi-printer"></i> Download Application PDF
+                    </button>
                 </div>
             `,
-            confirmButtonColor: '#002b5e' 
-        }).then(() => location.reload());
+            confirmButtonText: 'Close',
+            confirmButtonColor: '#002b5e',
+            width: '600px',
+            padding: '20px',
+            showConfirmButton: true,
+            showCloseButton: true
+        });
     }
 
     // Add real-time validation removal on input/change
@@ -1082,7 +1515,6 @@
         if (e.target.classList.contains('is-invalid')) {
             e.target.classList.remove('is-invalid');
             
-            // Hide error summary if no more errors
             const hasInvalid = document.querySelectorAll('.is-invalid').length > 0;
             if (!hasInvalid) {
                 document.getElementById('errorSummary').classList.remove('show');
@@ -1101,7 +1533,6 @@
         }
     });
     
-    // Remove invalid class from signature wrapper when drawing starts
     canvas.addEventListener('mousedown', function() {
         document.getElementById('sigWrapper').classList.remove('is-invalid');
     });
