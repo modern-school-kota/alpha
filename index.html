@@ -96,7 +96,6 @@
                 scroll-behavior: smooth;
             }
             
-            /* SweetAlert mobile adjustments */
             .swal2-popup {
                 font-size: 14px !important;
             }
@@ -343,94 +342,152 @@
             }
         }
         
-        /* Styles for PDF generation */
-        .pdf-form-container {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
-            max-width: 1200px;
+        /* PDF Styles - Optimized for single page */
+        .pdf-container {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 1000px;
             margin: 0 auto;
+            padding: 15px;
+            background: white;
+            color: #333;
         }
         
         .pdf-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-bottom: 3px solid #002b5e;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
         
-        .pdf-header h2 {
+        .pdf-header h1 {
+            font-size: 24px;
             color: #002b5e;
-            margin-bottom: 5px;
+            margin: 0 0 3px 0;
+            font-weight: bold;
+        }
+        
+        .pdf-header h3 {
+            font-size: 16px;
+            color: #666;
+            margin: 0 0 5px 0;
+            font-weight: normal;
+        }
+        
+        .pdf-header .app-info {
+            font-size: 13px;
+            color: #444;
+            background: #f5f5f5;
+            padding: 5px;
+            border-radius: 4px;
+            display: inline-block;
         }
         
         .pdf-section {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
+            page-break-inside: avoid;
         }
         
         .pdf-section-title {
             background: #002b5e;
             color: white;
-            padding: 8px 15px;
+            padding: 6px 12px;
+            font-size: 14px;
             font-weight: bold;
         }
         
         .pdf-section-content {
-            padding: 15px;
+            padding: 10px;
             background: white;
         }
         
         .pdf-row {
             display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-            border-bottom: 1px dashed #eee;
-            padding-bottom: 8px;
+            margin-bottom: 6px;
+            border-bottom: 1px dotted #eee;
+            padding-bottom: 4px;
+            font-size: 12px;
         }
         
         .pdf-label {
             font-weight: 600;
-            width: 200px;
+            width: 140px;
             color: #555;
+            font-size: 12px;
         }
         
         .pdf-value {
             flex: 1;
+            color: #333;
+            font-size: 12px;
         }
         
         .pdf-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 11px;
         }
         
         .pdf-table th {
             background: #f0f2f5;
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: 1px solid #ccc;
+            padding: 5px;
             text-align: left;
+            font-weight: 600;
+            font-size: 11px;
         }
         
         .pdf-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-size: 11px;
         }
         
-        .pdf-signature {
-            max-width: 300px;
-            max-height: 100px;
-            border: 1px solid #ddd;
-            padding: 5px;
+        .pdf-signature-box {
+            margin-top: 10px;
+            border-top: 2px dashed #002b5e;
+            padding-top: 8px;
+        }
+        
+        .pdf-digital-info {
+            background: #f8f9fa;
+            border-left: 4px solid #002b5e;
+            padding: 8px;
+            margin: 8px 0 0 0;
+            font-size: 11px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .pdf-digital-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 4px;
+        }
+        
+        .pdf-digital-item {
+            font-size: 11px;
+            color: #555;
         }
         
         .pdf-footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 10px;
-            color: #666;
+            margin-top: 15px;
+            font-size: 9px;
+            color: #777;
             border-top: 1px solid #ddd;
-            padding-top: 10px;
+            padding-top: 5px;
+        }
+        
+        .pdf-two-col {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .pdf-col {
+            flex: 1;
         }
         
         /* SweetAlert custom styles */
@@ -444,7 +501,7 @@
         .swal2-popup .applicant-details {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
             justify-content: space-between;
             align-items: center;
         }
@@ -452,21 +509,21 @@
         .swal2-popup .detail-item {
             flex: 1;
             text-align: center;
-            padding: 5px 10px;
+            padding: 5px 8px;
             background: white;
             border-radius: 6px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .swal2-popup .detail-label {
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .swal2-popup .detail-value {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: #002b5e;
             word-break: break-word;
@@ -475,8 +532,8 @@
         .swal2-popup .digital-info {
             background: #e9ecef;
             border-radius: 6px;
-            padding: 10px;
-            margin: 15px 0 5px;
+            padding: 8px;
+            margin: 12px 0 5px;
             font-size: 11px;
             color: #495057;
             border-left: 3px solid #002b5e;
@@ -490,14 +547,15 @@
         .swal2-popup .digital-info-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             justify-content: space-between;
-            margin-top: 5px;
+            margin-top: 4px;
         }
         
         .swal2-popup .digital-info-item {
             flex: 1;
-            min-width: 120px;
+            min-width: 100px;
+            font-size: 10px;
         }
         
         .swal2-popup .print-btn {
@@ -510,6 +568,7 @@
             width: 100%;
             margin-top: 15px;
             transition: background 0.3s ease;
+            cursor: pointer;
         }
         
         .swal2-popup .print-btn:hover {
@@ -800,9 +859,6 @@
         </div>
     </form>
 </div>
-
-<!-- Hidden container for PDF generation -->
-<div id="pdfContainer" style="display: none;"></div>
 
 <script>
     // Function to allow only numbers in year and mobile fields
@@ -1134,209 +1190,272 @@
         const now = new Date();
         submissionDateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();
         
+        // Get all form values
+        const fullName = document.getElementById('fullName').value;
+        const dob = document.getElementById('dob').value;
+        const gender = document.getElementById('gender').value;
+        const nationality = document.getElementById('natSelect').value;
+        const religion = document.getElementById('religion').value;
+        const mobile = document.getElementById('mobile').value;
+        const email = document.getElementById('email').value;
+        const permAddr = document.getElementById('permAddr').value;
+        const currAddr = document.getElementById('currAddr').value;
+        const position = document.getElementById('posSelect').value;
+        const subject = document.getElementById('subField').classList.contains('d-none') ? 'N/A' : document.getElementById('subList').value;
+        const prefClass = document.getElementById('prefClassField').classList.contains('d-none') ? 'N/A' : document.getElementById('prefClass').value;
+        const expYears = document.getElementById('expYears').value;
+        const expMonths = document.getElementById('expMonths').value;
+        const joiningDate = document.getElementById('joiningDate').value;
+        const noticePeriod = document.getElementById('noticePeriod').value;
+        const extraCurr = document.getElementById('extraCurr').value || 'Not provided';
+        const place = document.getElementById('placeInput').value;
+        
+        // Collect education data
+        let eduRows = [];
+        document.querySelectorAll('#eduTbl tbody tr').forEach(row => {
+            const inputs = row.querySelectorAll('input');
+            if (inputs.length >= 5) {
+                eduRows.push({
+                    level: inputs[0].value,
+                    board: inputs[1].value,
+                    institution: inputs[2].value,
+                    year: inputs[3].value,
+                    percentage: inputs[4].value
+                });
+            }
+        });
+        
+        // Collect experience data
+        let expRows = [];
+        document.querySelectorAll('#expTbl tbody tr').forEach(row => {
+            const org = row.querySelector('.exp-org')?.value || '';
+            const desig = row.querySelector('.exp-desig')?.value || '';
+            const from = row.querySelector('.exp-from')?.value || '';
+            const to = row.querySelector('.exp-to')?.value || '';
+            const dur = row.querySelector('.dur-res')?.value || '';
+            if (org || desig) {
+                expRows.push({ org, desig, from, to, dur });
+            }
+        });
+        
         // Create PDF content
-        const pdfContent = document.createElement('div');
-        pdfContent.className = 'pdf-form-container';
-        pdfContent.innerHTML = `
-            <div class="pdf-header">
-                <h2>MODERN SCHOOL KOTA</h2>
-                <h3>Faculty Recruitment Application Form</h3>
-                <p><strong>Application No:</strong> ${appNo} | <strong>Date:</strong> ${submissionDateTime}</p>
-            </div>
-            
-            <div class="pdf-section">
-                <div class="pdf-section-title">1. Personal Information</div>
-                <div class="pdf-section-content">
-                    <div class="pdf-row">
-                        <div class="pdf-label">Full Name:</div>
-                        <div class="pdf-value">${document.getElementById('fullName').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Date of Birth:</div>
-                        <div class="pdf-value">${document.getElementById('dob').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Gender:</div>
-                        <div class="pdf-value">${document.getElementById('gender').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Nationality:</div>
-                        <div class="pdf-value">${document.getElementById('natSelect').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Religion:</div>
-                        <div class="pdf-value">${document.getElementById('religion').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Mobile:</div>
-                        <div class="pdf-value">+91 ${document.getElementById('mobile').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Email:</div>
-                        <div class="pdf-value">${document.getElementById('email').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Permanent Address:</div>
-                        <div class="pdf-value">${document.getElementById('permAddr').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Current Address:</div>
-                        <div class="pdf-value">${document.getElementById('currAddr').value}</div>
+        const pdfContent = `
+            <div class="pdf-container">
+                <div class="pdf-header">
+                    <h1>MODERN SCHOOL KOTA</h1>
+                    <h3>Faculty Recruitment Application Form</h3>
+                    <div class="app-info">
+                        <strong>Application No:</strong> ${appNo} | 
+                        <strong>Date:</strong> ${submissionDateTime}
                     </div>
                 </div>
-            </div>
-            
-            <div class="pdf-section">
-                <div class="pdf-section-title">2. Professional Requirements</div>
-                <div class="pdf-section-content">
-                    <div class="pdf-row">
-                        <div class="pdf-label">Position Applied:</div>
-                        <div class="pdf-value">${document.getElementById('posSelect').value}</div>
-                    </div>
-                    ${document.getElementById('subField').classList.contains('d-none') ? '' : `
-                    <div class="pdf-row">
-                        <div class="pdf-label">Subject/Role:</div>
-                        <div class="pdf-value">${document.getElementById('subList').value}</div>
-                    </div>
-                    `}
-                    ${document.getElementById('prefClassField').classList.contains('d-none') ? '' : `
-                    <div class="pdf-row">
-                        <div class="pdf-label">Preferred Classes:</div>
-                        <div class="pdf-value">${document.getElementById('prefClass').value}</div>
-                    </div>
-                    `}
-                    <div class="pdf-row">
-                        <div class="pdf-label">Total Experience:</div>
-                        <div class="pdf-value">${document.getElementById('expYears').value} Years, ${document.getElementById('expMonths').value} Months</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Expected Joining:</div>
-                        <div class="pdf-value">${document.getElementById('joiningDate').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Notice Period:</div>
-                        <div class="pdf-value">${document.getElementById('noticePeriod').value} Months</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pdf-section">
-                <div class="pdf-section-title">3. Education Details</div>
-                <div class="pdf-section-content">
-                    <table class="pdf-table">
-                        <thead>
-                            <tr>
-                                <th>Level</th>
-                                <th>Board/University</th>
-                                <th>Institution</th>
-                                <th>Year</th>
-                                <th>% / CGPA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${Array.from(document.querySelectorAll('#eduTbl tbody tr')).map(row => {
-                                const inputs = row.querySelectorAll('input');
-                                if (inputs.length >= 5) {
-                                    return `<tr>
-                                        <td>${inputs[0].value || '-'}</td>
-                                        <td>${inputs[1].value || '-'}</td>
-                                        <td>${inputs[2].value || '-'}</td>
-                                        <td>${inputs[3].value || '-'}</td>
-                                        <td>${inputs[4].value || '-'}</td>
-                                    </tr>`;
-                                }
-                                return '';
-                            }).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="pdf-section">
-                <div class="pdf-section-title">4. Teaching Experience</div>
-                <div class="pdf-section-content">
-                    <table class="pdf-table">
-                        <thead>
-                            <tr>
-                                <th>Organization</th>
-                                <th>Designation</th>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Duration</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${Array.from(document.querySelectorAll('#expTbl tbody tr')).map(row => {
-                                const org = row.querySelector('.exp-org')?.value || '-';
-                                const desig = row.querySelector('.exp-desig')?.value || '-';
-                                const from = row.querySelector('.exp-from')?.value || '-';
-                                const to = row.querySelector('.exp-to')?.value || '-';
-                                const dur = row.querySelector('.dur-res')?.value || '-';
-                                return `<tr>
-                                    <td>${org}</td>
-                                    <td>${desig}</td>
-                                    <td>${from}</td>
-                                    <td>${to}</td>
-                                    <td>${dur}</td>
-                                </tr>`;
-                            }).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="pdf-section">
-                <div class="pdf-section-title">5. Additional Information</div>
-                <div class="pdf-section-content">
-                    <div class="pdf-row">
-                        <div class="pdf-label">Extra-Curricular Achievements:</div>
-                        <div class="pdf-value">${document.getElementById('extraCurr').value || 'Not provided'}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Place:</div>
-                        <div class="pdf-value">${document.getElementById('placeInput').value}</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pdf-section">
-                <div class="pdf-section-title">6. Declaration & Digital Signature</div>
-                <div class="pdf-section-content">
-                    <div class="pdf-row">
-                        <div class="pdf-label">Declaration:</div>
-                        <div class="pdf-value">I hereby declare that all information provided is accurate.</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Digitally Signed by:</div>
-                        <div class="pdf-value">${document.getElementById('fullName').value}</div>
-                    </div>
-                    <div class="pdf-row">
-                        <div class="pdf-label">Digital Signature Metadata:</div>
-                        <div class="pdf-value">
-                            <strong>IP Address:</strong> ${userIP}<br>
-                            <strong>Location:</strong> ${userLocStr}<br>
-                            <strong>Timestamp:</strong> ${submissionDateTime}
+                
+                <div class="pdf-section">
+                    <div class="pdf-section-title">1. PERSONAL INFORMATION</div>
+                    <div class="pdf-section-content">
+                        <div class="pdf-row">
+                            <div class="pdf-label">Full Name:</div>
+                            <div class="pdf-value">${fullName}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Date of Birth:</div>
+                            <div class="pdf-value">${dob}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Gender:</div>
+                            <div class="pdf-value">${gender}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Nationality:</div>
+                            <div class="pdf-value">${nationality}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Religion:</div>
+                            <div class="pdf-value">${religion}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Mobile:</div>
+                            <div class="pdf-value">+91 ${mobile}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Email:</div>
+                            <div class="pdf-value">${email}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Permanent Address:</div>
+                            <div class="pdf-value">${permAddr}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Current Address:</div>
+                            <div class="pdf-value">${currAddr}</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="pdf-footer">
-                <p>This is a computer generated document. Generated on ${submissionDateTime}</p>
-                <p>Modern School Kota - Faculty Recruitment Portal</p>
+                
+                <div class="pdf-section">
+                    <div class="pdf-section-title">2. PROFESSIONAL REQUIREMENTS</div>
+                    <div class="pdf-section-content">
+                        <div class="pdf-row">
+                            <div class="pdf-label">Position Applied:</div>
+                            <div class="pdf-value">${position}</div>
+                        </div>
+                        ${subject !== 'N/A' ? `
+                        <div class="pdf-row">
+                            <div class="pdf-label">Subject/Role:</div>
+                            <div class="pdf-value">${subject}</div>
+                        </div>
+                        ` : ''}
+                        ${prefClass !== 'N/A' ? `
+                        <div class="pdf-row">
+                            <div class="pdf-label">Preferred Classes:</div>
+                            <div class="pdf-value">${prefClass}</div>
+                        </div>
+                        ` : ''}
+                        <div class="pdf-row">
+                            <div class="pdf-label">Total Experience:</div>
+                            <div class="pdf-value">${expYears} Years, ${expMonths} Months</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Expected Joining:</div>
+                            <div class="pdf-value">${joiningDate}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Notice Period:</div>
+                            <div class="pdf-value">${noticePeriod} Months</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pdf-section">
+                    <div class="pdf-section-title">3. EDUCATION DETAILS</div>
+                    <div class="pdf-section-content">
+                        <table class="pdf-table">
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Board/University</th>
+                                    <th>Institution</th>
+                                    <th>Year</th>
+                                    <th>% / CGPA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${eduRows.map(row => `
+                                    <tr>
+                                        <td>${row.level}</td>
+                                        <td>${row.board}</td>
+                                        <td>${row.institution}</td>
+                                        <td>${row.year}</td>
+                                        <td>${row.percentage}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="pdf-section">
+                    <div class="pdf-section-title">4. TEACHING EXPERIENCE</div>
+                    <div class="pdf-section-content">
+                        <table class="pdf-table">
+                            <thead>
+                                <tr>
+                                    <th>Organization</th>
+                                    <th>Designation</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${expRows.length > 0 ? expRows.map(row => `
+                                    <tr>
+                                        <td>${row.org}</td>
+                                        <td>${row.desig}</td>
+                                        <td>${row.from}</td>
+                                        <td>${row.to}</td>
+                                        <td>${row.dur}</td>
+                                    </tr>
+                                `).join('') : '<tr><td colspan="5" style="text-align: center;">No experience added</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="pdf-section">
+                    <div class="pdf-section-title">5. ADDITIONAL INFORMATION</div>
+                    <div class="pdf-section-content">
+                        <div class="pdf-row">
+                            <div class="pdf-label">Extra-Curricular:</div>
+                            <div class="pdf-value">${extraCurr}</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Place:</div>
+                            <div class="pdf-value">${place}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pdf-section">
+                    <div class="pdf-section-title">6. DECLARATION & DIGITAL SIGNATURE</div>
+                    <div class="pdf-section-content">
+                        <div class="pdf-row">
+                            <div class="pdf-label">Declaration:</div>
+                            <div class="pdf-value">I hereby declare that all information provided is accurate and complete to the best of my knowledge.</div>
+                        </div>
+                        <div class="pdf-row">
+                            <div class="pdf-label">Digitally Signed by:</div>
+                            <div class="pdf-value">${fullName}</div>
+                        </div>
+                        
+                        <div class="pdf-digital-info">
+                            <strong><i class="bi bi-shield-lock"></i> DIGITAL SIGNATURE VERIFICATION</strong>
+                            <div class="pdf-digital-row">
+                                <div class="pdf-digital-item"><strong>IP Address:</strong> ${userIP}</div>
+                                <div class="pdf-digital-item"><strong>Location:</strong> ${userLocStr}</div>
+                                <div class="pdf-digital-item"><strong>Timestamp:</strong> ${submissionDateTime}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pdf-footer">
+                    <p>This is a computer generated document. Generated on ${submissionDateTime}</p>
+                    <p>Modern School Kota - Faculty Recruitment Portal | This document is digitally verified</p>
+                </div>
             </div>
         `;
         
-        // Generate PDF
+        // Create a temporary div for PDF generation
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = pdfContent;
+        document.body.appendChild(tempDiv);
+        
+        // PDF options optimized for single page
         const opt = {
-            margin: [0.5, 0.5, 0.5, 0.5],
+            margin: [0.4, 0.4, 0.4, 0.4],
             filename: `Application_${appNo}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, letterRendering: true },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            html2canvas: { 
+                scale: 1.5,
+                letterRendering: true,
+                logging: false,
+                useCORS: true
+            },
+            jsPDF: { 
+                unit: 'in', 
+                format: 'a4', 
+                orientation: 'portrait',
+                compress: true
+            },
+            pagebreak: { mode: ['css', 'legacy'] }
         };
         
-        html2pdf().set(opt).from(pdfContent).save();
+        // Generate and save PDF
+        html2pdf().set(opt).from(tempDiv).save().then(() => {
+            // Remove temporary div after PDF generation
+            document.body.removeChild(tempDiv);
+        });
     }
 
     // Form validation and submission
