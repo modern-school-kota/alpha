@@ -10,16 +10,17 @@
   
   <style>
     :root {
-      --maroon-deep: #4A0013;
-      --maroon-primary: #7A0022;
-      --maroon-light: #9E1B32;
-      --cream-bg: #FAF6F0;
+      /* Updated Color Palette */
+      --navy-deep: #0A1F44;
+      --navy-primary: #12326B;
+      --navy-light: #1C4894;
+      --cream-bg: #FDFBF7;
       --cream-card: rgba(253, 251, 247, 0.95);
-      --cream-border: #E4D5C1;
+      --cream-border: #E5DFC8;
       --gold-accent: #C5A059;
-      --text-dark: #231B15;
-      --text-muted: #6B5D52;
-      --shadow-elevation: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      --text-dark: #101828;
+      --text-muted: #5C677D;
+      --shadow-elevation: 0 25px 50px -12px rgba(10, 31, 68, 0.45);
     }
 
     * {
@@ -37,7 +38,7 @@
       padding: 3rem 1.5rem;
       position: relative;
       overflow-x: hidden;
-      background-color: var(--maroon-deep);
+      background-color: var(--navy-deep);
     }
 
     /* Background Image Slideshow */
@@ -68,7 +69,7 @@
       transform: scale(1);
     }
 
-    /* Dark Maroon Overlay */
+    /* Dark Navy Overlay */
     .bg-overlay {
       position: fixed;
       top: 0;
@@ -77,8 +78,8 @@
       height: 100%;
       background: linear-gradient(
         135deg, 
-        rgba(74, 0, 19, 0.78) 0%, 
-        rgba(35, 27, 21, 0.85) 100%
+        rgba(10, 31, 68, 0.85) 0%, 
+        rgba(5, 15, 33, 0.92) 100%
       );
       z-index: 2;
     }
@@ -103,7 +104,7 @@
       max-width: 180px;
       max-height: 90px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
     }
 
     .logo-fallback-text {
@@ -113,7 +114,7 @@
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
     /* Glassmorphic Card Container */
@@ -124,7 +125,7 @@
       border-radius: 24px;
       padding: 3rem 2.5rem;
       box-shadow: var(--shadow-elevation);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.7);
     }
 
     /* Form Header Section */
@@ -136,7 +137,7 @@
     .header-section h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
-      color: var(--maroon-deep);
+      color: var(--navy-deep);
       margin-bottom: 0.35rem;
     }
 
@@ -156,7 +157,7 @@
       margin-bottom: 0.4rem;
       font-weight: 600;
       font-size: 0.85rem;
-      color: var(--maroon-deep);
+      color: var(--navy-deep);
     }
 
     .required-star {
@@ -191,16 +192,16 @@
     }
 
     .form-group input::placeholder {
-      color: #A3968A;
+      color: #A0A8B8;
     }
 
     .form-group input:focus {
-      border-color: var(--maroon-primary);
-      box-shadow: 0 0 0 4px rgba(122, 0, 34, 0.1);
+      border-color: var(--navy-primary);
+      box-shadow: 0 0 0 4px rgba(10, 31, 68, 0.12);
     }
 
     .form-group input:focus + .input-icon {
-      color: var(--maroon-primary);
+      color: var(--navy-primary);
     }
 
     /* Validated Field Indicator */
@@ -213,7 +214,7 @@
       padding: 1.1rem;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--maroon-primary), var(--maroon-deep));
+      background: linear-gradient(135deg, var(--navy-primary), var(--navy-deep));
       color: #ffffff;
       font-size: 1.05rem;
       font-weight: 700;
@@ -221,7 +222,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1.25rem;
-      box-shadow: 0 8px 20px rgba(122, 0, 34, 0.3);
+      box-shadow: 0 8px 20px rgba(10, 31, 68, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -229,14 +230,14 @@
     }
 
     .submit-btn:hover:not(:disabled) {
-      background: linear-gradient(135deg, var(--maroon-light), var(--maroon-primary));
+      background: linear-gradient(135deg, var(--navy-light), var(--navy-primary));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(122, 0, 34, 0.4);
+      box-shadow: 0 12px 25px rgba(10, 31, 68, 0.4);
     }
 
     .submit-btn:disabled {
-      background: #D8CEC4;
-      color: #8C8075;
+      background: #D5DBE5;
+      color: #8C96A6;
       box-shadow: none;
       cursor: not-allowed;
       transform: none;
