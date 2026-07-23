@@ -14,14 +14,12 @@
       --maroon-primary: #7A0022;
       --maroon-light: #9E1B32;
       --cream-bg: #FAF6F0;
-      --cream-card: #F3EBDD;
-      --cream-surface: #FFFFFF;
+      --cream-card: rgba(253, 251, 247, 0.95);
       --cream-border: #E4D5C1;
       --gold-accent: #C5A059;
       --text-dark: #231B15;
       --text-muted: #6B5D52;
-      --shadow-soft: 0 20px 40px rgba(74, 0, 19, 0.08);
-      --shadow-hover: 0 25px 50px rgba(74, 0, 19, 0.16);
+      --shadow-elevation: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
     }
 
     * {
@@ -32,70 +30,110 @@
     }
 
     body {
-      background-color: var(--cream-bg);
-      background-image: radial-gradient(circle at 10% 10%, rgba(122, 0, 34, 0.03) 0%, transparent 50%),
-                        radial-gradient(circle at 90% 90%, rgba(197, 160, 89, 0.05) 0%, transparent 50%);
-      color: var(--text-dark);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem 1.5rem;
+      padding: 3rem 1.5rem;
+      position: relative;
+      overflow-x: hidden;
+      background-color: var(--maroon-deep);
     }
 
-    .wrapper {
+    /* Background Image Slideshow */
+    .bg-slideshow {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      max-width: 1180px;
+      height: 100%;
+      z-index: 1;
     }
 
-    .page-header {
-      text-align: center;
-      margin-bottom: 2.5rem;
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.8s ease-in-out, transform 6s ease-out;
+      transform: scale(1.05);
     }
 
-    .badge {
-      display: inline-block;
-      padding: 0.35rem 1rem;
-      background-color: rgba(122, 0, 34, 0.08);
-      color: var(--maroon-primary);
-      border-radius: 50px;
-      font-size: 0.825rem;
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Dark Maroon Overlay */
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg, 
+        rgba(74, 0, 19, 0.78) 0%, 
+        rgba(35, 27, 21, 0.85) 100%
+      );
+      z-index: 2;
+    }
+
+    /* Main Container Wrapper */
+    .wrapper {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* Borderless Logo Above / Outside Card */
+    .outer-logo-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .borderless-logo {
+      max-width: 180px;
+      max-height: 90px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    .logo-fallback-text {
+      color: var(--cream-bg);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      border: 1px solid rgba(122, 0, 34, 0.15);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
-    .page-header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: var(--maroon-deep);
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-    }
-
-    .page-header p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-    }
-
+    /* Glassmorphic Container Card */
     .container {
       display: flex;
-      background-color: var(--cream-surface);
+      background: var(--cream-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-radius: 24px;
       overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid var(--cream-border);
-      min-height: 620px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow-elevation);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      min-height: 580px;
     }
 
-    /* Left Side: Interactive Map Frame */
+    /* Left Side: Map Section */
     .map-section {
       flex: 1.1;
       position: relative;
-      background-color: var(--cream-card);
+      background-color: rgba(228, 213, 193, 0.3);
       display: flex;
       flex-direction: column;
     }
@@ -119,12 +157,12 @@
       bottom: 1.5rem;
       left: 1.5rem;
       right: 1.5rem;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(253, 251, 247, 0.92);
       backdrop-filter: blur(10px);
       padding: 1.25rem 1.5rem;
       border-radius: 16px;
       border: 1px solid var(--cream-border);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
       display: flex;
       align-items: flex-start;
       gap: 1rem;
@@ -160,33 +198,32 @@
       margin-top: 0.3rem;
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--gold-accent);
+      color: var(--maroon-primary);
     }
 
-    /* Right Side: Form */
+    /* Right Side: Form Section */
     .form-section {
       flex: 1;
-      padding: 3.5rem 3rem;
+      padding: 3rem 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background-color: var(--cream-surface);
     }
 
     .form-header {
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
 
-    .form-header h2 {
+    .form-header h1 {
       font-family: 'Playfair Display', serif;
       color: var(--maroon-deep);
-      font-size: 1.85rem;
-      margin-bottom: 0.5rem;
+      font-size: 2.1rem;
+      margin-bottom: 0.35rem;
     }
 
     .form-header p {
       color: var(--text-muted);
-      font-size: 0.925rem;
+      font-size: 0.95rem;
     }
 
     .form-group {
@@ -196,11 +233,15 @@
 
     .form-group label {
       display: block;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.4rem;
       font-weight: 600;
       font-size: 0.85rem;
-      color: var(--maroon-primary);
-      letter-spacing: 0.3px;
+      color: var(--maroon-deep);
+    }
+
+    .required-star {
+      color: #C62828;
+      font-weight: bold;
     }
 
     .input-wrapper {
@@ -213,16 +254,16 @@
       position: absolute;
       left: 1rem;
       color: var(--text-muted);
-      transition: color 0.3s ease;
+      transition: color 0.25s ease;
       pointer-events: none;
     }
 
     .form-group input {
       width: 100%;
-      padding: 0.9rem 1rem 0.9rem 2.8rem;
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
       border: 1.5px solid var(--cream-border);
-      border-radius: 12px;
-      background-color: var(--cream-bg);
+      border-radius: 10px;
+      background-color: #FFFFFF;
       color: var(--text-dark);
       font-size: 0.95rem;
       transition: all 0.25s ease;
@@ -235,8 +276,7 @@
 
     .form-group input:focus {
       border-color: var(--maroon-primary);
-      background-color: #FFFFFF;
-      box-shadow: 0 0 0 4px rgba(122, 0, 34, 0.08);
+      box-shadow: 0 0 0 4px rgba(122, 0, 34, 0.1);
     }
 
     .form-group input:focus + .input-icon {
@@ -250,18 +290,18 @@
 
     .submit-btn {
       width: 100%;
-      padding: 1.05rem;
+      padding: 1.1rem;
       border: none;
       border-radius: 12px;
       background: linear-gradient(135deg, var(--maroon-primary), var(--maroon-deep));
       color: #ffffff;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1rem;
-      box-shadow: 0 8px 20px rgba(122, 0, 34, 0.25);
+      box-shadow: 0 8px 20px rgba(122, 0, 34, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -271,7 +311,7 @@
     .submit-btn:hover:not(:disabled) {
       background: linear-gradient(135deg, var(--maroon-light), var(--maroon-primary));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(122, 0, 34, 0.35);
+      box-shadow: 0 12px 25px rgba(122, 0, 34, 0.4);
     }
 
     .submit-btn:disabled {
@@ -284,14 +324,14 @@
     }
 
     .status-note {
-      margin-top: 1rem;
-      font-size: 0.8rem;
+      margin-top: 1.25rem;
+      font-size: 0.825rem;
       text-align: center;
       color: var(--text-muted);
-      transition: opacity 0.3s ease;
+      font-weight: 500;
     }
 
-    /* Responsive Breakpoints */
+    /* Responsive Layout */
     @media (max-width: 960px) {
       .container {
         flex-direction: column;
@@ -308,8 +348,8 @@
     }
 
     @media (max-width: 480px) {
-      .page-header h1 {
-        font-size: 2rem;
+      .form-header h1 {
+        font-size: 1.85rem;
       }
       .form-section {
         padding: 2rem 1.5rem;
@@ -320,23 +360,35 @@
         right: 1rem;
         padding: 1rem;
       }
+      .borderless-logo {
+        max-width: 140px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Animated Background Image Slideshow -->
+  <div class="bg-slideshow">
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1600&auto=format&fit=crop');"></div>
+  </div>
+  <div class="bg-overlay"></div>
+
+  <!-- Main Content Wrapper -->
   <div class="wrapper">
-    <header class="page-header">
-      <span class="badge">Modern School Talwandi</span>
-      <h1>Send Us a Message</h1>
-      <p>We are here to answer your queries and welcome you to our campus.</p>
-    </header>
+    
+    <!-- Outer Borderless Logo Slot -->
+    <div class="outer-logo-wrapper">
+      <img src="logo.png" alt="Modern School Kota" class="borderless-logo" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'logo-fallback-text\'>Modern School Kota</span>';">
+    </div>
 
     <div class="container">
       <!-- Left Side: Interactive Map -->
       <div class="map-section">
         <div class="map-wrapper">
-          <!-- Coordinates: Lat 25.1387° N, Lon 75.8360° E (Modern School, Sector-A, Talwandi, Kota) -->
           <iframe 
             src="https://maps.google.com/maps?q=25.1387,75.8360&hl=en&z=17&output=embed" 
             allowfullscreen="" 
@@ -363,13 +415,13 @@
       <!-- Right Side: Contact Form -->
       <div class="form-section">
         <div class="form-header">
-          <h2>Direct Inquiry</h2>
-          <p>Complete all required details below to enable submission.</p>
+          <h1>Contact Us</h1>
+          <p>Complete all mandatory fields (*) to submit your message.</p>
         </div>
 
         <form id="contactForm" autocomplete="off">
           <div class="form-group" id="group-fullName">
-            <label for="fullName">Your Name</label>
+            <label for="fullName">Your Name <span class="required-star">*</span></label>
             <div class="input-wrapper">
               <input type="text" id="fullName" placeholder="e.g. Rahul Sharma" required>
               <svg class="input-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -379,7 +431,7 @@
           </div>
 
           <div class="form-group" id="group-contactNumber">
-            <label for="contactNumber">Contact Number</label>
+            <label for="contactNumber">Contact Number <span class="required-star">*</span></label>
             <div class="input-wrapper">
               <input type="tel" id="contactNumber" placeholder="+91 98765 43210" required>
               <svg class="input-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -389,7 +441,7 @@
           </div>
 
           <div class="form-group" id="group-email">
-            <label for="email">E-Mail</label>
+            <label for="email">E-Mail <span class="required-star">*</span></label>
             <div class="input-wrapper">
               <input type="email" id="email" placeholder="name@example.com" required>
               <svg class="input-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -399,7 +451,7 @@
           </div>
 
           <div class="form-group" id="group-subject">
-            <label for="subject">Subject</label>
+            <label for="subject">Subject <span class="required-star">*</span></label>
             <div class="input-wrapper">
               <input type="text" id="subject" placeholder="e.g. Admission Query" required>
               <svg class="input-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -415,13 +467,25 @@
             </svg>
           </button>
 
-          <p id="statusNote" class="status-note">Please complete all 4 fields to submit.</p>
+          <p id="statusNote" class="status-note">Please complete all required (*) fields to submit.</p>
         </form>
       </div>
     </div>
   </div>
 
   <script>
+    /* Background Image Transition Slideshow */
+    const slides = document.querySelectorAll('.bg-slideshow .slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    setInterval(nextSlide, 4000);
+
+    /* Form Validation Logic */
     const form = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
     const statusNote = document.getElementById('statusNote');
@@ -442,7 +506,6 @@
           allFilled = false;
           group.classList.remove('valid');
         } else {
-          // Extra validation check for email format
           if (input.type === 'email' && !validateEmail(value)) {
             allFilled = false;
             group.classList.remove('valid');
@@ -459,21 +522,21 @@
       } else {
         submitBtn.disabled = true;
         statusNote.style.color = 'var(--text-muted)';
-        statusNote.textContent = 'Please complete all fields with valid information to submit.';
+        statusNote.textContent = 'Please complete all required (*) fields to enable submission.';
       }
     }
 
     inputs.forEach(input => {
       input.addEventListener('input', checkFormState);
+      input.addEventListener('change', checkFormState);
       input.addEventListener('blur', checkFormState);
     });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Visual Feedback upon submission
       submitBtn.disabled = true;
-      submitBtn.querySelector('span').textContent = 'Sending...';
+      submitBtn.querySelector('span').textContent = 'Sending Message...';
       
       setTimeout(() => {
         alert('Thank you! Your message has been sent to Modern School Talwandi.');
