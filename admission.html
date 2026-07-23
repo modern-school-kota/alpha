@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admission Application | Modern School Kota</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --maroon-deep: #4A0013;
+      --maroon-primary: #7A0022;
+      --maroon-light: #9E1B32;
+      --cream-bg: #FAF6F0;
+      --cream-card: rgba(253, 251, 247, 0.95);
+      --cream-border: #E4D5C1;
+      --gold-accent: #C5A059;
+      --text-dark: #231B15;
+      --text-muted: #6B5D52;
+      --shadow-elevation: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 1rem;
+      position: relative;
+      overflow-x: hidden;
+      background-color: var(--maroon-deep);
+    }
+
+    /* Background Image Slideshow */
+    .bg-slideshow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.8s ease-in-out, transform 6s ease-out;
+      transform: scale(1.05);
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Dark Maroon Overlay */
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg, 
+        rgba(74, 0, 19, 0.78) 0%, 
+        rgba(35, 27, 21, 0.85) 100%
+      );
+      z-index: 2;
+    }
+
+    /* Main Container */
+    .wrapper {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 880px;
+    }
+
+    /* Borderless Logo Above / Outside Card */
+    .outer-logo-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .borderless-logo {
+      max-width: 180px;
+      max-height: 90px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    .logo-fallback-text {
+      color: var(--cream-bg);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .form-card {
+      background: var(--cream-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-elevation);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* Card Internal Header */
+    .header-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header-section h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.25rem;
+      color: var(--maroon-deep);
+      margin-bottom: 0.35rem;
+    }
+
+    .header-section p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Form Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem 1.5rem;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--maroon-deep);
+    }
+
+    .required-star {
+      color: #C62828;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--cream-border);
+      border-radius: 10px;
+      background-color: #FFFFFF;
+      color: var(--text-dark);
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--maroon-primary);
+      box-shadow: 0 0 0 4px rgba(122, 0, 34, 0.1);
+    }
+
+    .form-group.valid input,
+    .form-group.valid select {
+      border-color: #2E7D32;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--maroon-primary), var(--maroon-deep));
+      color: #ffffff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 1.25rem;
+      box-shadow: 0 8px 20px rgba(122, 0, 34, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--maroon-light), var(--maroon-primary));
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(122, 0, 34, 0.4);
+    }
+
+    .submit-btn:disabled {
+      background: #D8CEC4;
+      color: #8C8075;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+      opacity: 0.85;
+    }
+
+    .status-note {
+      margin-top: 1.25rem;
+      font-size: 0.825rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      .form-card {
+        padding: 2rem 1.5rem;
+      }
+      .header-section h1 {
+        font-size: 1.85rem;
+      }
+      .borderless-logo {
+        max-width: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Background Image Slideshow -->
+  <div class="bg-slideshow">
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1600&auto=format&fit=crop');"></div>
+  </div>
+  <div class="bg-overlay"></div>
+
+  <!-- Main Content Area -->
+  <div class="wrapper">
+    
+    <!-- Outer Borderless Logo Slot (Outside Card) -->
+    <div class="outer-logo-wrapper">
+      <img src="logo.png" alt="Modern School Kota" class="borderless-logo" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'logo-fallback-text\'>Modern School Kota</span>';">
+    </div>
+
+    <!-- Form Container Card -->
+    <div class="form-card">
+      
+      <!-- Top Header Section Inside Card -->
+      <div class="header-section">
+        <h1>Admission Enquiry</h1>
+        <p>Please complete all mandatory fields (*) to submit the enquiry.</p>
+      </div>
+
+      <form id="admissionForm" autocomplete="off">
+        <div class="form-grid">
+          
+          <!-- Student Name -->
+          <div class="form-group">
+            <label for="studentName">Student Name <span class="required-star">*</span></label>
+            <input type="text" id="studentName" data-required="true" placeholder="Full name of student">
+          </div>
+
+          <!-- Parent's Name -->
+          <div class="form-group">
+            <label for="parentName">Parent's Name <span class="required-star">*</span></label>
+            <input type="text" id="parentName" data-required="true" placeholder="Father / Mother / Guardian">
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="form-group">
+            <label for="dob">Date of Birth <span class="required-star">*</span></label>
+            <input type="date" id="dob" data-required="true">
+          </div>
+
+          <!-- Gender -->
+          <div class="form-group">
+            <label for="gender">Gender <span class="required-star">*</span></label>
+            <select id="gender" data-required="true">
+              <option value="" disabled selected>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Current Class -->
+          <div class="form-group">
+            <label for="currentClass">Current Class <span class="required-star">*</span></label>
+            <select id="currentClass" data-required="true">
+              <option value="" disabled selected>Select Current Class</option>
+              <option value="Pre-Primary">Pre-Primary / Nursery</option>
+              <option value="Class 1-5">Class 1 to 5</option>
+              <option value="Class 6-8">Class 6 to 8</option>
+              <option value="Class 9-10">Class 9 or 10</option>
+              <option value="Class 11-12">Class 11 or 12</option>
+            </select>
+          </div>
+
+          <!-- Current School (Optional) -->
+          <div class="form-group">
+            <label for="currentSchool">Current School</label>
+            <input type="text" id="currentSchool" placeholder="Name of present school (if any)">
+          </div>
+
+          <!-- Seeking Admission in -->
+          <div class="form-group">
+            <label for="seekingClass">Seeking Admission in <span class="required-star">*</span></label>
+            <select id="seekingClass" data-required="true">
+              <option value="" disabled selected>Select Class Applying For</option>
+              <option value="Nursery">Nursery / LKG / UKG</option>
+              <option value="Class 1">Class 1</option>
+              <option value="Class 2">Class 2</option>
+              <option value="Class 3">Class 3</option>
+              <option value="Class 4">Class 4</option>
+              <option value="Class 5">Class 5</option>
+              <option value="Class 6">Class 6</option>
+              <option value="Class 7">Class 7</option>
+              <option value="Class 8">Class 8</option>
+              <option value="Class 9">Class 9</option>
+              <option value="Class 10">Class 10</option>
+              <option value="Class 11">Class 11</option>
+              <option value="Class 12">Class 12</option>
+            </select>
+          </div>
+
+          <!-- Academic Year Dropdown -->
+          <div class="form-group">
+            <label for="academicYear">Academic Year <span class="required-star">*</span></label>
+            <select id="academicYear" data-required="true">
+              <option value="" disabled selected>Select Session</option>
+              <option value="2026-2027">2026 - 2027</option>
+              <option value="2027-2028">2027 - 2028</option>
+            </select>
+          </div>
+
+          <!-- Email Address -->
+          <div class="form-group">
+            <label for="email">Email Address <span class="required-star">*</span></label>
+            <input type="email" id="email" data-required="true" placeholder="e.g. parent@example.com">
+          </div>
+
+          <!-- Contact Number -->
+          <div class="form-group">
+            <label for="contactNumber">Contact Number <span class="required-star">*</span></label>
+            <input type="tel" id="contactNumber" data-required="true" placeholder="+91 98765 43210">
+          </div>
+
+          <!-- Address (Optional) -->
+          <div class="form-group full-width">
+            <label for="address">Address</label>
+            <input type="text" id="address" placeholder="Residential Address">
+          </div>
+
+          <!-- Message (Optional) -->
+          <div class="form-group full-width">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Any additional details or special requests..."></textarea>
+          </div>
+
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn" disabled>
+          <span>Submit Application</span>
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </button>
+
+        <p id="statusNote" class="status-note">Please complete all required (*) fields to submit.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* Background Image Transition Slideshow */
+    const slides = document.querySelectorAll('.bg-slideshow .slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    setInterval(nextSlide, 4000);
+
+    /* Form Field Validation */
+    const form = document.getElementById('admissionForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusNote = document.getElementById('statusNote');
+    const requiredInputs = form.querySelectorAll('[data-required="true"]');
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function checkFormState() {
+      let allValid = true;
+
+      requiredInputs.forEach(input => {
+        const value = input.value.trim();
+        const group = input.closest('.form-group');
+
+        if (value === '') {
+          allValid = false;
+          group.classList.remove('valid');
+        } else {
+          if (input.type === 'email' && !validateEmail(value)) {
+            allValid = false;
+            group.classList.remove('valid');
+          } else {
+            group.classList.add('valid');
+          }
+        }
+      });
+
+      if (allValid) {
+        submitBtn.disabled = false;
+        statusNote.style.color = '#2E7D32';
+        statusNote.textContent = '✓ All required fields completed. Ready to submit!';
+      } else {
+        submitBtn.disabled = true;
+        statusNote.style.color = 'var(--text-muted)';
+        statusNote.textContent = 'Please complete all required (*) fields to enable submission.';
+      }
+    }
+
+    requiredInputs.forEach(input => {
+      input.addEventListener('input', checkFormState);
+      input.addEventListener('change', checkFormState);
+      input.addEventListener('blur', checkFormState);
+    });
+
+    /* Form Submit Handling */
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.querySelector('span').textContent = 'Submitting Application...';
+
+      setTimeout(() => {
+        alert('Application Submitted Successfully to Modern School Kota!');
+        form.reset();
+        requiredInputs.forEach(input => input.closest('.form-group').classList.remove('valid'));
+        submitBtn.querySelector('span').textContent = 'Submit Application';
+        checkFormState();
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
