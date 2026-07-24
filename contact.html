@@ -8,9 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   
-  <!-- Google Maps JavaScript API (Replace YOUR_API_KEY with a valid Google Maps API Key) -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&v=weekly"></script>
-
   <style>
     :root {
       /* User Specified Palette */
@@ -151,50 +148,77 @@
       width: 100%;
       height: 100%;
       min-height: 380px;
+      overflow: hidden;
     }
 
-    #map {
+    .map-wrapper iframe {
       width: 100%;
       height: 100%;
       border: 0;
+      filter: contrast(1.02) saturate(1.05);
     }
 
-    /* Custom Custom Pin Marker Container */
-    .custom-marker-pin {
+    /* Custom Custom Logo Pin Overlay */
+    .custom-map-pin {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -100%);
+      z-index: 4;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .pin-badge {
+      width: 56px;
+      height: 56px;
+      background: #FFFFFF;
+      border: 3px solid var(--color-primary);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--color-light);
-      border: 3px solid var(--color-primary);
-      border-radius: 50%;
-      width: 52px;
-      height: 52px;
-      box-shadow: 0 8px 16px rgba(10, 31, 68, 0.35);
-      position: relative;
-      transform: translateY(-8px);
-      transition: transform 0.2s ease;
+      box-shadow: 0 10px 20px rgba(10, 31, 68, 0.35);
+      padding: 5px;
+      background-clip: padding-box;
     }
 
-    .custom-marker-pin:hover {
-      transform: translateY(-12px) scale(1.08);
-    }
-
-    .custom-marker-pin::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 10px 8px 0 8px;
-      border-style: solid;
-      border-color: var(--color-primary) transparent transparent transparent;
-    }
-
-    .custom-marker-pin img {
-      width: 32px;
-      height: 32px;
+    .pin-badge img {
+      width: 100%;
+      height: 100%;
       object-fit: contain;
+    }
+
+    .pin-fallback {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--color-primary);
+    }
+
+    .pin-point {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 14px solid var(--color-primary);
+      margin-top: -2px;
+    }
+
+    .pin-shadow {
+      width: 22px;
+      height: 6px;
+      background: rgba(10, 31, 68, 0.3);
       border-radius: 50%;
+      margin-top: 3px;
+      animation: pinShadowPulse 2s infinite alternate ease-in-out;
+    }
+
+    @keyframes pinShadowPulse {
+      0% { transform: scale(0.8); opacity: 0.3; }
+      100% { transform: scale(1.2); opacity: 0.6; }
     }
 
     .map-overlay-info {
@@ -211,7 +235,7 @@
       display: flex;
       align-items: flex-start;
       gap: 1rem;
-      z-index: 10;
+      z-index: 5;
     }
 
     .location-icon {
@@ -433,10 +457,25 @@
     </div>
 
     <div class="container">
-      <!-- Left Side: Interactive Map with Logo Marker Pin -->
+      <!-- Left Side: Interactive Map with Custom Logo Pin -->
       <div class="map-section">
         <div class="map-wrapper">
-          <div id="map"></div>
+          <iframe 
+            src="https://maps.google.com/maps?q=25.1505214115487,75.84971800820223&hl=en&z=17&output=embed" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+
+          <!-- Custom Pin Drop featuring logo.png -->
+          <div class="custom-map-pin">
+            <div class="pin-badge">
+              <img src="logo.png" alt="Map Pin Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <span class="pin-fallback" style="display:none;">MS</span>
+            </div>
+            <div class="pin-point"></div>
+            <div class="pin-shadow"></div>
+          </div>
         </div>
 
         <div class="map-overlay-info">
@@ -516,50 +555,6 @@
   </div>
 
   <script>
-    /* Google Maps Initialization with Custom Logo Pin Marker */
-    async function initMap() {
-      const schoolLocation = { lat: 25.1505214115487, lng: 75.84971800820223 };
-
-      const { Map } = await google.maps.importLibrary("maps");
-      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-      const map = new Map(document.getElementById("map"), {
-        zoom: 17,
-        center: schoolLocation,
-        mapId: "DEMO_MAP_ID",
-        disableDefaultUI: true,
-        zoomControl: true,
-      });
-
-      // Create Custom Pin Element Containing 'logo.png'
-      const pinContainer = document.createElement("div");
-      pinContainer.className = "custom-marker-pin";
-
-      const logoImg = document.createElement("img");
-      logoImg.src = "logo.png";
-      logoImg.alt = "Modern School Logo Pin";
-      logoImg.onerror = function() {
-        this.src = "https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png";
-      };
-
-      pinContainer.appendChild(logoImg);
-
-      // Attach Advanced Marker
-      new AdvancedMarkerElement({
-        map: map,
-        position: schoolLocation,
-        content: pinContainer,
-        title: "Modern School, Talwandi, Kota",
-      });
-    }
-
-    // Initialize Map on window load
-    window.addEventListener("DOMContentLoaded", () => {
-      if (typeof google !== "undefined" && google.maps) {
-        initMap();
-      }
-    });
-
     /* Background Image Transition Slideshow */
     const slides = document.querySelectorAll('.bg-slideshow .slide');
     let currentSlide = 0;
