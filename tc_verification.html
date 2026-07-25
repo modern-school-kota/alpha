@@ -10,17 +10,17 @@
   
   <style>
     :root {
-      /* Updated Color Palette */
-      --navy-deep: #0A1F44;
-      --navy-primary: #12326B;
-      --navy-light: #1C4894;
+      /* Updated Color Palette to #7b2830 Theme */
+      --primary-deep: #4d181e;
+      --primary-main: #7b2830;
+      --primary-light: #9a3640;
       --cream-bg: #FDFBF7;
       --cream-card: rgba(253, 251, 247, 0.95);
       --cream-border: #E5DFC8;
       --gold-accent: #C5A059;
       --text-dark: #101828;
       --text-muted: #5C677D;
-      --shadow-elevation: 0 25px 50px -12px rgba(10, 31, 68, 0.45);
+      --shadow-elevation: 0 25px 50px -12px rgba(77, 24, 30, 0.45);
     }
 
     * {
@@ -38,7 +38,7 @@
       padding: 3rem 1.5rem;
       position: relative;
       overflow-x: hidden;
-      background-color: var(--navy-deep);
+      background-color: var(--primary-deep);
     }
 
     /* Background Image Slideshow */
@@ -69,7 +69,7 @@
       transform: scale(1);
     }
 
-    /* Dark Navy Overlay */
+    /* Dark Maroon Overlay */
     .bg-overlay {
       position: fixed;
       top: 0;
@@ -78,8 +78,8 @@
       height: 100%;
       background: linear-gradient(
         135deg, 
-        rgba(10, 31, 68, 0.85) 0%, 
-        rgba(5, 15, 33, 0.92) 100%
+        rgba(77, 24, 30, 0.88) 0%, 
+        rgba(40, 12, 15, 0.94) 100%
       );
       z-index: 2;
     }
@@ -137,7 +137,7 @@
     .header-section h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
-      color: var(--navy-deep);
+      color: var(--primary-deep);
       margin-bottom: 0.35rem;
     }
 
@@ -157,7 +157,7 @@
       margin-bottom: 0.4rem;
       font-weight: 600;
       font-size: 0.85rem;
-      color: var(--navy-deep);
+      color: var(--primary-deep);
     }
 
     .required-star {
@@ -196,12 +196,12 @@
     }
 
     .form-group input:focus {
-      border-color: var(--navy-primary);
-      box-shadow: 0 0 0 4px rgba(10, 31, 68, 0.12);
+      border-color: var(--primary-main);
+      box-shadow: 0 0 0 4px rgba(123, 40, 48, 0.15);
     }
 
     .form-group input:focus + .input-icon {
-      color: var(--navy-primary);
+      color: var(--primary-main);
     }
 
     /* Validated Field Indicator */
@@ -214,7 +214,7 @@
       padding: 1.1rem;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--navy-primary), var(--navy-deep));
+      background: linear-gradient(135deg, var(--primary-main), var(--primary-deep));
       color: #ffffff;
       font-size: 1.05rem;
       font-weight: 700;
@@ -222,7 +222,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1.25rem;
-      box-shadow: 0 8px 20px rgba(10, 31, 68, 0.3);
+      box-shadow: 0 8px 20px rgba(123, 40, 48, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -230,9 +230,9 @@
     }
 
     .submit-btn:hover:not(:disabled) {
-      background: linear-gradient(135deg, var(--navy-light), var(--navy-primary));
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-main));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(10, 31, 68, 0.4);
+      box-shadow: 0 12px 25px rgba(123, 40, 48, 0.45);
     }
 
     .submit-btn:disabled {
