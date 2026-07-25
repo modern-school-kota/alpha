@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern School, Kota - Mandatory Public Disclosure</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-main: #7B2830;
+            --brand-dark: #581c22;
+            --bg-body: #F8FAFC;
+            --surface-card: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --shadow-md: 0 10px 25px -5px rgba(123, 40, 48, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+
+            /* Rainbow Row Palette from Image */
+            --row-1: #F9E2CD; /* Peach / Orange */
+            --row-2: #FBF4C3; /* Soft Yellow */
+            --row-3: #D0F2CD; /* Light Green */
+            --row-4: #C4EED1; /* Soft Mint */
+            --row-5: #BBE9EB; /* Light Cyan */
+            --row-6: #BCE2FA; /* Sky Blue */
+            --row-7: #D8CEF6; /* Lavender / Purple */
+            --row-8: #F3C4DB; /* Soft Pink */
+            --row-9: #BDEAE8; /* Aqua / Turquoise */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* Header Area */
+        header {
+            background: linear-gradient(135deg, var(--brand-main) 0%, var(--brand-dark) 100%);
+            color: #FFFFFF;
+            padding: 3.5rem 1.5rem 3rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            margin-bottom: 1.25rem;
+            display: inline-block;
+        }
+
+        .logo-container img {
+            max-height: 110px;
+            width: auto;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1150px;
+            margin: 2.5rem auto 0;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--surface-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #F3C4DB;
+        }
+
+        .section-header .icon-box {
+            width: 42px;
+            height: 42px;
+            background: rgba(123, 40, 48, 0.08);
+            color: var(--brand-main);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--brand-main);
+        }
+
+        /* Table Wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 0.95rem 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 0.92rem;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        td:last-child, th:last-child {
+            border-right: none;
+        }
+
+        /* Header matching the periwinkle blue from image */
+        th {
+            background-color: #E1E8F7;
+            color: #475569;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        /* Sequential Pastel Colors Applied to Table Rows */
+        tbody tr:nth-child(1) { background-color: var(--row-1); }
+        tbody tr:nth-child(2) { background-color: var(--row-2); }
+        tbody tr:nth-child(3) { background-color: var(--row-3); }
+        tbody tr:nth-child(4) { background-color: var(--row-4); }
+        tbody tr:nth-child(5) { background-color: var(--row-5); }
+        tbody tr:nth-child(6) { background-color: var(--row-6); }
+        tbody tr:nth-child(7) { background-color: var(--row-7); }
+        tbody tr:nth-child(8) { background-color: var(--row-8); }
+        tbody tr:nth-child(9) { background-color: var(--row-9); }
+        /* Loop colors for tables with more than 9 rows */
+        tbody tr:nth-child(10) { background-color: var(--row-1); }
+        tbody tr:nth-child(11) { background-color: var(--row-2); }
+
+        tbody tr:hover {
+            filter: brightness(0.97);
+        }
+
+        /* Download Button Styling Matching Image */
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #1E293B;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+
+        .download-link:hover {
+            transform: translateX(2px);
+        }
+
+        .download-btn-icon {
+            width: 32px;
+            height: 32px;
+            background-color: #2BB673;
+            color: #FFFFFF;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Sub-List styling for nested lab items */
+        .nested-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .nested-list li {
+            padding: 3px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+        }
+
+        .nested-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.75rem; }
+            .section-card { padding: 1.25rem; }
+            th, td { padding: 0.75rem 0.85rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Area with Logo -->
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Modern School Logo">
+            </div>
+            <h1>MODERN SCHOOL, KOTA</h1>
+            <p>Mandatory Public Disclosure & Regulatory Documentation</p>
+        </div>
+    </header>
+
+    <!-- Main Content: All Sections Below Each Other -->
+    <main class="container">
+
+        <!-- SECTION A: GENERAL INFORMATION -->
+        <section class="section-card">
+            <div class="section-header">
+                <div class="icon-box"><i class="fa-solid fa-circle-info"></i></div>
+                <h2>A. General Information</h2>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px; text-align: center;">Sr. No.</th>
+                            <th style="width: 35%;">INFORMATION</th>
+                            <th>DETAIL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">1</td>
+                            <td>NAME OF THE SCHOOL</td>
+                            <td><strong>MODERN SCHOOL</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">2</td>
+                            <td>AFFILIATION NO(IF APPLICABLE)</td>
+                            <td>1730067</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">3</td>
+                            <td>SCHOOL CODE(IF APPLICABLE)</td>
+                            <td>10474</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">4</td>
+                            <td>COMPLETE ADDRESS WITH PIN CODE</td>
+                            <td>Sector - A Talwandi, Kota ( Raj.) INDIA Pin Code - 324005</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">5</td>
+                            <td>PRINCIPAL NAME & QUALIFICATION</td>
+                            <td>Mr. Rajendra Kumar Jain (Msc. B.Ed.)</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">6</td>
+                            <td>SCHOOL EMAIL ID</td>
+                            <td><a href="mailto:info@modernschool.ac.in" style="color:#1E293B; font-weight:600;">info@modernschool.ac.in</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">7</td>
+                            <td>CONTACT DETAILS (LANDLINE/MOBILE)</td>
+                            <td>0744 - 2421116, 2411116, 2411117, +91- 8003990272</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION B: DOCUMENTS AND INFORMATION -->
+        <section class="section-card">
+            <div class="section-header">
+                <div class="icon-box"><i class="fa-solid fa-file-contract"></i></div>
+                <h2>B. Documents and Information</h2>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px; text-align: center;">Sr. No.</th>
+                            <th>DOCUMENTS/INFORMATION</th>
+                            <th style="width: 250px;">UPLOAD DOCUMENTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">1</td>
+                            <td>COPIES OF AFFILIATION/UPGRADATION LETTER AND RECENT EXTENSION OF AFFILIATION IN ANY</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">2</td>
+                            <td>COPIES OF SOCIETIES / TRUST / COMPANY REGISTRATION / RENEWAL CERTIFICATE AS APPLICABLE</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">3</td>
+                            <td>COPY OF NO OBJECTION CERTIFICATE(NOC) ISSUED IF APPLICABLE BY THE STATE GOVT / UT</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">4</td>
+                            <td>COPIES OF RECOGNITION CERTIFICATE UNDER RTE ACT 2009 AND IT'S RENEWAL IF APPLICABLE</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">5</td>
+                            <td>COPY OF VALID BUILDING SAFETY CERTIFICATE AS PER THE NATIONAL BUILDING CODE</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">6</td>
+                            <td>COPY OF VALID FIRE SAFETY CERTIFICATE ISSUED BY THE COMPETENT AUTHORITY</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">7</td>
+                            <td>COPY OF THE DEO CERTIFICATE SUBMITTED BY THE SCHOOL FOR AFFILIATION /UPGRADATION/EXTENSION OF AFFILIATION OR SELF CERTIFICATE BY SCHOOL</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">8</td>
+                            <td>COPIES OF VALID WATER HEALTH AND SANITATION CERTIFICATES</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">9</td>
+                            <td>COPY OF VALID MANDATORY PUBLIC DISCLOSURE SARAS</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION C: RESULT AND ACADEMICS -->
+        <section class="section-card">
+            <div class="section-header">
+                <div class="icon-box"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h2>C. Result and Academics</h2>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px; text-align: center;">Sr. No.</th>
+                            <th>DOCUMENTS/INFORMATION</th>
+                            <th style="width: 250px;">UPLOAD DOCUMENTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">1</td>
+                            <td>FEE STRUCTURE OF THE SCHOOL</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">2</td>
+                            <td>ANNUAL ACADEMIC CALENDAR</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">3</td>
+                            <td>LIST OF SCHOOL MANAGEMENT COMMITTEE (SMC)</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">4</td>
+                            <td>LIST OF PARENTS TEACHERS ASSOCIATION (PTA) MEMBERS</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">5</td>
+                            <td>LAST THREE-YEAR RESULT OF THE BOARD EXAMINATION AS PER AAPLICABILITY</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon"><i class="fa-solid fa-download"></i></span> (Click here)</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION D: STAFF (TEACHING) -->
+        <section class="section-card">
+            <div class="section-header">
+                <div class="icon-box"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <h2>D. Staff (Teaching)</h2>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px; text-align: center;">Sr. No.</th>
+                            <th style="width: 35%;">DOCUMENTS/INFORMATION</th>
+                            <th>DETAILS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">1</td>
+                            <td>PRINCIPAL</td>
+                            <td>Mr. Rajendra Kumar Jain</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">2</td>
+                            <td>TOTAL NO. OF TEACHERS</td>
+                            <td>
+                                <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+                                    <span><strong>PGT:</strong> <a href="#" class="download-link"><span class="download-btn-icon" style="width:24px; height:24px; font-size:0.75rem;"><i class="fa-solid fa-download"></i></span> (Click here)</a></span>
+                                    <span><strong>TGT:</strong> <a href="#" class="download-link"><span class="download-btn-icon" style="width:24px; height:24px; font-size:0.75rem;"><i class="fa-solid fa-download"></i></span> (Click here)</a></span>
+                                    <span><strong>PRT:</strong> <a href="#" class="download-link"><span class="download-btn-icon" style="width:24px; height:24px; font-size:0.75rem;"><i class="fa-solid fa-download"></i></span> (Click here)</a></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">3</td>
+                            <td>TEACHER SECTION RATIO</td>
+                            <td>1:1.5</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">4</td>
+                            <td>DETAILS OF SPECIAL EDUCATOR</td>
+                            <td>Mr. Priti Banda (M.Sc., B.ED.)</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">5</td>
+                            <td>DETAILS OF COUNSELLOR AND WELLNESS TEACHER</td>
+                            <td>Mrs. Preeti Yadav (M.Sc., Child Development, M.A.(English), BEd.)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION E: SCHOOL INFRASTRUCTURE -->
+        <section class="section-card">
+            <div class="section-header">
+                <div class="icon-box"><i class="fa-solid fa-building"></i></div>
+                <h2>E. School Infrastructure</h2>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 80px; text-align: center;">Sr. No.</th>
+                            <th style="width: 35%;">INFORMATION</th>
+                            <th>DETAILS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">1</td>
+                            <td>TOTAL CAMPUS AREA OF THE SCHOOL (IN SQUARE MTR)</td>
+                            <td>11433</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">2</td>
+                            <td>NO AND SIZE OF THE CLASS ROOMS (IN SQ MTR)</td>
+                            <td>65 CLASS ROOMS (48 Sq Mtr Per Class Room)</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">3</td>
+                            <td>NO AND SIZE OF LABORATORIES INCLUDING COMPUTER LABS (IN SQ MTR)</td>
+                            <td>
+                                <ul class="nested-list">
+                                    <li><strong>BIOLOGY LAB:</strong> 46.40 SQ/MTR</li>
+                                    <li><strong>PHYSICS LAB:</strong> 69.64 SQ/MTR</li>
+                                    <li><strong>CHEMISTRY LAB:</strong> 84.65 SQ/MTR</li>
+                                    <li><strong>COMPUTER LAB:</strong> 67.72 SQ/MTR</li>
+                                    <li><strong>LIBRARY:</strong> 95.25 SQ/MTR</li>
+                                    <li><strong>COMPOSITE SCIENCE LAB:</strong> 46 SQ/MTR</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">4</td>
+                            <td>INTERNET FACILITY (Y/N)</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">5</td>
+                            <td>NO. OF GIRLS TOILETS</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">6</td>
+                            <td>NO. OF BOYS TOILETS</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-weight: 700;">7</td>
+                            <td>LINK OF YOUTUBE VIDEO OF THE INSPECTION OF SCHOOL COVERING THE INFRASTRUCTURE OF THE SCHOOL</td>
+                            <td><a href="#" class="download-link"><span class="download-btn-icon" style="background-color:#E53E3E;"><i class="fa-brands fa-youtube"></i></span> (Click here)</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
