@@ -10,16 +10,16 @@
   
   <style>
     :root {
-      --navy-deep: #0A1F44;
-      --navy-primary: #132E5C;
-      --navy-light: #1E4079;
+      --burgundy-deep: #4A151B;
+      --burgundy-primary: #7b2830;
+      --burgundy-light: #9A3640;
       --cream-bg: #FDFBF7;
       --cream-card: rgba(253, 251, 247, 0.96);
       --cream-border: #E5DFC8;
       --gold-accent: #C5A059;
       --text-dark: #1A222E;
       --text-muted: #5C677D;
-      --shadow-elevation: 0 25px 50px -12px rgba(10, 31, 68, 0.4);
+      --shadow-elevation: 0 25px 50px -12px rgba(74, 21, 27, 0.45);
     }
 
     * {
@@ -37,7 +37,7 @@
       padding: 3rem 1rem;
       position: relative;
       overflow-x: hidden;
-      background-color: var(--navy-deep);
+      background-color: var(--burgundy-deep);
     }
 
     /* Background Image Slideshow */
@@ -68,7 +68,7 @@
       transform: scale(1);
     }
 
-    /* Dark Navy Overlay */
+    /* Deep Burgundy Overlay */
     .bg-overlay {
       position: fixed;
       top: 0;
@@ -77,8 +77,8 @@
       height: 100%;
       background: linear-gradient(
         135deg, 
-        rgba(10, 31, 68, 0.45) 0%, 
-        rgba(5, 15, 33, 0.55) 100%
+        rgba(74, 21, 27, 0.55) 0%, 
+        rgba(35, 10, 13, 0.65) 100%
       );
       z-index: 2;
     }
@@ -135,7 +135,7 @@
     .header-section h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.25rem;
-      color: var(--navy-deep);
+      color: var(--burgundy-deep);
       margin-bottom: 0.35rem;
     }
 
@@ -164,7 +164,7 @@
       margin-bottom: 0.4rem;
       font-weight: 600;
       font-size: 0.85rem;
-      color: var(--navy-deep);
+      color: var(--burgundy-deep);
     }
 
     .required-star {
@@ -189,8 +189,8 @@
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
-      border-color: var(--navy-primary);
-      box-shadow: 0 0 0 4px rgba(10, 31, 68, 0.12);
+      border-color: var(--burgundy-primary);
+      box-shadow: 0 0 0 4px rgba(123, 40, 48, 0.15);
     }
 
     .form-group.valid input,
@@ -208,7 +208,7 @@
       padding: 1.1rem;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--navy-primary), var(--navy-deep));
+      background: linear-gradient(135deg, var(--burgundy-primary), var(--burgundy-deep));
       color: #ffffff;
       font-size: 1.05rem;
       font-weight: 700;
@@ -216,7 +216,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1.25rem;
-      box-shadow: 0 8px 20px rgba(10, 31, 68, 0.3);
+      box-shadow: 0 8px 20px rgba(123, 40, 48, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -224,9 +224,9 @@
     }
 
     .submit-btn:hover:not(:disabled) {
-      background: linear-gradient(135deg, var(--navy-light), var(--navy-primary));
+      background: linear-gradient(135deg, var(--burgundy-light), var(--burgundy-primary));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(10, 31, 68, 0.4);
+      box-shadow: 0 12px 25px rgba(123, 40, 48, 0.45);
     }
 
     .submit-btn:disabled {
