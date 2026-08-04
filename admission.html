@@ -56,10 +56,10 @@
     }
 
     .borderless-logo {
-    max-width: 260px; /* Increase this value as needed (e.g., 240px, 260px, 280px) */
-  max-height: 110px; /* Adjust height limit proportionally if needed */
-  object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+      max-width: 260px; /* Increased logo width */
+      max-height: 110px; /* Proportional height ceiling */
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
     }
 
     .logo-fallback-text {
@@ -202,7 +202,7 @@
       font-weight: 500;
     }
 
-    /* Responsive */
+    /* Responsive Breakdown */
     @media (max-width: 768px) {
       .form-grid {
         grid-template-columns: 1fr;
@@ -217,7 +217,7 @@
         font-size: 1.85rem;
       }
       .borderless-logo {
-        max-width: 140px;
+        max-width: 190px; /* Scaled up for mobile display */
       }
     }
   </style>
