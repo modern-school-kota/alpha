@@ -10,23 +10,23 @@
   
   <style>
     :root {
-      /* User Specified Palette */
-      --color-primary: #263d4f;     /* Primary Slate/Navy */
-      --color-light: #FDFBF7;       /* Soft Off-White/Cream */
+      /* User Specified Palette - Updated to Rich Navy Theme */
+      --color-primary: #0A1F44;      /* Main Rich Navy */
+      --color-light: #F8FAFC;        /* Light Background */
       
       /* Derived Colors for Contrast & Hierarchy */
-      --primary-hover: #1b2c3a;
-      --primary-light: #38556d;
-      --primary-transparent: rgba(38, 61, 79, 0.08);
+      --primary-hover: #06132B;      /* Deep Navy Dark */
+      --primary-light: #183365;      /* Lighter Navy Variant */
+      --primary-transparent: rgba(10, 31, 68, 0.08);
       
-      --cream-card: #FDFBF7;
-      --cream-muted: #EFECE6;
-      --border-color: #D3CFC7;
+      --cream-card: #FFFFFF;
+      --cream-muted: #F1F5F9;
+      --border-color: #E2E8F0;
       
-      --text-dark: #16242f;
-      --text-muted: #4a5963;
+      --text-dark: #2D3748;
+      --text-muted: #64748B;
       
-      --shadow-elevation: 0 25px 50px -12px rgba(18, 30, 40, 0.45);
+      --shadow-elevation: 0 25px 50px -12px rgba(10, 31, 68, 0.45);
     }
 
     * {
@@ -44,7 +44,7 @@
       padding: 3rem 1.5rem;
       position: relative;
       overflow-x: hidden;
-      background: linear-gradient(135deg, #263d4f 0%, #16242f 100%);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--primary-hover) 100%);
     }
 
     /* Main Container Wrapper */
@@ -64,14 +64,14 @@
     }
 
     .borderless-logo {
-  max-width: 260px; /* Increase this value as needed (e.g., 240px, 260px, 280px) */
-  max-height: 110px; /* Adjust height limit proportionally if needed */
-  object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
-}
+      max-width: 260px; /* Increase this value as needed (e.g., 240px, 260px, 280px) */
+      max-height: 110px; /* Adjust height limit proportionally if needed */
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    }
 
     .logo-fallback-text {
-      color: var(--color-light);
+      color: #FFFFFF;
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
       font-weight: 700;
@@ -87,7 +87,7 @@
       border-radius: 24px;
       overflow: hidden;
       box-shadow: var(--shadow-elevation);
-      border: 1px solid rgba(253, 251, 247, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       min-height: 580px;
     }
 
@@ -138,7 +138,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 20px rgba(38, 61, 79, 0.35);
+      box-shadow: 0 10px 20px rgba(10, 31, 68, 0.35);
       padding: 5px;
       background-clip: padding-box;
     }
@@ -167,7 +167,7 @@
     .pin-shadow {
       width: 22px;
       height: 6px;
-      background: rgba(38, 61, 79, 0.3);
+      background: rgba(10, 31, 68, 0.3);
       border-radius: 50%;
       margin-top: 3px;
       animation: pinShadowPulse 2s infinite alternate ease-in-out;
@@ -183,12 +183,12 @@
       bottom: 1.5rem;
       left: 1.5rem;
       right: 1.5rem;
-      background: rgba(253, 251, 247, 0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
       padding: 1.25rem 1.5rem;
       border-radius: 16px;
       border: 1px solid var(--border-color);
-      box-shadow: 0 10px 25px rgba(38, 61, 79, 0.15);
+      box-shadow: 0 10px 25px rgba(10, 31, 68, 0.15);
       display: flex;
       align-items: flex-start;
       gap: 1rem;
@@ -203,7 +203,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--color-light);
+      color: #FFFFFF;
       flex-shrink: 0;
     }
 
@@ -235,7 +235,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background-color: var(--color-light);
+      background-color: var(--cream-card);
     }
 
     .form-header {
@@ -299,7 +299,7 @@
     }
 
     .form-group input::placeholder {
-      color: #9A948D;
+      color: #94A3B8;
     }
 
     .form-group input:focus {
@@ -322,14 +322,14 @@
       border: none;
       border-radius: 12px;
       background: linear-gradient(135deg, var(--color-primary), var(--primary-hover));
-      color: var(--color-light);
+      color: #FFFFFF;
       font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1rem;
-      box-shadow: 0 8px 20px rgba(38, 61, 79, 0.25);
+      box-shadow: 0 8px 20px rgba(10, 31, 68, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -337,9 +337,9 @@
     }
 
     .submit-btn:hover:not(:disabled) {
-      background: linear-gradient(135deg, var(--primary-hover), var(--primary-light));
+      background: linear-gradient(135deg, var(--primary-light), var(--color-primary));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(38, 61, 79, 0.35);
+      box-shadow: 0 12px 25px rgba(10, 31, 68, 0.35);
     }
 
     .submit-btn:disabled {
