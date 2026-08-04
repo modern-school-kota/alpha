@@ -10,16 +10,15 @@
   
   <style>
     :root {
-      --primary-deep: #1a5f7a;      /* deep variant of #2596be */
-      --primary-main: #2596be;      /* requested main color */
-      --primary-light: #4aafd4;     /* lighter variant */
+      --primary-deep: #16242f;      /* Deep dark slate */
+      --primary-main: #263d4f;      /* Requested main slate/navy */
+      --primary-light: #38556d;     /* Lighter slate variant */
       --cream-bg: #FDFBF7;
       --cream-card: rgba(253, 251, 247, 0.96);
-      --cream-border: #E5DFC8;
-      --gold-accent: #C5A059;
-      --text-dark: #1A222E;
-      --text-muted: #5C677D;
-      --shadow-elevation: 0 25px 50px -12px rgba(26, 95, 122, 0.45);
+      --cream-border: #D3CFC7;
+      --text-dark: #16242f;
+      --text-muted: #4a5963;
+      --shadow-elevation: 0 25px 50px -12px rgba(18, 30, 40, 0.45);
     }
 
     * {
@@ -37,7 +36,7 @@
       padding: 3rem 1rem;
       position: relative;
       overflow-x: hidden;
-      background: #eef5f7;  /* soft, clean background */
+      background: linear-gradient(135deg, #263d4f 0%, #16242f 100%);
     }
 
     /* Main Container */
@@ -60,17 +59,17 @@
       max-width: 180px;
       max-height: 90px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
     }
 
     .logo-fallback-text {
-      color: #1a5f7a;
+      color: #FDFBF7;
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
 
     .form-card {
@@ -80,7 +79,7 @@
       border-radius: 24px;
       padding: 3rem 2.5rem;
       box-shadow: var(--shadow-elevation);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(253, 251, 247, 0.3);
     }
 
     /* Card Internal Header */
@@ -92,7 +91,7 @@
     .header-section h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.25rem;
-      color: var(--primary-deep);
+      color: var(--primary-main);
       margin-bottom: 0.35rem;
     }
 
@@ -121,7 +120,7 @@
       margin-bottom: 0.4rem;
       font-weight: 600;
       font-size: 0.85rem;
-      color: var(--primary-deep);
+      color: var(--primary-main);
     }
 
     .required-star {
@@ -147,7 +146,7 @@
     .form-group select:focus,
     .form-group textarea:focus {
       border-color: var(--primary-main);
-      box-shadow: 0 0 0 4px rgba(37, 150, 190, 0.20);
+      box-shadow: 0 0 0 4px rgba(38, 61, 79, 0.15);
     }
 
     .form-group.valid input,
@@ -173,7 +172,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1.25rem;
-      box-shadow: 0 8px 20px rgba(37, 150, 190, 0.35);
+      box-shadow: 0 8px 20px rgba(38, 61, 79, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -183,12 +182,12 @@
     .submit-btn:hover:not(:disabled) {
       background: linear-gradient(135deg, var(--primary-light), var(--primary-main));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(37, 150, 190, 0.45);
+      box-shadow: 0 12px 25px rgba(38, 61, 79, 0.35);
     }
 
     .submit-btn:disabled {
-      background: #D5D8DF;
-      color: #8C94A0;
+      background: var(--cream-border);
+      color: var(--text-muted);
       box-shadow: none;
       cursor: not-allowed;
       transform: none;
@@ -228,9 +227,9 @@
   <!-- Main Content Area -->
   <div class="wrapper">
     
-    <!-- Outer Borderless Logo Slot (Outside Card) -->
+    <!-- Outer Borderless Logo Slot: using 'main_logo.png' -->
     <div class="outer-logo-wrapper">
-      <img src="logo.png" alt="Modern School Kota" class="borderless-logo" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'logo-fallback-text\'>Modern School Kota</span>';">
+      <img src="main_logo.png" alt="Modern School Kota" class="borderless-logo" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'logo-fallback-text\'>Modern School Kota</span>';">
     </div>
 
     <!-- Form Container Card -->
