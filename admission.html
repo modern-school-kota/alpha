@@ -10,15 +10,16 @@
   
   <style>
     :root {
-      --primary-deep: #16242f;      /* Deep dark slate */
-      --primary-main: #263d4f;      /* Requested main slate/navy */
-      --primary-light: #38556d;     /* Lighter slate variant */
-      --cream-bg: #FDFBF7;
-      --cream-card: rgba(253, 251, 247, 0.96);
-      --cream-border: #D3CFC7;
-      --text-dark: #16242f;
-      --text-muted: #4a5963;
-      --shadow-elevation: 0 25px 50px -12px rgba(18, 30, 40, 0.45);
+      /* Updated Color Palette to Match Navy Header Theme */
+      --primary-deep: #06132B;      /* Deep navy dark */
+      --primary-main: #0A1F44;      /* Main rich navy */
+      --primary-light: #183365;     /* Lighter navy variant */
+      --cream-bg: #F8FAFC;
+      --cream-card: rgba(255, 255, 255, 0.96);
+      --cream-border: #E2E8F0;
+      --text-dark: #2D3748;
+      --text-muted: #64748B;
+      --shadow-elevation: 0 25px 50px -12px rgba(10, 31, 68, 0.45);
     }
 
     * {
@@ -36,7 +37,7 @@
       padding: 3rem 1rem;
       position: relative;
       overflow-x: hidden;
-      background: linear-gradient(135deg, #263d4f 0%, #16242f 100%);
+      background: linear-gradient(135deg, var(--primary-main) 0%, var(--primary-deep) 100%);
     }
 
     /* Main Container */
@@ -63,7 +64,7 @@
     }
 
     .logo-fallback-text {
-      color: #FDFBF7;
+      color: #FFFFFF;
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 700;
@@ -74,12 +75,12 @@
 
     .form-card {
       background: var(--cream-card);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-radius: 24px;
       padding: 3rem 2.5rem;
       box-shadow: var(--shadow-elevation);
-      border: 1px solid rgba(253, 251, 247, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     /* Card Internal Header */
@@ -142,11 +143,16 @@
       outline: none;
     }
 
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #94A3B8;
+    }
+
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
       border-color: var(--primary-main);
-      box-shadow: 0 0 0 4px rgba(38, 61, 79, 0.15);
+      box-shadow: 0 0 0 4px rgba(10, 31, 68, 0.15);
     }
 
     .form-group.valid input,
@@ -172,7 +178,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1.25rem;
-      box-shadow: 0 8px 20px rgba(38, 61, 79, 0.25);
+      box-shadow: 0 8px 20px rgba(10, 31, 68, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -182,7 +188,7 @@
     .submit-btn:hover:not(:disabled) {
       background: linear-gradient(135deg, var(--primary-light), var(--primary-main));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(38, 61, 79, 0.35);
+      box-shadow: 0 12px 25px rgba(10, 31, 68, 0.35);
     }
 
     .submit-btn:disabled {
