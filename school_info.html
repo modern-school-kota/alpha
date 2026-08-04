@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --brand-main: #7B2830;
-            --brand-dark: #581c22;
+            --brand-main: #0A1F44;
+            --brand-dark: #06132B;
             --bg-body: #F8FAFC;
             --surface-card: #FFFFFF;
             --text-main: #2D3748;
             --text-muted: #64748B;
             --border-color: #E2E8F0;
-            --shadow-md: 0 10px 25px -5px rgba(123, 40, 48, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --shadow-md: 0 10px 25px -5px rgba(10, 31, 68, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
 
             /* Rainbow Row Palette from Image */
             --row-1: #F9E2CD; /* Peach / Orange */
@@ -63,10 +63,12 @@
             display: inline-block;
         }
 
-        .logo-container img {
-            max-height: 110px;
-            width: auto;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+        /* Base Logo Styling (Desktop) */
+        .borderless-logo {
+            max-width: 260px; /* Increase this value as needed (e.g., 240px, 260px, 280px) */
+            max-height: 110px; /* Adjust height limit proportionally if needed */
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
         }
 
         header h1 {
@@ -113,7 +115,7 @@
         .section-header .icon-box {
             width: 42px;
             height: 42px;
-            background: rgba(123, 40, 48, 0.08);
+            background: rgba(10, 31, 68, 0.08);
             color: var(--brand-main);
             border-radius: 10px;
             display: flex;
@@ -228,12 +230,18 @@
             border-bottom: none;
         }
 
-        /* Mobile Optimization */
+        /* Mobile Responsive adjustment */
         @media (max-width: 768px) {
             header { padding: 2rem 1rem; }
             header h1 { font-size: 1.75rem; }
             .section-card { padding: 1.25rem; }
             th, td { padding: 0.75rem 0.85rem; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 480px) {
+            .borderless-logo {
+                max-width: 190px; /* Increased mobile max-width to match desktop scaling */
+            }
         }
     </style>
 </head>
@@ -243,7 +251,7 @@
     <header>
         <div class="header-content">
             <div class="logo-container">
-                <img src="logo.png" alt="Modern School Logo">
+                <img src="main_logo.png" alt="Modern School Logo" class="borderless-logo">
             </div>
             
             <p>Mandatory Public Disclosure & Regulatory Documentation</p>
