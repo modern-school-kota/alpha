@@ -11,22 +11,22 @@
   <style>
     :root {
       /* User Specified Palette */
-      --color-primary: #7b2830;     /* Primary Crimson/Burgundy */
+      --color-primary: #263d4f;     /* Primary Slate/Navy */
       --color-light: #FDFBF7;       /* Soft Off-White/Cream */
       
       /* Derived Colors for Contrast & Hierarchy */
-      --crimson-hover: #5d1e24;
-      --crimson-light: #97333d;
-      --crimson-transparent: rgba(123, 40, 48, 0.08);
+      --primary-hover: #1b2c3a;
+      --primary-light: #38556d;
+      --primary-transparent: rgba(38, 61, 79, 0.08);
       
       --cream-card: #FDFBF7;
       --cream-muted: #EFECE6;
       --border-color: #D3CFC7;
       
-      --text-dark: #2B1518;
-      --text-muted: #5A4A4C;
+      --text-dark: #16242f;
+      --text-muted: #4a5963;
       
-      --shadow-elevation: 0 25px 50px -12px rgba(45, 12, 16, 0.45);
+      --shadow-elevation: 0 25px 50px -12px rgba(18, 30, 40, 0.45);
     }
 
     * {
@@ -44,50 +44,7 @@
       padding: 3rem 1.5rem;
       position: relative;
       overflow-x: hidden;
-      background-color: var(--color-primary);
-    }
-
-    /* Background Image Slideshow */
-    .bg-slideshow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 1.8s ease-in-out, transform 6s ease-out;
-      transform: scale(1.05);
-    }
-
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* Deep Crimson Overlay */
-    .bg-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg, 
-        rgba(60, 15, 20, 0.90) 0%, 
-        rgba(25, 5, 8, 0.94) 100%
-      );
-      z-index: 2;
+      background: linear-gradient(135deg, #263d4f 0%, #16242f 100%);
     }
 
     /* Main Container Wrapper */
@@ -181,7 +138,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 20px rgba(123, 40, 48, 0.35);
+      box-shadow: 0 10px 20px rgba(38, 61, 79, 0.35);
       padding: 5px;
       background-clip: padding-box;
     }
@@ -210,7 +167,7 @@
     .pin-shadow {
       width: 22px;
       height: 6px;
-      background: rgba(123, 40, 48, 0.3);
+      background: rgba(38, 61, 79, 0.3);
       border-radius: 50%;
       margin-top: 3px;
       animation: pinShadowPulse 2s infinite alternate ease-in-out;
@@ -231,7 +188,7 @@
       padding: 1.25rem 1.5rem;
       border-radius: 16px;
       border: 1px solid var(--border-color);
-      box-shadow: 0 10px 25px rgba(123, 40, 48, 0.15);
+      box-shadow: 0 10px 25px rgba(38, 61, 79, 0.15);
       display: flex;
       align-items: flex-start;
       gap: 1rem;
@@ -268,7 +225,7 @@
       margin-top: 0.3rem;
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--crimson-light);
+      color: var(--primary-light);
     }
 
     /* Right Side: Form Section */
@@ -347,7 +304,7 @@
 
     .form-group input:focus {
       border-color: var(--color-primary);
-      box-shadow: 0 0 0 4px var(--crimson-transparent);
+      box-shadow: 0 0 0 4px var(--primary-transparent);
     }
 
     .form-group input:focus + .input-icon {
@@ -364,7 +321,7 @@
       padding: 1.1rem;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--color-primary), var(--crimson-hover));
+      background: linear-gradient(135deg, var(--color-primary), var(--primary-hover));
       color: var(--color-light);
       font-size: 1.05rem;
       font-weight: 700;
@@ -372,7 +329,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1rem;
-      box-shadow: 0 8px 20px rgba(123, 40, 48, 0.25);
+      box-shadow: 0 8px 20px rgba(38, 61, 79, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -380,9 +337,9 @@
     }
 
     .submit-btn:hover:not(:disabled) {
-      background: linear-gradient(135deg, var(--crimson-hover), var(--crimson-light));
+      background: linear-gradient(135deg, var(--primary-hover), var(--primary-light));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(123, 40, 48, 0.35);
+      box-shadow: 0 12px 25px rgba(38, 61, 79, 0.35);
     }
 
     .submit-btn:disabled {
@@ -439,15 +396,6 @@
 </head>
 <body>
 
-  <!-- Animated Background Image Slideshow -->
-  <div class="bg-slideshow">
-    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop');"></div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1600&auto=format&fit=crop');"></div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1600&auto=format&fit=crop');"></div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1600&auto=format&fit=crop');"></div>
-  </div>
-  <div class="bg-overlay"></div>
-
   <!-- Main Content Wrapper -->
   <div class="wrapper">
     
@@ -457,7 +405,7 @@
     </div>
 
     <div class="container">
-      <!-- Left Side: Interactive Map with Custom Logo Pin -->
+      <!-- Left Side: Interactive Map -->
       <div class="map-section">
         <div class="map-wrapper">
           <iframe 
@@ -466,9 +414,6 @@
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
-
-          <!-- Custom Pin Drop featuring logo.png -->
-        
         </div>
 
         <div class="map-overlay-info">
@@ -548,17 +493,6 @@
   </div>
 
   <script>
-    /* Background Image Transition Slideshow */
-    const slides = document.querySelectorAll('.bg-slideshow .slide');
-    let currentSlide = 0;
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-    setInterval(nextSlide, 4000);
-
     /* Form Validation Logic */
     const form = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
