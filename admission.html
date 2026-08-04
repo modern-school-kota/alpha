@@ -10,16 +10,16 @@
   
   <style>
     :root {
-      --burgundy-deep: #4A151B;
-      --burgundy-primary: #7b2830;
-      --burgundy-light: #9A3640;
+      --primary-deep: #1a5f7a;      /* deep variant of #2596be */
+      --primary-main: #2596be;      /* requested main color */
+      --primary-light: #4aafd4;     /* lighter variant */
       --cream-bg: #FDFBF7;
       --cream-card: rgba(253, 251, 247, 0.96);
       --cream-border: #E5DFC8;
       --gold-accent: #C5A059;
       --text-dark: #1A222E;
       --text-muted: #5C677D;
-      --shadow-elevation: 0 25px 50px -12px rgba(74, 21, 27, 0.45);
+      --shadow-elevation: 0 25px 50px -12px rgba(26, 95, 122, 0.45);
     }
 
     * {
@@ -37,50 +37,7 @@
       padding: 3rem 1rem;
       position: relative;
       overflow-x: hidden;
-      background-color: var(--burgundy-deep);
-    }
-
-    /* Background Image Slideshow */
-    .bg-slideshow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 1.8s ease-in-out, transform 6s ease-out;
-      transform: scale(1.05);
-    }
-
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* Deep Burgundy Overlay */
-    .bg-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg, 
-        rgba(74, 21, 27, 0.55) 0%, 
-        rgba(35, 10, 13, 0.65) 100%
-      );
-      z-index: 2;
+      background: #eef5f7;  /* soft, clean background */
     }
 
     /* Main Container */
@@ -103,27 +60,27 @@
       max-width: 180px;
       max-height: 90px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
     }
 
     .logo-fallback-text {
-      color: var(--cream-bg);
+      color: #1a5f7a;
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     .form-card {
       background: var(--cream-card);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       border-radius: 24px;
       padding: 3rem 2.5rem;
       box-shadow: var(--shadow-elevation);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
     }
 
     /* Card Internal Header */
@@ -135,7 +92,7 @@
     .header-section h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.25rem;
-      color: var(--burgundy-deep);
+      color: var(--primary-deep);
       margin-bottom: 0.35rem;
     }
 
@@ -164,7 +121,7 @@
       margin-bottom: 0.4rem;
       font-weight: 600;
       font-size: 0.85rem;
-      color: var(--burgundy-deep);
+      color: var(--primary-deep);
     }
 
     .required-star {
@@ -189,8 +146,8 @@
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
-      border-color: var(--burgundy-primary);
-      box-shadow: 0 0 0 4px rgba(123, 40, 48, 0.15);
+      border-color: var(--primary-main);
+      box-shadow: 0 0 0 4px rgba(37, 150, 190, 0.20);
     }
 
     .form-group.valid input,
@@ -208,7 +165,7 @@
       padding: 1.1rem;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--burgundy-primary), var(--burgundy-deep));
+      background: linear-gradient(135deg, var(--primary-main), var(--primary-deep));
       color: #ffffff;
       font-size: 1.05rem;
       font-weight: 700;
@@ -216,7 +173,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1.25rem;
-      box-shadow: 0 8px 20px rgba(123, 40, 48, 0.35);
+      box-shadow: 0 8px 20px rgba(37, 150, 190, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -224,9 +181,9 @@
     }
 
     .submit-btn:hover:not(:disabled) {
-      background: linear-gradient(135deg, var(--burgundy-light), var(--burgundy-primary));
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-main));
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(123, 40, 48, 0.45);
+      box-shadow: 0 12px 25px rgba(37, 150, 190, 0.45);
     }
 
     .submit-btn:disabled {
@@ -267,15 +224,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Animated Background Image Slideshow -->
-  <div class="bg-slideshow">
-    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop');"></div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1600&auto=format&fit=crop');"></div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1600&auto=format&fit=crop');"></div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1600&auto=format&fit=crop');"></div>
-  </div>
-  <div class="bg-overlay"></div>
 
   <!-- Main Content Area -->
   <div class="wrapper">
@@ -415,17 +363,6 @@
   </div>
 
   <script>
-    /* Background Image Transition Slideshow */
-    const slides = document.querySelectorAll('.bg-slideshow .slide');
-    let currentSlide = 0;
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-    setInterval(nextSlide, 4000);
-
     /* Form Field Validation */
     const form = document.getElementById('admissionForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -489,6 +426,5 @@
       }, 1000);
     });
   </script>
-
 </body>
 </html>
